@@ -1,34 +1,24 @@
 package com.example.ravi.myapplication;
 
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.GridView;
 
-public class MainActivity extends ActionBarActivity {
 
-    GridView mCategoryGridView;
+public class SampleActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-       /*Three Lines of code needed on every activity using the navigation drawer*/
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-        drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout));
-        mCategoryGridView = (GridView) findViewById(R.id.category_grid_view);
-        mCategoryGridView.setAdapter(new CategoryGridViewAdapter(this));
-
+        setContentView(R.layout.activity_sample);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_sample, menu);
         return true;
     }
 
