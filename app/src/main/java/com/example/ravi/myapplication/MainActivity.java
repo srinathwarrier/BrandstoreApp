@@ -1,10 +1,12 @@
 package com.example.ravi.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridView;
 
 public class MainActivity extends ActionBarActivity {
@@ -21,7 +23,14 @@ public class MainActivity extends ActionBarActivity {
         drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout));
         mCategoryGridView = (GridView) findViewById(R.id.category_grid_view);
         mCategoryGridView.setAdapter(new CategoryGridViewAdapter(this));
-
+        SearchBoxEditText mEdit = (SearchBoxEditText) findViewById(R.id.search_box_edit_text);
+        mEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

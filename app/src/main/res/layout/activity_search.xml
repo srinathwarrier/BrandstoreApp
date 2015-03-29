@@ -17,23 +17,24 @@
         tools:context=".MainActivity">
 
         <com.example.ravi.myapplication.SearchBoxEditText
-            android:id="@+id/search_box_edit_text"
+            android:id="@+id/search_box_results"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/roundededittext"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:hint="@string/home_page_search_box_hint" />
 
-        <GridView
-            android:id="@+id/category_grid_view"
+        <ListView
+            android:id="@+id/list_view_results"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:columnWidth="130dp"
-            android:numColumns="auto_fit">
+            android:divider="#000000"
+            android:dividerHeight="1dp">
 
-        </GridView>
+        </ListView>
+
     </LinearLayout>
 
     <fragment
