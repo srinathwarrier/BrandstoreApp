@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Brandstore</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_custom_edit_text">CustomEditText</string>
@@ -7,6 +7,8 @@
     <string name="home_page_search_box_hint">  Enter a brand/category</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_outlet_list">OutletList</string>
+    <string name="title_activity_outlet_details">OutletDetails</string>
 
 
 </resources>

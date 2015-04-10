@@ -25,4 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'org.json:json:20141113'
     compile 'com.google.code.gson:gson:2.3'
+    compile 'com.android.support:cardview-v7:21.0.+'
+    compile 'com.android.support:recyclerview-v7:21.0.+'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 }

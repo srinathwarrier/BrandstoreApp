@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="130dp"
-    android:layout_height="130dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="160dp"
+    android:layout_height="120dp">
 
     <ImageView
 
-        android:layout_width="120dp"
+        android:layout_width="160dp"
         android:layout_height="120dp"
-        android:padding="5dp"
+        android:scaleType="fitXY"
+
         android:id="@+id/category_image"
         android:layout_gravity="center_horizontal" />
+<ImageView
+    android:layout_width="160dp"
+    android:layout_height="30dp"
+    android:layout_alignParentBottom="true"
+    android:background="#000000"
+    android:alpha="0.7"/>
+    <TextView
+        android:id="@+id/category_name"
+        android:layout_width="160dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
 
-
-</LinearLayout>
+        android:textSize="15sp"
+        android:textColor="#FFFFFF"
+        android:gravity="center" />
+</RelativeLayout>

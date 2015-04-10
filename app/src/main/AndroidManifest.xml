@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ravi.myapplication">
+    package="com.brandstore" >
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"
+        />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Light">
+        android:icon="@drawable/logo"
+android:label="@string/app_name"
+        android:logo="@drawable/logo"
+        android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:name=".activities.MainActivity"
+
+            android:logo="@drawable/logo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,8 +24,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SearchActivity"
-            android:label="@string/title_activity_sample"></activity>
+            android:name=".activities.SearchActivity"
+            android:label="@string/title_activity_sample"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
+        <activity
+            android:name=".activities.OutletListActivity"
+            android:label="@string/title_activity_outlet_list" >
+        </activity>
+        <activity
+            android:name=".activities.OutletDetailsActivity"
+            android:label="@string/title_activity_outlet_details" >
+        </activity>
     </application>
 
 </manifest>
