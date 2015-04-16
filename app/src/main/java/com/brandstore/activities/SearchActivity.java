@@ -65,7 +65,7 @@ public class SearchActivity extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (mEdit.getText().length() < 2) {
+                if (mEdit.getText().length() < 1) {
                    // mResultList.setVisibility(View.INVISIBLE);
                     mSearchResult.clear();
                 } else {

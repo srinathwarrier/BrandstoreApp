@@ -17,13 +17,12 @@ public class MainActivity extends ActionBarActivity {
 
     GridView mCategoryGridView;
 
-    int CategoryImages[] = {R.drawable.accessories, R.drawable.books, R.drawable.denims, R.drawable.electronics, R.drawable.p5, R.drawable.p6, R.drawable.p7, R.drawable.p8, R.drawable.p9, R.drawable.p10,
-            R.drawable.p10,R.drawable.p10,R.drawable.p10,R.drawable.p10,R.drawable.p10,
-            R.drawable.p10,R.drawable.p10,R.drawable.p10,R.drawable.p10,R.drawable.p10,R.drawable.p10,R.drawable.p10,R.drawable.p10,R.drawable.p10,R.drawable.p10};
-    String ids[]={"3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27"};
-    String CategoryNames[]={"Accessories and Gifts","Books and Stationery","Denims","Electronics","Footwear","Hand Bags","Health / Saloon / Spa ","Home Decor & Art","Hypermarket",
-            "Jewellery","Kid's Wear","Lingerie & Innerwear","Liquor Boutique","Luggage","Men's Ethnic Wear","Music Instruments & Professional Audio","Services","Sportswear","Toys",
-    "Unisex Apparel","Watches and Eyewear","Western Men's Apparel","Western Unisex Apparel","Western Women's Apparel","Women's Ethnic Wear"};
+    int CategoryImages[] = {R.drawable.accessories, R.drawable.denims, R.drawable.footwear, R.drawable.handbags, R.drawable.kidswear,
+            R.drawable.luggage,R.drawable.mensethnic,R.drawable.sportswear,R.drawable.toys,R.drawable.unisex,
+            R.drawable.watcheseyewear,R.drawable.westernmen,R.drawable.westernunisex,R.drawable.westernwomen,R.drawable.womensethnic};
+    String ids[]={"3","5","7","8","13","16","17","20","21","22","23","24","25","26","27"};
+    String CategoryNames[]={"Accessories and Gifts", "Denims","Footwear", "Hand Bags", "Kid's Wear", "Luggage", "Men's Ethnic Wear", "Sportswear","Toys","Unisex Apparel",
+            "Watches and Eyewear", "Western Men's Apparel","Western Unisex Apparel", "Western Women's Apparel", "Women's Ethnic Wear" };
 
 
     @Override

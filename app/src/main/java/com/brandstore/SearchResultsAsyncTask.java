@@ -49,7 +49,7 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, Void> {
         mSearchResults.clear();
         StringBuilder builder = null;
         try {
-            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getSuggestions?q=" + query);
+            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getSuggestions?q=" + query+"&userid="+6);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoOutput(false);
             Log.d("response", ""+urlConnection.getResponseCode());

@@ -38,7 +38,7 @@ public class SearchBox extends EditText {
         this.setCompoundDrawables(searchButton, null, null, null);
         this.setHintTextColor(getResources().getColor(R.color.grey));
         this.setCursorVisible(true);
-this.setTextColor(getResources().getColor(R.color.black));
+        this.setTextColor(getResources().getColor(R.color.black));
 
     }
 
