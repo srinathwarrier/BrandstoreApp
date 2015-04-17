@@ -64,7 +64,7 @@ ArrayList<Outlet> mOutlet;
                 obj = new Outlet();
                 JSONObject object = json.getJSONObject(i);
                 obj.setBrandOutletName(object.get("brandOutletName").toString());
-                obj.setBrandTypeName(object.get("brandTypeName").toString());
+                obj.setGenderCodeString(object.get("genderCodeString").toString());
                 obj.setImageUrl(object.get("imageUrl").toString());
                // obj.setId(object.get("brandOutletId").toString());
                 obj.setContactNumber(object.get("phoneNumber").toString());

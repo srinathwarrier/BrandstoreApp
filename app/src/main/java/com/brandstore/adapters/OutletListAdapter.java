@@ -2,6 +2,7 @@ package com.brandstore.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,22 +75,49 @@ public class OutletListAdapter extends BaseAdapter {
 
             //mHolder.textView2 = (TextView) convertView.findViewById(R.id.outletcategory);
             mHolder.image = (ImageView) convertView.findViewById(R.id.outlet_image);
+            mHolder.male = (ImageView) convertView.findViewById(R.id.male);
+            mHolder.female = (ImageView) convertView.findViewById(R.id.female);
+            mHolder.kids = (ImageView) convertView.findViewById(R.id.kids);
             convertView.setTag(mHolder);
         } else {
             mHolder = (ViewHolder1) convertView.getTag();
         }
 
+        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
+            if (mOutletList.get(position).getGenderCodeString().contains("M"))
+                mHolder.male.setVisibility(View.INVISIBLE);
 
-        mHolder.textView.setText(mOutletList.get(position).getBrandOutletName());
+            if (mOutletList.get(position).getGenderCodeString().contains("F"))
+                mHolder.female.setVisibility(View.INVISIBLE);
+
+            if (mOutletList.get(position).getGenderCodeString().contains("K"))
+                mHolder.kids.setVisibility(View.INVISIBLE);
+        }
+
+        else {
+            if (mOutletList.get(position).getGenderCodeString().contains("M"))
+                mHolder.male.setAlpha(1.0F);
+
+            if (mOutletList.get(position).getGenderCodeString().contains("F"))
+                mHolder.female.setAlpha(1.0F);
+
+            if (mOutletList.get(position).getGenderCodeString().contains("K"))
+                mHolder.kids.setAlpha(1.0F);
+        }
+            mHolder.textView.setText(mOutletList.get(position).getBrandOutletName());
 //        mHolder.textView2.setText(mOutletList.get(position).getBrandTypeName());
-        ImageLoader.getInstance().displayImage(mOutletList.get(position).getImageUrl(), mHolder.image);
-        return convertView;
-    }
+            ImageLoader.getInstance().displayImage(mOutletList.get(position).getImageUrl(), mHolder.image);
+            return convertView;
+        }
+
 
     static class ViewHolder1 {
 
         TextView textView;
         TextView textView2;
         ImageView image;
+        ImageView male;
+        ImageView female;
+        ImageView kids;
     }
 }

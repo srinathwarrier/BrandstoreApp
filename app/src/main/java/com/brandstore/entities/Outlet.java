@@ -8,13 +8,21 @@ public class Outlet {
 
     private String BrandOutletName;
     private String ImageUrl;
-    private String BrandTypeName;
     private String ContactNumber;
     private String FloorNumber;
     private String MallName;
     private String Price;
     private String Id;
 
+    public String getGenderCodeString() {
+        return genderCodeString;
+    }
+
+    public void setGenderCodeString(String genderCodeString) {
+        this.genderCodeString = genderCodeString;
+    }
+
+    private String genderCodeString;
 
     public String getBrandOutletName() {
         return BrandOutletName;
@@ -30,14 +38,6 @@ public class Outlet {
 
     public void setImageUrl(String imageUrl) {
         ImageUrl = imageUrl;
-    }
-
-    public String getBrandTypeName() {
-        return BrandTypeName;
-    }
-
-    public void setBrandTypeName(String brandTypeName) {
-        BrandTypeName = brandTypeName;
     }
 
 
