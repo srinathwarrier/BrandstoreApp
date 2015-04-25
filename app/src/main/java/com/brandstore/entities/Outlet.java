@@ -11,6 +11,7 @@ public class Outlet {
     private String ContactNumber;
     private String FloorNumber;
     private String MallName;
+    private String RelevantTag;
     private String Price;
     private String Id;
 
@@ -85,5 +86,11 @@ public class Outlet {
     }
 
 
+    public String getRelevantTag() {
+        return RelevantTag;
+    }
 
+    public void setRelevantTag(String relevantTag) {
+        RelevantTag = relevantTag;
+    }
 }

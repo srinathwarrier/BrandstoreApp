@@ -1,8 +1,8 @@
 package com.brandstore.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,18 +10,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.brandstore.entities.Outlet;
 import com.brandstore.OutletListAsyncTask;
 import com.brandstore.R;
 import com.brandstore.adapters.OutletListAdapter;
+import com.brandstore.entities.Outlet;
 
 import java.util.ArrayList;
 
 
 public class OutletListActivity extends ActionBarActivity {
     TextView category;
-    ListView outletlist;
-    ArrayList<Outlet> outlet = new ArrayList();
+    ListView outletListView;
+    ArrayList<Outlet> outletArrayList = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +31,17 @@ public class OutletListActivity extends ActionBarActivity {
         String query = bundle.getString("name");
         String id=bundle.getString("id");
 
-        outletlist = (ListView) findViewById(R.id.outlet_list_list_view);
-        OutletListAdapter mOutletListAdapter = new OutletListAdapter(outlet, this);
-        outletlist.setAdapter(mOutletListAdapter);
-        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outlet, query, mOutletListAdapter,id);
+        outletListView = (ListView) findViewById(R.id.outlet_list_list_view);
+        OutletListAdapter mOutletListAdapter = new OutletListAdapter(outletArrayList, this);
+        outletListView.setAdapter(mOutletListAdapter);
+        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outletArrayList, query, mOutletListAdapter,id);
         mOutletListAsyncTask.execute();
 
-        outletlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        outletListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), OutletDetailsActivity.class);
-                intent.putExtra("id", outlet.get(position).getId());
+                intent.putExtra("id", outletArrayList.get(position).getId());
                 startActivity(intent);
             }
         });

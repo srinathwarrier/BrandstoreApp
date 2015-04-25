@@ -1,6 +1,7 @@
 package com.brandstore;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.brandstore.adapters.OutletListAdapter;
 import com.brandstore.entities.Outlet;
@@ -22,24 +23,24 @@ import java.util.ArrayList;
  */
 public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
 {
-ArrayList<Outlet> mOutlet;
+    ArrayList<Outlet> mOutletArrayList;
     String query;
     OutletListAdapter mOutletListAdapter;
     Outlet obj;
     String id;
-    public OutletListAsyncTask(ArrayList<Outlet> outlet,String text,OutletListAdapter adapter,String id)
+    public OutletListAsyncTask(ArrayList<Outlet> outletArrayList,String text,OutletListAdapter adapter,String id)
     {
         this.id=id;
-        mOutlet=outlet;
+        mOutletArrayList=outletArrayList;
         query=text;
         mOutletListAdapter=adapter;
     }
     @Override
     protected Void doInBackground(Void... params) {
-        mOutlet.clear();
+        mOutletArrayList.clear();
         StringBuilder builder = null;
         try {
-            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?id=" +id+"&type=category" );
+            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" +id );
 
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -48,7 +49,8 @@ ArrayList<Outlet> mOutlet;
             String line;
             builder = new StringBuilder();
             InputStreamReader isr = new InputStreamReader(
-                    urlConnection.getInputStream());
+                    urlConnection.getInputStream()
+            );
             BufferedReader reader = new BufferedReader(isr);
             while ((line = reader.readLine()) != null) builder.append(line);
         } catch (MalformedURLException e) {
@@ -61,17 +63,21 @@ ArrayList<Outlet> mOutlet;
 
             JSONArray json = new JSONArray(builder.toString());
             for (int i = 0; i < json.length(); i++) {
+                Log.i("Brandstore - Outletlist","Start ");
                 obj = new Outlet();
                 JSONObject object = json.getJSONObject(i);
-                obj.setBrandOutletName(object.get("brandOutletName").toString());
-                obj.setGenderCodeString(object.get("genderCodeString").toString());
+                obj.setBrandOutletName(object.get("brandName").toString());
                 obj.setImageUrl(object.get("imageUrl").toString());
-               // obj.setId(object.get("brandOutletId").toString());
                 obj.setContactNumber(object.get("phoneNumber").toString());
-                obj.setFloorNumber("Lower Ground Floor");
-                obj.setPrice("500");
+                obj.setFloorNumber(object.get("floorNumber").toString());
+                obj.setId(object.get("outletID").toString());
+                obj.setRelevantTag(object.get("tagName").toString());
+                obj.setPrice(object.get("avgPrice").toString());
+                obj.setGenderCodeString(object.get("genderCodeString").toString());
+                obj.setMallName(object.get("hubName").toString());
 
-                mOutlet.add(obj);
+                Log.i("Brandstore - Outletlist","object:"+obj.toString());
+                mOutletArrayList.add(obj);
             }
         } catch (JSONException e) {
             e.printStackTrace();

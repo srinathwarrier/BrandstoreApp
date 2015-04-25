@@ -71,10 +71,16 @@ public class OutletListAdapter extends BaseAdapter {
         if (convertView == null) {
             mHolder = new ViewHolder1();
             convertView = inflater.inflate(R.layout.outlet_list_list_view_item, null);
-            mHolder.textView = (TextView) convertView.findViewById(R.id.outletname);
+            mHolder.brandNameTextView = (TextView) convertView.findViewById(R.id.outletname);
+            mHolder.floorAndHubNameTextView= (TextView) convertView.findViewById(R.id.floorAndHubName);
+            mHolder.tagAndPriceTextView= (TextView) convertView.findViewById(R.id.tag_and_price);
+
+            //mHolder.tagNameTextView= (TextView) convertView.findViewById(R.id.most_relevant_product);
+            //mHolder.avgPriceTextView= (TextView) convertView.findViewById(R.id.price_of_most_relevant_product);
 
             //mHolder.textView2 = (TextView) convertView.findViewById(R.id.outletcategory);
             mHolder.image = (ImageView) convertView.findViewById(R.id.outlet_image);
+            mHolder.logoOnTop = (ImageView) convertView.findViewById(R.id.outlet_image_top);
             mHolder.male = (ImageView) convertView.findViewById(R.id.male);
             mHolder.female = (ImageView) convertView.findViewById(R.id.female);
             mHolder.kids = (ImageView) convertView.findViewById(R.id.kids);
@@ -104,20 +110,35 @@ public class OutletListAdapter extends BaseAdapter {
             if (mOutletList.get(position).getGenderCodeString().contains("K"))
                 mHolder.kids.setAlpha(1.0F);
         }
-            mHolder.textView.setText(mOutletList.get(position).getBrandOutletName());
-//        mHolder.textView2.setText(mOutletList.get(position).getBrandTypeName());
-            ImageLoader.getInstance().displayImage(mOutletList.get(position).getImageUrl(), mHolder.image);
-            return convertView;
+        mHolder.brandNameTextView.setText(mOutletList.get(position).getBrandOutletName());
+        mHolder.floorAndHubNameTextView.setText(mOutletList.get(position).getFloorNumber() +","+ mOutletList.get(position).getMallName());
+        mHolder.tagAndPriceTextView.setText("Cost of "+mOutletList.get(position).getRelevantTag() +" : Rs."+ mOutletList.get(position).getPrice());
+
+        //mHolder.tagNameTextView.setText(mOutletList.get(position).getRelevantTag());
+        //mHolder.avgPriceTextView.setText(mOutletList.get(position).getPrice());
+        //mHolder.textView2.setText(mOutletList.get(position).getBrandTypeName());
+        ImageLoader.getInstance().displayImage(mOutletList.get(position).getImageUrl(), mHolder.image);
+        ImageLoader.getInstance().displayImage(mOutletList.get(position).getImageUrl(), mHolder.logoOnTop);
+        return convertView;
         }
 
 
     static class ViewHolder1 {
 
-        TextView textView;
+        TextView brandNameTextView;
+        TextView floorAndHubNameTextView;
+
+        TextView tagAndPriceTextView;
+        //TextView tagNameTextView;
+        //TextView avgPriceTextView;
+
         TextView textView2;
+
         ImageView image;
+        ImageView logoOnTop;
         ImageView male;
         ImageView female;
         ImageView kids;
+
     }
 }
