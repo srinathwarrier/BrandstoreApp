@@ -5,16 +5,14 @@ import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.brandstore.entities.OutletDetails;
-
 import com.brandstore.adapters.TagPriceListViewAdapter;
+import com.brandstore.entities.OutletDetails;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -102,16 +100,16 @@ public OutletDetailsAsyncTask(TagPriceListViewAdapter TagPrice,ImageView outleti
 
         try {
 
-            JSONArray json = new JSONArray(builder.toString());
+            JSONObject jsonobject = new JSONObject(builder.toString());
 
                 obj = new OutletDetails();
-                 jsonobject= json.getJSONObject(0);
-                obj.setFloor(jsonobject.getString("floorNumber").concat(", "));
-                obj.setOutletName(jsonobject.getString("brandOutletName"));
-                obj.setOutletImage(jsonobject.getString("imageUrl"));
+                 //jsonobject= json.getJSONObject(0);
+            obj.setOutletName(jsonobject.getString("brandName"));
+            obj.setOutletImage(jsonobject.getString("imageUrl"));
+            obj.setFloor(jsonobject.getString("floorNumber").concat(", "));
             obj.setHubName(jsonobject.getString("hubName"));
             obj.setDescription(jsonobject.getString("description"));
-            obj.setWebsite(jsonobject.getString("website"));
+            //obj.setWebsite(jsonobject.getString("website"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

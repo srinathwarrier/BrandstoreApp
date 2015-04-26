@@ -80,7 +80,7 @@ public class OutletListAdapter extends BaseAdapter {
 
             //mHolder.textView2 = (TextView) convertView.findViewById(R.id.outletcategory);
             mHolder.image = (ImageView) convertView.findViewById(R.id.outlet_image);
-            mHolder.logoOnTop = (ImageView) convertView.findViewById(R.id.outlet_image_top);
+            //mHolder.logoOnTop = (ImageView) convertView.findViewById(R.id.outlet_image_top);
             mHolder.male = (ImageView) convertView.findViewById(R.id.male);
             mHolder.female = (ImageView) convertView.findViewById(R.id.female);
             mHolder.kids = (ImageView) convertView.findViewById(R.id.kids);
@@ -118,7 +118,7 @@ public class OutletListAdapter extends BaseAdapter {
         //mHolder.avgPriceTextView.setText(mOutletList.get(position).getPrice());
         //mHolder.textView2.setText(mOutletList.get(position).getBrandTypeName());
         ImageLoader.getInstance().displayImage(mOutletList.get(position).getImageUrl(), mHolder.image);
-        ImageLoader.getInstance().displayImage(mOutletList.get(position).getImageUrl(), mHolder.logoOnTop);
+        //ImageLoader.getInstance().displayImage(mOutletList.get(position).getImageUrl(), mHolder.logoOnTop);
         return convertView;
         }
 
@@ -135,7 +135,7 @@ public class OutletListAdapter extends BaseAdapter {
         TextView textView2;
 
         ImageView image;
-        ImageView logoOnTop;
+        //ImageView logoOnTop;
         ImageView male;
         ImageView female;
         ImageView kids;
