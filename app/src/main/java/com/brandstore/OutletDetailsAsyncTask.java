@@ -5,9 +5,8 @@ import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.brandstore.entities.OutletDetails;
-
 import com.brandstore.adapters.TagPriceListViewAdapter;
+import com.brandstore.entities.OutletDetails;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -25,13 +24,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by Ravi on 30-Mar-15.
  */
 public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, OutletDetails> {
 
-
+    int i;
     ImageView outletimage;
     TextView outletname;
     TextView floor;
@@ -42,36 +42,40 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, OutletDetails>
     OutletDetails obj;
     JSONObject jsonobject;
     Context context;
+    ArrayList<String> Tag;
+    ArrayList<String> Price;
     TagPriceListViewAdapter mTagPrice;
-public OutletDetailsAsyncTask(TagPriceListViewAdapter TagPrice,ImageView outletimage,TextView outletname, TextView floor,TextView hubname,String ids, TextView description,TextView website, Context context) {
 
-    this.outletimage=outletimage;
-    this.outletname=outletname;
-    this.floor=floor;
-    this.hubname=hubname;
-    this.description=description;
-    this.website=website;
-    id=ids;
-    this.context=context;
-   mTagPrice=TagPrice;
-    File cacheDir = StorageUtils.getCacheDirectory(context);
-    DisplayImageOptions options = new DisplayImageOptions.Builder()
-            .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
-            .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
-            .showImageOnFail(R.drawable.blank_screen) // resource or drawable
-            .resetViewBeforeLoading(true)  // default
+    public OutletDetailsAsyncTask(TagPriceListViewAdapter TagPrice, ImageView outletimage, TextView outletname, TextView floor, TextView hubname, String ids, TextView description, TextView website, Context context, ArrayList<String> Tag, ArrayList<String> Price) {
+        this.Tag = Tag;
+        this.Price = Price;
+        this.outletimage = outletimage;
+        this.outletname = outletname;
+        this.floor = floor;
+        this.hubname = hubname;
+        this.description = description;
+        this.website = website;
+        id = ids;
+        this.context = context;
+        mTagPrice = TagPrice;
+        File cacheDir = StorageUtils.getCacheDirectory(context);
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
+                .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
+                .showImageOnFail(R.drawable.blank_screen) // resource or drawable
+                .resetViewBeforeLoading(true)  // default
 
-            .cacheInMemory(true) // default
-            .cacheOnDisk(true) // default
-            .build();
-    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                .cacheInMemory(true) // default
+                .cacheOnDisk(true) // default
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
 
-            .diskCache(new UnlimitedDiscCache(cacheDir))
-            .defaultDisplayImageOptions(options)
-            .build();
-    ImageLoader.getInstance().init(config);
+                .diskCache(new UnlimitedDiscCache(cacheDir))
+                .defaultDisplayImageOptions(options)
+                .build();
+        ImageLoader.getInstance().init(config);
 
-}
+    }
 
     @Override
     protected void onPreExecute() {
@@ -101,17 +105,25 @@ public OutletDetailsAsyncTask(TagPriceListViewAdapter TagPrice,ImageView outleti
         }
 
         try {
-
-            JSONArray json = new JSONArray(builder.toString());
-
-                obj = new OutletDetails();
-                 jsonobject= json.getJSONObject(0);
-                obj.setFloor(jsonobject.getString("floorNumber").concat(", "));
-                obj.setOutletName(jsonobject.getString("brandOutletName"));
-                obj.setOutletImage(jsonobject.getString("imageUrl"));
+            Tag.clear();
+            Price.clear();
+            // JSONArray json = new JSONArray(builder.toString());
+            JSONObject jsonobject = new JSONObject(builder.toString());
+            obj = new OutletDetails();
+            //jsonobject= json.getJSONObject(0);
+            //Log.d("outledeatisljsonobject",""+jsonobject);
+            obj.setFloor(jsonobject.getString("floorNumber").concat(", "));
+            obj.setOutletName(jsonobject.getString("brandName"));
+            obj.setOutletImage(jsonobject.getString("imageUrl"));
             obj.setHubName(jsonobject.getString("hubName"));
             obj.setDescription(jsonobject.getString("description"));
-            obj.setWebsite(jsonobject.getString("website"));
+
+            JSONArray json2 = jsonobject.getJSONArray("tagsArray");
+            for (i = 0; i < json2.length(); i++) {
+                JSONObject object = json2.getJSONObject(i);
+                Tag.add(object.getString("tagName"));
+                Price.add(object.getString("avgPrice"));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -127,9 +139,9 @@ public OutletDetailsAsyncTask(TagPriceListViewAdapter TagPrice,ImageView outleti
         outletname.setText(outletDetails.getOutletName());
         floor.setText(outletDetails.getFloor());
         description.setText(outletDetails.getDescription());
-        website.setText(outletDetails.getWebsite());
+        //website.setText(outletDetails.getWebsite());
         hubname.setText(outletDetails.getHubName());
-mTagPrice.notifyDataSetChanged();
+        mTagPrice.notifyDataSetChanged();
         ImageLoader.getInstance().displayImage(outletDetails.getOutletImage(), outletimage);
     }
 }

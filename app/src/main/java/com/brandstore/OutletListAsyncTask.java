@@ -1,7 +1,6 @@
 package com.brandstore;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.brandstore.adapters.OutletListAdapter;
 import com.brandstore.entities.Outlet;
@@ -21,26 +20,26 @@ import java.util.ArrayList;
 /**
  * Created by Ravi on 29-Mar-15.
  */
-public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
-{
+public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
     ArrayList<Outlet> mOutletArrayList;
     String query;
     OutletListAdapter mOutletListAdapter;
     Outlet obj;
     String id;
-    public OutletListAsyncTask(ArrayList<Outlet> outletArrayList,String text,OutletListAdapter adapter,String id)
-    {
-        this.id=id;
-        mOutletArrayList=outletArrayList;
-        query=text;
-        mOutletListAdapter=adapter;
+
+    public OutletListAsyncTask(ArrayList<Outlet> outletArrayList, String text, OutletListAdapter adapter, String id) {
+        this.id = id;
+        mOutletArrayList = outletArrayList;
+        query = text;
+        mOutletListAdapter = adapter;
     }
+
     @Override
     protected Void doInBackground(Void... params) {
         mOutletArrayList.clear();
         StringBuilder builder = null;
         try {
-            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" +id );
+            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" + id);
 
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -63,7 +62,7 @@ public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
 
             JSONArray json = new JSONArray(builder.toString());
             for (int i = 0; i < json.length(); i++) {
-                Log.i("Brandstore - Outletlist","Start ");
+                // Log.i("Brandstore - Outletlist","Start ");
                 obj = new Outlet();
                 JSONObject object = json.getJSONObject(i);
                 obj.setBrandOutletName(object.get("brandName").toString());
@@ -76,7 +75,7 @@ public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
                 obj.setGenderCodeString(object.get("genderCodeString").toString());
                 obj.setMallName(object.get("hubName").toString());
 
-                Log.i("Brandstore - Outletlist","object:"+obj.toString());
+                // Log.i("Brandstore - Outletlist","object:"+obj.toString());
                 mOutletArrayList.add(obj);
             }
         } catch (JSONException e) {

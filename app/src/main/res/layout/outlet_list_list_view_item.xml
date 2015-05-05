@@ -10,176 +10,162 @@
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:alpha="0.8"
-    android:background="@color/grey">
+        android:background="@color/grey">
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:layout_weight="4">
+
             <ImageView
-                android:id="@+id/outlet_image_top"
+                android:id="@+id/outlet_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="175dp"
                 android:alpha="0.9"
                 android:scaleType="fitXY" />
-        </LinearLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:alpha="0.7"
 
-            android:layout_width="match_parent"
+                android:src="@color/black"
+                android:layout_alignBottom="@id/outlet_image" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/male"
+                android:src="@drawable/man"
+                android:layout_centerHorizontal="true"
+                android:layout_alignBottom="@id/outlet_image"
+                android:alpha="0.3" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/female"
+                android:src="@drawable/woman"
+                android:layout_alignBottom="@id/outlet_image"
+                android:layout_toRightOf="@id/male"
+                android:alpha="0.3" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/kids"
+                android:src="@drawable/kids"
+                android:layout_toLeftOf="@id/male"
+                android:layout_alignBottom="@id/outlet_image"
+                android:alpha="0.3" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/outletname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Puma"
+                android:textColor="#ebebeb"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/floorAndHubName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="LGF, Phoenix Market City"
+                android:textColor="#ebebeb"
+                android:textSize="14sp" />
+
+            <!--
+                    <TextView
+                        android:id="@+id/outletcategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="7dp"
+                        android:text="New Text"
+                        android:textColor="#ebebeb"
+                        android:textSize="30sp" />  -->
+
+            <!--
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="7dp"
+
+                        android:layout_marginTop="7dp"
+                        android:text="Known For :"
+                        android:textColor="#ebebeb"
+                        android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/knownfor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:layout_marginTop="45dp"
+
+                android:text="Shoes, Bags , T-Shirts"
+                android:textColor="#ebebeb"
+                android:textSize="16sp" />
+                -->
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="175dp"
-                android:layout_weight="4">
-
-                <ImageView
-                    android:id="@+id/outlet_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="175dp"
-                    android:alpha="0.9"
-                    android:scaleType="fitXY" />
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:alpha="0.7"
-
-                    android:src="@color/black"
-                    android:layout_alignBottom="@id/outlet_image"/>
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/male"
-                    android:src="@drawable/man"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignBottom="@id/outlet_image"
-                    android:alpha="0.3"
-                    />
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/female"
-                    android:src="@drawable/woman"
-                    android:layout_alignBottom="@id/outlet_image"
-                    android:layout_toRightOf="@id/male"
-                    android:alpha="0.3"
-                    />
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/kids"
-                    android:src="@drawable/kids"
-                    android:layout_toLeftOf="@id/male"
-                    android:layout_alignBottom="@id/outlet_image"
-                    android:alpha="0.3"
-                    />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="7"
-                android:orientation="vertical">
+                android:layout_marginTop="45dp">
+
 
                 <TextView
-                    android:id="@+id/outletname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Puma"
-                    android:textColor="#ebebeb"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/floorAndHubName"
+                    android:id="@+id/tag_and_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:text="LGF, Phoenix Market City"
-                    android:textColor="#ebebeb"
-                    android:textSize="14sp" />
-
-                <!--
-                        <TextView
-                            android:id="@+id/outletcategory"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="7dp"
-                            android:text="New Text"
-                            android:textColor="#ebebeb"
-                            android:textSize="30sp" />  -->
-
-                <!--
-                        <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="7dp"
-
-                            android:layout_marginTop="7dp"
-                            android:text="Known For :"
-                            android:textColor="#ebebeb"
-                            android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/knownfor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginTop="45dp"
-
-                    android:text="Shoes, Bags , T-Shirts"
+                    android:text="Cost of Clothing : Rs.10"
                     android:textColor="#ebebeb"
                     android:textSize="16sp" />
-                    -->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <!-- TextView
+
+                    android:id="@+id/most_relevant_product"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="45dp">
+                    android:layout_toRightOf="@id/textView5"
+                    android:text="Clothing Accessories &amp; Innerwear : "
+                    android:textColor="#ebebeb"
+                    android:textSize="16sp" />
 
-
-                    <TextView
-                        android:id="@+id/tag_and_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Cost of Clothing : Rs.10"
-                        android:textColor="#ebebeb"
-                        android:textSize="16sp" />
-
-                    <!-- TextView
-
-                        android:id="@+id/most_relevant_product"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/textView5"
-                        android:text="Clothing Accessories &amp; Innerwear : "
-                        android:textColor="#ebebeb"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/price_of_most_relevant_product"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/most_relevant_product"
-                        android:text="N/A"
-                        android:textColor="#ebebeb"
-                        android:textSize="16sp" / -->
-                </RelativeLayout>
-
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/price_of_most_relevant_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/most_relevant_product"
+                    android:text="N/A"
+                    android:textColor="#ebebeb"
+                    android:textSize="16sp" / -->
+            </RelativeLayout>
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
+
 
 </android.support.v7.widget.CardView>

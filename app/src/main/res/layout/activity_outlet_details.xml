@@ -6,76 +6,81 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/scrollView"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="114dp">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/outlet_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
-
-                <TextView
-                    android:id="@+id/outletdetailsname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/outlet_image"
-                    android:text="Outlet Name"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/floor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/outletdetailsname"
-                    android:layout_below="@id/outletdetailsname"
-                    android:text="Floor, "
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/hubname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/floor"
-                    android:layout_toRightOf="@id/floor"
-                    android:text="Hub Name"
-                    android:textSize="20sp" />
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/outlet_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                android:layout_marginRight="10dp" />
 
             <TextView
-                android:id="@+id/website"
+                android:layout_marginTop="10dp"
+                android:id="@+id/outletdetailsname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="www.google.com"
+                android:layout_toRightOf="@id/outlet_image"
+                android:text="Outlet Name"
                 android:textSize="20sp" />
 
-
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/floor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
-                android:textSize="15sp" />
+                android:layout_alignLeft="@id/outletdetailsname"
+                android:layout_below="@id/outletdetailsname"
+                android:text="Floor, "
+                android:textSize="20sp" />
 
-            <ListView
-                android:id="@+id/tag_and_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            <TextView
+                android:id="@+id/hubname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/floor"
+                android:layout_below="@id/floor"
+                android:text="Hub Name"
+                android:textSize="20sp" />
+        </RelativeLayout>
 
-    </ScrollView>
+        <!-- Holder for website
+
+        <TextView
+             android:id="@+id/website"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="www.google.com"
+             android:textSize="20sp" />
+             -->
+
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="18sp"
+
+            android:layout_marginBottom="15dp" />
+
+        <ListView
+            android:id="@+id/tag_and_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/black"
+            android:dividerHeight="1dp"
+            android:background="@drawable/roundededittext" />
+    </LinearLayout>
+
 
     <fragment
         android:id="@+id/navigation_drawer_fragment"

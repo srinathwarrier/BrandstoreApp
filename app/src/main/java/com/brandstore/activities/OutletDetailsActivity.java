@@ -1,7 +1,7 @@
 package com.brandstore.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -23,23 +23,24 @@ public class OutletDetailsActivity extends ActionBarActivity {
     TextView hubname;
     ListView tagprice;
     TagPriceListViewAdapter mTagPriceListViewAdapter;
-    ArrayList <String>Tag;
-    ArrayList<String> Price;
+    ArrayList<String> Tag = new ArrayList<String>();
+    ArrayList<String> Price = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet_details);
-        String id=getIntent().getStringExtra("id");
-        outletimage=(ImageView)findViewById(R.id.outlet_image);
-        outletname=(TextView)findViewById(R.id.outletdetailsname);
-        floor=(TextView)findViewById(R.id.floor);
-        website= (TextView) findViewById(R.id.website);
-        description= (TextView) findViewById(R.id.description);
-        hubname= (TextView) findViewById(R.id.hubname);
-        tagprice=(ListView)findViewById(R.id.tag_and_price);
-        mTagPriceListViewAdapter=new TagPriceListViewAdapter(Tag,Price,this);
+        String id = getIntent().getStringExtra("id");
+        outletimage = (ImageView) findViewById(R.id.outlet_image);
+        outletname = (TextView) findViewById(R.id.outletdetailsname);
+        floor = (TextView) findViewById(R.id.floor);
+        //website= (TextView) findViewById(R.id.website);
+        description = (TextView) findViewById(R.id.description);
+        hubname = (TextView) findViewById(R.id.hubname);
+        tagprice = (ListView) findViewById(R.id.tag_and_price);
+        mTagPriceListViewAdapter = new TagPriceListViewAdapter(Tag, Price, this);
         tagprice.setAdapter(mTagPriceListViewAdapter);
-        OutletDetailsAsyncTask mOutletDetailsAsyncTask=new OutletDetailsAsyncTask(mTagPriceListViewAdapter,outletimage,outletname,floor,hubname,id,description,website,this);
+        OutletDetailsAsyncTask mOutletDetailsAsyncTask = new OutletDetailsAsyncTask(mTagPriceListViewAdapter, outletimage, outletname, floor, hubname, id, description, website, this, Tag, Price);
         mOutletDetailsAsyncTask.execute();
 
     }

@@ -2,12 +2,12 @@ package com.brandstore.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 
 import com.brandstore.R;
 
@@ -18,18 +18,22 @@ import java.util.ArrayList;
  */
 public class TagPriceListViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    ArrayList<String>Tag;
-    ArrayList<String>Price;
-    public TagPriceListViewAdapter(ArrayList<String> Tag, ArrayList<String>Price,Activity context)
-    {
+    ArrayList<String> Tag;
+    ArrayList<String> Price;
+
+    public TagPriceListViewAdapter(ArrayList<String> Tag, ArrayList<String> Price, Activity context) {
         this.inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.Tag=Tag;
-        this.Price=Price;
+        this.Tag = Tag;
+        this.Price = Price;
     }
+
     @Override
     public int getCount() {
-        return 0;
+        Log.d("size", "" + Tag.size() + " " + Tag);
+        return Tag.size();
+
+
     }
 
     @Override
@@ -49,7 +53,7 @@ public class TagPriceListViewAdapter extends BaseAdapter {
             mHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.tag_price_list_view_item, null);
             mHolder.textView = (TextView) convertView.findViewById(R.id.Tag);
-            mHolder.textView2=(TextView)convertView.findViewById(R.id.Price);
+            mHolder.textView2 = (TextView) convertView.findViewById(R.id.Price);
 
             convertView.setTag(mHolder);
         } else {
@@ -62,8 +66,7 @@ public class TagPriceListViewAdapter extends BaseAdapter {
         return convertView;
     }
 
-    class ViewHolder
-    {
+    class ViewHolder {
         TextView textView;
         TextView textView2;
     }
