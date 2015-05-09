@@ -7,55 +7,57 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:id="@+id/scrollView"
+        android:id="@+id/outletDetails_ScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="114dp">
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/outletDetails_outer_LinearLayout">
+
+            <ImageView
+                android:id="@+id/outlet_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/blank_screen"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/outlet_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
 
                 <TextView
-                    android:id="@+id/outletdetailsname"
+                    android:id="@+id/outletDetails_brandName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/outlet_image"
                     android:text="Outlet Name"
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/floor"
+                    android:id="@+id/outletDetails_floorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/outletdetailsname"
-                    android:layout_below="@id/outletdetailsname"
+                    android:layout_alignLeft="@id/outletDetails_brandName"
+                    android:layout_below="@id/outletDetails_brandName"
                     android:text="Floor, "
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/hubname"
+                    android:id="@+id/outletDetails_hubName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/floor"
-                    android:layout_toRightOf="@id/floor"
+                    android:layout_alignBottom="@id/outletDetails_floorName"
+                    android:layout_toRightOf="@id/outletDetails_floorName"
                     android:text="Hub Name"
                     android:textSize="20sp" />
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/website"
+                android:id="@+id/outletDetails_website"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="www.google.com"
@@ -63,19 +65,29 @@
 
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/outletDetails_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Description"
                 android:textSize="15sp" />
+            <TextView
+                android:id="@+id/outletDetails_tagAndPrice_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Average Price of Items : "
+                android:textSize="20sp" />
 
-            <ListView
-                android:id="@+id/tag_and_price"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:id="@+id/outletDetails_tagAndPrice_linearLayout"
+                android:orientation="vertical">
 
+            </LinearLayout>
+
+        </LinearLayout>
     </ScrollView>
+
 
     <fragment
         android:id="@+id/navigation_drawer_fragment"
@@ -84,6 +96,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         tools:layout="@layout/fragment_navigation_drawer">
-
     </fragment>
 </android.support.v4.widget.DrawerLayout>

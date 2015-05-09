@@ -2,6 +2,7 @@ package com.brandstore;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.brandstore.adapters.OutletListAdapter;
 import com.brandstore.entities.Outlet;
@@ -28,13 +29,17 @@ public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
     OutletListAdapter mOutletListAdapter;
     Outlet obj;
     String id;
-    public OutletListAsyncTask(ArrayList<Outlet> outletArrayList,String text,OutletListAdapter adapter,String id)
+    TextView emptyView;
+    public OutletListAsyncTask(ArrayList<Outlet> outletArrayList,String text,OutletListAdapter adapter,String id, TextView theEmptyView)
     {
         this.id=id;
         mOutletArrayList=outletArrayList;
         query=text;
         mOutletListAdapter=adapter;
+        emptyView = theEmptyView;
     }
+
+
     @Override
     protected Void doInBackground(Void... params) {
         mOutletArrayList.clear();
@@ -62,6 +67,8 @@ public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
         try {
 
             JSONArray json = new JSONArray(builder.toString());
+
+
             for (int i = 0; i < json.length(); i++) {
                 Log.i("Brandstore - Outletlist","Start ");
                 obj = new Outlet();
@@ -82,6 +89,9 @@ public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
         return null;
     }
@@ -89,6 +99,10 @@ public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+        if(mOutletArrayList.size()==0)
+        {
+            emptyView.setText("No Outlets Found !!!");
+        }
         mOutletListAdapter.notifyDataSetChanged();
 
     }

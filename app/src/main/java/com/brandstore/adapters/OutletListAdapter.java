@@ -73,7 +73,7 @@ public class OutletListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.outlet_list_list_view_item, null);
             mHolder.brandNameTextView = (TextView) convertView.findViewById(R.id.outletname);
             mHolder.floorAndHubNameTextView= (TextView) convertView.findViewById(R.id.floorAndHubName);
-            mHolder.tagAndPriceTextView= (TextView) convertView.findViewById(R.id.tag_and_price);
+            mHolder.tagAndPriceTextView= (TextView) convertView.findViewById(R.id.tag_and_price_label);
 
             //mHolder.tagNameTextView= (TextView) convertView.findViewById(R.id.most_relevant_product);
             //mHolder.avgPriceTextView= (TextView) convertView.findViewById(R.id.price_of_most_relevant_product);

@@ -1,9 +1,19 @@
 package com.brandstore.entities;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ravi on 30-Mar-15.
  */
 public class OutletDetails {
+
+    private String OutletName;
+    private String OutletImage;
+    private String Floor;
+    private String HubName;
+    private String Website;
+    private String Description;
+    private ArrayList<TagPrice> tagPriceArrayList;
 
 
     public String getOutletImage() {
@@ -55,11 +65,11 @@ public class OutletDetails {
         Description = description;
     }
 
-    private String OutletImage;
-    private String OutletName;
-    private String Floor;
-    private String HubName;
-    private String Website;
-    private String Description;
+    public ArrayList<TagPrice> getTagPriceArrayList() {
+        return tagPriceArrayList;
+    }
 
+    public void setTagPriceArrayList(ArrayList<TagPrice> tagPriceArrayList) {
+        this.tagPriceArrayList = tagPriceArrayList;
+    }
 }

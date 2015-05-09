@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-
 import com.brandstore.R;
+import com.brandstore.entities.TagPrice;
 
 import java.util.ArrayList;
 
@@ -18,23 +18,21 @@ import java.util.ArrayList;
  */
 public class TagPriceListViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    ArrayList<String>Tag;
-    ArrayList<String>Price;
-    public TagPriceListViewAdapter(ArrayList<String> Tag, ArrayList<String>Price,Activity context)
+    ArrayList<TagPrice>tagPriceArrayList ;
+    public TagPriceListViewAdapter(ArrayList<TagPrice> newTagPriceArrayList,Activity context)
     {
         this.inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.Tag=Tag;
-        this.Price=Price;
+        this.tagPriceArrayList = newTagPriceArrayList;
     }
     @Override
     public int getCount() {
-        return 0;
+        return tagPriceArrayList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return tagPriceArrayList.get(position);
     }
 
     @Override
@@ -48,23 +46,23 @@ public class TagPriceListViewAdapter extends BaseAdapter {
         if (convertView == null) {
             mHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.tag_price_list_view_item, null);
-            mHolder.textView = (TextView) convertView.findViewById(R.id.Tag);
-            mHolder.textView2=(TextView)convertView.findViewById(R.id.Price);
+            mHolder.tagTextView = (TextView) convertView.findViewById(R.id.Tag);
+            mHolder.priceTextView=(TextView)convertView.findViewById(R.id.Price);
 
             convertView.setTag(mHolder);
         } else {
             mHolder = (ViewHolder) convertView.getTag();
         }
 
-
-        mHolder.textView.setText(Tag.get(position));
-        mHolder.textView2.setText(Price.get(position));
+        TagPrice tagPriceObject = tagPriceArrayList.get(position);
+        mHolder.tagTextView.setText(tagPriceObject.getTagString());
+        mHolder.priceTextView.setText(tagPriceObject.getPriceString());
         return convertView;
     }
 
     class ViewHolder
     {
-        TextView textView;
-        TextView textView2;
+        TextView tagTextView;
+        TextView priceTextView;
     }
 }

@@ -26,16 +26,27 @@ public class OutletListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_outlet_list);
+
         Bundle bundle = getIntent().getExtras();
         String query = bundle.getString("name");
         String id=bundle.getString("id");
 
+        TextView emptyView = (TextView)findViewById( R.id.outlet_list_empty_textView );
+
         outletListView = (ListView) findViewById(R.id.outlet_list_list_view);
+        outletListView.setEmptyView(emptyView);
+
+
         OutletListAdapter mOutletListAdapter = new OutletListAdapter(outletArrayList, this);
+
         outletListView.setAdapter(mOutletListAdapter);
-        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outletArrayList, query, mOutletListAdapter,id);
+
+        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outletArrayList, query, mOutletListAdapter,id, emptyView);
+
         mOutletListAsyncTask.execute();
+
 
         outletListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
