@@ -6,22 +6,22 @@
 
     <ImageView
 
-        android:layout_width="160dp"
-        android:layout_height="120dp"
+        android:layout_width="165dp"
+        android:layout_height="160dp"
         android:scaleType="fitXY"
 
         android:id="@+id/category_image"
         android:layout_gravity="center_horizontal" />
 <ImageView
-    android:layout_width="160dp"
-    android:layout_height="30dp"
+    android:layout_width="165dp"
+    android:layout_height="40dp"
     android:layout_alignParentBottom="true"
     android:background="#000000"
     android:alpha="0.7"/>
     <TextView
         android:id="@+id/category_name"
-        android:layout_width="160dp"
-        android:layout_height="30dp"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
 
         android:textSize="15sp"
