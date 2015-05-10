@@ -63,7 +63,10 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, Void> {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
         try {
 
@@ -87,6 +90,8 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, Void> {
                 }
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

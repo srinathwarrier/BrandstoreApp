@@ -5,12 +5,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.brandstore.OutletDetailsAsyncTask;
 import com.brandstore.R;
 import com.brandstore.adapters.TagPriceListViewAdapter;
+import com.brandstore.entities.TagPrice;
 
 import java.util.ArrayList;
 
@@ -22,25 +24,46 @@ public class OutletDetailsActivity extends ActionBarActivity {
     TextView description;
     TextView hubname;
     ListView tagprice;
-    TagPriceListViewAdapter mTagPriceListViewAdapter;
-    ArrayList<String> Tag = new ArrayList<String>();
-    ArrayList<String> Price = new ArrayList<String>();
+    LinearLayout tagPriceLinearLayout;
 
+
+    TagPriceListViewAdapter mTagPriceListViewAdapter;
+    ArrayList<TagPrice> tagPriceArrayList = new ArrayList();
+
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet_details);
-        String id = getIntent().getStringExtra("id");
-        outletimage = (ImageView) findViewById(R.id.outlet_image);
-        outletname = (TextView) findViewById(R.id.outletdetailsname);
-        floor = (TextView) findViewById(R.id.floor);
-        //website= (TextView) findViewById(R.id.website);
-        description = (TextView) findViewById(R.id.description);
-        hubname = (TextView) findViewById(R.id.hubname);
-        tagprice = (ListView) findViewById(R.id.tag_and_price);
-        mTagPriceListViewAdapter = new TagPriceListViewAdapter(Tag, Price, this);
-        tagprice.setAdapter(mTagPriceListViewAdapter);
-        OutletDetailsAsyncTask mOutletDetailsAsyncTask = new OutletDetailsAsyncTask(mTagPriceListViewAdapter, outletimage, outletname, floor, hubname, id, description, website, this, Tag, Price);
+        String id=getIntent().getStringExtra("id");
+
+        // get the list of UI Elements' Objects
+
+        outletimage=(ImageView)findViewById(R.id.outlet_image);
+        outletname=(TextView)findViewById(R.id.outletDetails_brandName);
+        floor=(TextView)findViewById(R.id.outletDetails_floorName);
+        hubname= (TextView) findViewById(R.id.outletDetails_hubName);
+        description= (TextView) findViewById(R.id.outletDetails_description);
+        website= (TextView) findViewById(R.id.outletDetails_website);
+        tagPriceLinearLayout = (LinearLayout) findViewById(R.id.outletDetails_tagAndPrice_linearLayout);
+
+
+
+        //tagprice=(ListView)findViewById(R.id.tag_and_price);
+        //mTagPriceListViewAdapter=new TagPriceListViewAdapter(tagPriceArrayList,this);
+        //tagprice.setAdapter(mTagPriceListViewAdapter);
+
+
+        OutletDetailsAsyncTask mOutletDetailsAsyncTask=new OutletDetailsAsyncTask(
+                outletimage,
+                outletname,
+                floor,
+                hubname,
+                id,
+                description,
+                website,
+                tagPriceLinearLayout,
+                this);
         mOutletDetailsAsyncTask.execute();
 
     }
@@ -67,4 +90,5 @@ public class OutletDetailsActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -14,6 +14,9 @@ public class Outlet {
     private String RelevantTag;
     private String Price;
     private String Id;
+    private String genderCodeString;
+    private String descriptionString;
+    private String websiteString;
 
     public String getGenderCodeString() {
         return genderCodeString;
@@ -22,8 +25,6 @@ public class Outlet {
     public void setGenderCodeString(String genderCodeString) {
         this.genderCodeString = genderCodeString;
     }
-
-    private String genderCodeString;
 
     public String getBrandOutletName() {
         return BrandOutletName;
@@ -92,5 +93,21 @@ public class Outlet {
 
     public void setRelevantTag(String relevantTag) {
         RelevantTag = relevantTag;
+    }
+
+    public String getDescriptionString() {
+        return descriptionString;
+    }
+
+    public void setDescriptionString(String descriptionString) {
+        this.descriptionString = descriptionString;
+    }
+
+    public String getWebsiteString() {
+        return websiteString;
+    }
+
+    public void setWebsiteString(String websiteString) {
+        this.websiteString = websiteString;
     }
 }

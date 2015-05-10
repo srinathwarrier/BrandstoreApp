@@ -3,10 +3,11 @@ package com.brandstore;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.brandstore.adapters.TagPriceListViewAdapter;
 import com.brandstore.entities.OutletDetails;
+import com.brandstore.entities.TagPrice;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,51 +32,69 @@ import java.util.ArrayList;
  */
 public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, OutletDetails> {
 
-    int i;
+    String id;  // Input parameter
+
+    // UI Element Objects
     ImageView outletimage;
     TextView outletname;
     TextView floor;
-    String id;
     TextView hubname;
     TextView website;
     TextView description;
+
+    // Entity Object
     OutletDetails obj;
-    JSONObject jsonobject;
+    //JSONObject jsonobject;
     Context context;
-    ArrayList<String> Tag;
-    ArrayList<String> Price;
-    TagPriceListViewAdapter mTagPrice;
+    //TagPriceListViewAdapter mTagPrice;
+    //ListView tagpriceListView;
+    //ArrayList<TagPrice> mTagPriceArrayList;
+    LinearLayout tagPriceLinearLayout;
+public OutletDetailsAsyncTask(
+                              //TagPriceListViewAdapter TagPrice,
+                              ImageView outletimage,
+                              TextView outletname,
+                              TextView floor,
+                              TextView hubname,
+                              String ids,
+                              TextView description,
+                              TextView website,
+                              //ArrayList<TagPrice> tagPriceArrayList,
+                              //ListView newtagpriceListView,
+                              LinearLayout theTagPriceLinearLayout,
+                              Context context) {
 
-    public OutletDetailsAsyncTask(TagPriceListViewAdapter TagPrice, ImageView outletimage, TextView outletname, TextView floor, TextView hubname, String ids, TextView description, TextView website, Context context, ArrayList<String> Tag, ArrayList<String> Price) {
-        this.Tag = Tag;
-        this.Price = Price;
-        this.outletimage = outletimage;
-        this.outletname = outletname;
-        this.floor = floor;
-        this.hubname = hubname;
-        this.description = description;
-        this.website = website;
-        id = ids;
-        this.context = context;
-        mTagPrice = TagPrice;
-        File cacheDir = StorageUtils.getCacheDirectory(context);
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
-                .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
-                .showImageOnFail(R.drawable.blank_screen) // resource or drawable
-                .resetViewBeforeLoading(true)  // default
+    this.outletimage=outletimage;
+    this.outletname=outletname;
+    this.floor=floor;
+    this.hubname=hubname;
+    this.description=description;
+    this.website=website;
+    id=ids;
+    this.context=context;
+    //mTagPrice=TagPrice;
+    //this.mTagPriceArrayList = tagPriceArrayList;
+    //this.tagpriceListView = newtagpriceListView;
+    this.tagPriceLinearLayout = theTagPriceLinearLayout;
 
-                .cacheInMemory(true) // default
-                .cacheOnDisk(true) // default
-                .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+    File cacheDir = StorageUtils.getCacheDirectory(context);
+    DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
+            .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
+            .showImageOnFail(R.drawable.blank_screen) // resource or drawable
+            .resetViewBeforeLoading(true)  // default
 
-                .diskCache(new UnlimitedDiscCache(cacheDir))
-                .defaultDisplayImageOptions(options)
-                .build();
-        ImageLoader.getInstance().init(config);
+            .cacheInMemory(true) // default
+            .cacheOnDisk(true) // default
+            .build();
+    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
 
-    }
+            .diskCache(new UnlimitedDiscCache(cacheDir))
+            .defaultDisplayImageOptions(options)
+            .build();
+    ImageLoader.getInstance().init(config);
+
+}
 
     @Override
     protected void onPreExecute() {
@@ -105,26 +124,37 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, OutletDetails>
         }
 
         try {
-            Tag.clear();
-            Price.clear();
-            // JSONArray json = new JSONArray(builder.toString());
+
             JSONObject jsonobject = new JSONObject(builder.toString());
+
             obj = new OutletDetails();
             //jsonobject= json.getJSONObject(0);
-            //Log.d("outledeatisljsonobject",""+jsonobject);
-            obj.setFloor(jsonobject.getString("floorNumber").concat(", "));
             obj.setOutletName(jsonobject.getString("brandName"));
             obj.setOutletImage(jsonobject.getString("imageUrl"));
+            obj.setFloor(jsonobject.getString("floorNumber").concat(", "));
             obj.setHubName(jsonobject.getString("hubName"));
             obj.setDescription(jsonobject.getString("description"));
+            //obj.setWebsite(jsonobject.getString("website"));
 
-            JSONArray json2 = jsonobject.getJSONArray("tagsArray");
-            for (i = 0; i < json2.length(); i++) {
-                JSONObject object = json2.getJSONObject(i);
-                Tag.add(object.getString("tagName"));
-                Price.add(object.getString("avgPrice"));
+            JSONArray tagsArray = jsonobject.getJSONArray("tagsArray");
+            JSONObject tagsObject;
+            ArrayList<TagPrice> tagPriceArrayList = new ArrayList<TagPrice>();
+
+            for (int i=0;i<tagsArray.length();i++)
+            {
+                tagsObject = tagsArray.getJSONObject(i);
+
+                TagPrice tagPriceObject = new TagPrice();
+                tagPriceObject.setTagString(  tagsObject.getString("tagName") );
+                tagPriceObject.setPriceString(tagsObject.getString("avgPrice"));
+
+                tagPriceArrayList.add(tagPriceObject);
             }
+            obj.setTagPriceArrayList(tagPriceArrayList);
+
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -136,12 +166,38 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, OutletDetails>
     protected void onPostExecute(OutletDetails outletDetails) {
         super.onPostExecute(outletDetails);
 
-        outletname.setText(outletDetails.getOutletName());
-        floor.setText(outletDetails.getFloor());
-        description.setText(outletDetails.getDescription());
-        //website.setText(outletDetails.getWebsite());
-        hubname.setText(outletDetails.getHubName());
-        mTagPrice.notifyDataSetChanged();
-        ImageLoader.getInstance().displayImage(outletDetails.getOutletImage(), outletimage);
+        if(outletDetails != null)
+        {
+
+            // 1. Add Default views to the LinearLayout
+            outletname.setText(outletDetails.getOutletName());
+            floor.setText(outletDetails.getFloor());
+            description.setText(outletDetails.getDescription());
+            website.setText(outletDetails.getWebsite());
+            hubname.setText(outletDetails.getHubName());
+            ImageLoader.getInstance().displayImage(outletDetails.getOutletImage(), outletimage);
+
+            // 2. Add TagPrice views to the LinearLayout
+            for(int i=0;i<obj.getTagPriceArrayList().size();i++)
+            {
+                TextView tagText = new TextView(context),
+                        priceText = new TextView(context);
+                tagText.setText("Avg price of "+obj.getTagPriceArrayList().get(i).getTagString());
+                priceText.setText(" -  Rs."+obj.getTagPriceArrayList().get(i).getPriceString());
+                LinearLayout newRow = new LinearLayout(context);
+                newRow.setOrientation(LinearLayout.HORIZONTAL);
+                newRow.addView(tagText);
+                newRow.addView(priceText);
+                tagPriceLinearLayout.addView(newRow);
+            }
+
+        }
+
+
+
     }
+
+
+
+
 }

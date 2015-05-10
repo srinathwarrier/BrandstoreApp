@@ -11,12 +11,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.brandstore.R;
+import com.brandstore.SearchResultsAsyncTask;
+import com.brandstore.adapters.ResultsListViewAdapter;
+import com.brandstore.entities.SearchResults;
 import com.brandstore.fragments.NavigationDrawerFragment;
 import com.brandstore.views.SearchBox;
-import com.brandstore.entities.SearchResults;
-import com.brandstore.SearchResultsAsyncTask;
-import com.brandstore.R;
-import com.brandstore.adapters.ResultsListViewAdapter;
 
 import java.util.ArrayList;
 
@@ -97,6 +97,15 @@ public class SearchActivity extends ActionBarActivity {
                 }
             }
         });
+
+        /*// Get tracker.
+        Tracker t = ((AnalyticsSampleApp) getActivity().getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
+
+        // Set screen name.
+        t.setScreenName("screen1");
+
+        // Send a screen view.
+        t.send(new HitBuilders.ScreenViewBuilder().build());*/
     }
 
 /*

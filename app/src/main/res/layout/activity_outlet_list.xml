@@ -72,6 +72,13 @@
             android:layout_height="wrap_content"
             android:dividerHeight="7dp"
             android:divider="@null" />
+        <TextView
+            android:id="@+id/outlet_list_empty_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loading outlets..."
+            android:visibility="gone"
+            />
     </LinearLayout>
 
     <fragment
