@@ -38,8 +38,8 @@ public class SearchActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-        drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout));
+        //drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
+        //drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout));
 
 
         //mEdit = (SearchBox) findViewById(R.id.search_box_results);
@@ -113,6 +113,7 @@ public class SearchActivity extends ActionBarActivity {
         final SearchView searchView = (SearchView) search.getActionView();
         searchView.setIconifiedByDefault(false);
         searchView.requestFocusFromTouch();
+        searchView.setQueryHint("Type brand store or product category");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {

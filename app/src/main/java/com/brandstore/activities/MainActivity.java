@@ -35,6 +35,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        NavigationDrawerFragment drawerFragment;
         // Get tracker.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,7 +54,7 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
        /*Three Lines of code needed on every activity using the navigation drawer*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
+       drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
         drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout));
 
 
@@ -157,6 +158,7 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {

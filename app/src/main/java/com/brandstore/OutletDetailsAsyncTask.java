@@ -1,7 +1,9 @@
 package com.brandstore;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +61,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, OutletDetails>
     ArrayList<String> tag;
     ArrayList<String> price;
 ScrollView scrollView;
+    Toolbar toolbar;
 
     public OutletDetailsAsyncTask(
             TagPriceListViewAdapter TagPrice,
@@ -74,6 +77,7 @@ ScrollView scrollView;
            ListView tagpriceListView,
             ScrollView scrollView,
             Button readmore,
+            Toolbar toolbar,
             Context context) {
 
         this.outletimage = outletimage;
@@ -89,6 +93,7 @@ ScrollView scrollView;
         this.tag=tag;
         this.price=price;
         this.scrollView=scrollView;
+        this.toolbar=toolbar;
         this.tagpriceListView = tagpriceListView;
 
 
@@ -222,6 +227,8 @@ ScrollView scrollView;
         });
 
     mTagPrice.notifyDataSetChanged();
+        toolbar.setTitle(outletDetails.getOutletName());
+
         int totalHeight = 0;
         int desiredWidth = View.MeasureSpec.makeMeasureSpec(tagpriceListView.getWidth(), View.MeasureSpec.AT_MOST);
         for (int i = 0; i < mTagPrice.getCount(); i++) {

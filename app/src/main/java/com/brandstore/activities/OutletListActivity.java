@@ -34,6 +34,7 @@ public class OutletListActivity extends ActionBarActivity {
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle bundle = getIntent().getExtras();
         String query = bundle.getString("name");
         String id = bundle.getString("id");
@@ -79,7 +80,10 @@ public class OutletListActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+
+        if(id==android.R.id.home)
+        {
+           onBackPressed();
             return true;
         }
 

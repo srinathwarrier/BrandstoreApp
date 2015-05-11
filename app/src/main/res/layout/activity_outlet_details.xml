@@ -11,7 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <include
+            android:id="@+id/outletdetailstoolbar"
+            layout="@layout/toolbar"/>
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -21,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -62,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@id/outletDetails_brandName"
-
+                        android:fontFamily="sans-serif-condensed"
                         android:layout_below="@id/outletDetails_brandName"
                         android:layout_marginTop="5dp"
                         android:text="Floor, "
@@ -79,6 +86,7 @@
                     <TextView
                         android:id="@+id/outletDetails_hubName"
                         android:layout_width="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@id/outletDetails_floorName"
                         android:layout_toRightOf="@id/outletDetails_floorName"
@@ -131,7 +139,9 @@
                     android:lineSpacingExtra="5dp"
                     android:text="Description"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+
+                    android:fontFamily="sans-serif-condensed"/>
 
                 <Button
                     android:id="@+id/readmore"
@@ -212,6 +222,7 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
+        </LinearLayout>
     </ScrollView>
 
 

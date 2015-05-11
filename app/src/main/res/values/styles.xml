@@ -9,5 +9,6 @@
 
     <style name="ToolBarTheme" parent="Theme.AppCompat">
         <item name="android:textColorPrimary">#000000</item>
+
     </style>
 </resources>

@@ -2,6 +2,7 @@ package com.brandstore.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
     ListView tagprice;
     LinearLayout tagPriceLinearLayout;
     Button readmore;
-
+Toolbar toolbar;
     TagPriceListViewAdapter mTagPriceListViewAdapter;
     ArrayList<String> tag = new ArrayList();
     ArrayList<String> price= new ArrayList();
@@ -39,6 +40,12 @@ public class OutletDetailsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet_details);
+        toolbar = (Toolbar) findViewById(R.id.outletdetailstoolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String id = getIntent().getStringExtra("id");
 
         // get the list of UI Elements' Objects
@@ -73,6 +80,7 @@ ScrollView scroll=(ScrollView)findViewById(R.id.outletDetails_ScrollView);
                 tagprice,
                 scroll,
                 readmore,
+                toolbar,
                 this);
         mOutletDetailsAsyncTask.execute();
         scroll.scrollTo(0,0);
@@ -94,10 +102,12 @@ ScrollView scroll=(ScrollView)findViewById(R.id.outletDetails_ScrollView);
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
+if(id==android.R.id.home)
+{
+    onBackPressed();
+    return true;
+}
         return super.onOptionsItemSelected(item);
     }
 

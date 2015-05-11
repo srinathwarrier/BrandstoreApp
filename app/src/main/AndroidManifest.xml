@@ -33,7 +33,10 @@
             android:label="@string/title_activity_sample"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="stateAlwaysVisible" />
+            android:windowSoftInputMode="stateAlwaysVisible">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.brandstore.activities.MainActivity" /></activity>
         <activity
             android:name=".activities.OutletListActivity"
             android:screenOrientation="portrait"
@@ -43,7 +46,8 @@
             android:name=".activities.OutletDetailsActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/title_activity_outlet_details"></activity>
+            android:label="@string/title_activity_outlet_details">
+            </activity>
     </application>
 
 </manifest>
