@@ -7,24 +7,24 @@
     android:layout_height="match_parent">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
 
         tools:context=".MainActivity">
+
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
-      <!--  <com.brandstore.views.SearchBox
-            android:id="@+id/search_box_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/roundededittext"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:hint="@string/home_page_search_box_hint" />-->
+        <!--  <com.brandstore.views.SearchBox
+              android:id="@+id/search_box_edit_text"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/roundededittext"
+              android:focusable="false"
+              android:focusableInTouchMode="false"
+              android:hint="@string/home_page_search_box_hint" />-->
 
         <GridView
             android:layout_marginLeft="10dp"

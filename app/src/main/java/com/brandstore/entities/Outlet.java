@@ -43,7 +43,6 @@ public class Outlet {
     }
 
 
-
     public String getContactNumber() {
         return ContactNumber;
     }
@@ -75,7 +74,6 @@ public class Outlet {
     public void setPrice(String price) {
         Price = price;
     }
-
 
 
     public String getId() {

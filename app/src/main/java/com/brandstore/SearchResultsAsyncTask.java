@@ -49,10 +49,10 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, Void> {
         mSearchResults.clear();
         StringBuilder builder = null;
         try {
-            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getSuggestions?q=" + query+"&userid="+6);
+            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getSuggestions?q=" + query + "&userid=" + 6);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoOutput(false);
-            Log.d("response", ""+urlConnection.getResponseCode());
+            Log.d("response", "" + urlConnection.getResponseCode());
             String line;
             builder = new StringBuilder();
             InputStreamReader isr = new InputStreamReader(
@@ -71,15 +71,13 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, Void> {
         try {
 
             JSONArray json = new JSONArray(builder.toString());
-            if(json.length()==0)
-            {
-                obj=new SearchResults();
+            if (json.length() == 0) {
+                obj = new SearchResults();
                 obj.setCategory(" ");
                 obj.setName("No results found");
                 obj.setId("0");
                 mSearchResults.add(obj);
-            }
-            else {
+            } else {
                 for (int i = 0; i < json.length(); i++) {
                     obj = new SearchResults();
                     JSONObject object = json.getJSONObject(i);

@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.brandstore.OutletDetailsAsyncTask;
@@ -25,36 +28,39 @@ public class OutletDetailsActivity extends ActionBarActivity {
     TextView hubname;
     ListView tagprice;
     LinearLayout tagPriceLinearLayout;
-
+    Button readmore;
 
     TagPriceListViewAdapter mTagPriceListViewAdapter;
-    ArrayList<TagPrice> tagPriceArrayList = new ArrayList();
+    ArrayList<String> tag = new ArrayList();
+    ArrayList<String> price= new ArrayList();
 
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet_details);
-        String id=getIntent().getStringExtra("id");
+        String id = getIntent().getStringExtra("id");
 
         // get the list of UI Elements' Objects
+ScrollView scroll=(ScrollView)findViewById(R.id.outletDetails_ScrollView);
+        outletimage = (ImageView) findViewById(R.id.outlet_image);
+        outletname = (TextView) findViewById(R.id.outletDetails_brandName);
+        floor = (TextView) findViewById(R.id.outletDetails_floorName);
+        hubname = (TextView) findViewById(R.id.outletDetails_hubName);
+        description = (TextView) findViewById(R.id.outletDetails_description);
+        website = (TextView) findViewById(R.id.outletDetails_website);
 
-        outletimage=(ImageView)findViewById(R.id.outlet_image);
-        outletname=(TextView)findViewById(R.id.outletDetails_brandName);
-        floor=(TextView)findViewById(R.id.outletDetails_floorName);
-        hubname= (TextView) findViewById(R.id.outletDetails_hubName);
-        description= (TextView) findViewById(R.id.outletDetails_description);
-        website= (TextView) findViewById(R.id.outletDetails_website);
-        tagPriceLinearLayout = (LinearLayout) findViewById(R.id.outletDetails_tagAndPrice_linearLayout);
-
-
-
-        //tagprice=(ListView)findViewById(R.id.tag_and_price);
-        //mTagPriceListViewAdapter=new TagPriceListViewAdapter(tagPriceArrayList,this);
-        //tagprice.setAdapter(mTagPriceListViewAdapter);
+        readmore = (Button) findViewById(R.id.readmore);
+        readmore.setVisibility(View.INVISIBLE);
 
 
-        OutletDetailsAsyncTask mOutletDetailsAsyncTask=new OutletDetailsAsyncTask(
+        tagprice=(ListView)findViewById(R.id.tag_and_price);
+        mTagPriceListViewAdapter=new TagPriceListViewAdapter(tag,price,this);
+        tagprice.setAdapter(mTagPriceListViewAdapter);
+
+
+        OutletDetailsAsyncTask mOutletDetailsAsyncTask = new OutletDetailsAsyncTask(
+                mTagPriceListViewAdapter,
                 outletimage,
                 outletname,
                 floor,
@@ -62,10 +68,14 @@ public class OutletDetailsActivity extends ActionBarActivity {
                 id,
                 description,
                 website,
-                tagPriceLinearLayout,
+                tag,
+                price,
+                tagprice,
+                scroll,
+                readmore,
                 this);
         mOutletDetailsAsyncTask.execute();
-
+        scroll.scrollTo(0,0);
     }
 
 

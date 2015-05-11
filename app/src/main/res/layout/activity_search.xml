@@ -14,11 +14,11 @@
 
 
         tools:context=".MainActivity">
-<include
-    layout="@layout/toolbar"
-    android:id="@+id/searchtoolbar"
-    />
-        <com.brandstore.views.SearchBox
+
+        <include
+            layout="@layout/toolbar"
+            android:id="@+id/searchtoolbar" />
+        <!--<com.brandstore.views.SearchBox
             android:id="@+id/search_box_results"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             <requestFocus/>
             </com.brandstore.views.SearchBox>
 
-
+-->
 
 
         <ListView

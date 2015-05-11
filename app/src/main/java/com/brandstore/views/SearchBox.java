@@ -18,7 +18,7 @@ public class SearchBox extends EditText {
     }
 
     public SearchBox(Context context, AttributeSet attrs) {
-       super(context,attrs);
+        super(context, attrs);
         init();
     }
 
@@ -29,7 +29,7 @@ public class SearchBox extends EditText {
 
     @TargetApi(21)
     public SearchBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs,defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 

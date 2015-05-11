@@ -2,10 +2,17 @@ package com.brandstore;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.brandstore.adapters.TagPriceListViewAdapter;
 import com.brandstore.entities.OutletDetails;
 import com.brandstore.entities.TagPrice;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -41,60 +48,68 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, OutletDetails>
     TextView hubname;
     TextView website;
     TextView description;
+    Button readmore;
 
     // Entity Object
     OutletDetails obj;
     //JSONObject jsonobject;
     Context context;
-    //TagPriceListViewAdapter mTagPrice;
-    //ListView tagpriceListView;
-    //ArrayList<TagPrice> mTagPriceArrayList;
-    LinearLayout tagPriceLinearLayout;
-public OutletDetailsAsyncTask(
-                              //TagPriceListViewAdapter TagPrice,
-                              ImageView outletimage,
-                              TextView outletname,
-                              TextView floor,
-                              TextView hubname,
-                              String ids,
-                              TextView description,
-                              TextView website,
-                              //ArrayList<TagPrice> tagPriceArrayList,
-                              //ListView newtagpriceListView,
-                              LinearLayout theTagPriceLinearLayout,
-                              Context context) {
+    TagPriceListViewAdapter mTagPrice;
+    ListView tagpriceListView;
+    ArrayList<String> tag;
+    ArrayList<String> price;
+ScrollView scrollView;
 
-    this.outletimage=outletimage;
-    this.outletname=outletname;
-    this.floor=floor;
-    this.hubname=hubname;
-    this.description=description;
-    this.website=website;
-    id=ids;
-    this.context=context;
-    //mTagPrice=TagPrice;
-    //this.mTagPriceArrayList = tagPriceArrayList;
-    //this.tagpriceListView = newtagpriceListView;
-    this.tagPriceLinearLayout = theTagPriceLinearLayout;
+    public OutletDetailsAsyncTask(
+            TagPriceListViewAdapter TagPrice,
+            ImageView outletimage,
+            TextView outletname,
+            TextView floor,
+            TextView hubname,
+            String ids,
+            TextView description,
+            TextView website,
+            ArrayList<String>tag,
+            ArrayList<String>price,
+           ListView tagpriceListView,
+            ScrollView scrollView,
+            Button readmore,
+            Context context) {
 
-    File cacheDir = StorageUtils.getCacheDirectory(context);
-    DisplayImageOptions options = new DisplayImageOptions.Builder()
-            .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
-            .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
-            .showImageOnFail(R.drawable.blank_screen) // resource or drawable
-            .resetViewBeforeLoading(true)  // default
+        this.outletimage = outletimage;
+        this.outletname = outletname;
+        this.floor = floor;
+        this.hubname = hubname;
+        this.description = description;
+        this.website = website;
+        id = ids;
+        this.context = context;
+        this.readmore = readmore;
+        mTagPrice=TagPrice;
+        this.tag=tag;
+        this.price=price;
+        this.scrollView=scrollView;
+        this.tagpriceListView = tagpriceListView;
 
-            .cacheInMemory(true) // default
-            .cacheOnDisk(true) // default
-            .build();
-    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
 
-            .diskCache(new UnlimitedDiscCache(cacheDir))
-            .defaultDisplayImageOptions(options)
-            .build();
-    ImageLoader.getInstance().init(config);
+        File cacheDir = StorageUtils.getCacheDirectory(context);
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
+                .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
+                .showImageOnFail(R.drawable.blank_screen) // resource or drawable
+                .resetViewBeforeLoading(true)  // default
 
-}
+                .cacheInMemory(true) // default
+                .cacheOnDisk(true) // default
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+
+                .diskCache(new UnlimitedDiscCache(cacheDir))
+                .defaultDisplayImageOptions(options)
+                .build();
+        ImageLoader.getInstance().init(config);
+
+    }
 
     @Override
     protected void onPreExecute() {
@@ -104,6 +119,8 @@ public OutletDetailsAsyncTask(
 
     @Override
     protected OutletDetails doInBackground(Void... params) {
+        tag.clear();
+        price.clear();
         StringBuilder builder = null;
         try {
             URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutletDetails?id=" + id);
@@ -128,29 +145,25 @@ public OutletDetailsAsyncTask(
             JSONObject jsonobject = new JSONObject(builder.toString());
 
             obj = new OutletDetails();
-            //jsonobject= json.getJSONObject(0);
+
             obj.setOutletName(jsonobject.getString("brandName"));
             obj.setOutletImage(jsonobject.getString("imageUrl"));
             obj.setFloor(jsonobject.getString("floorNumber").concat(", "));
             obj.setHubName(jsonobject.getString("hubName"));
-            obj.setDescription(jsonobject.getString("description"));
-            //obj.setWebsite(jsonobject.getString("website"));
+            obj.setLongDescription(jsonobject.getString("description"));
+            obj.setShortDescription(obj.getLongDescription().substring(0, 100).concat("..."));
+
 
             JSONArray tagsArray = jsonobject.getJSONArray("tagsArray");
             JSONObject tagsObject;
-            ArrayList<TagPrice> tagPriceArrayList = new ArrayList<TagPrice>();
 
-            for (int i=0;i<tagsArray.length();i++)
-            {
+
+            for (int i = 0; i < tagsArray.length(); i++) {
                 tagsObject = tagsArray.getJSONObject(i);
-
-                TagPrice tagPriceObject = new TagPrice();
-                tagPriceObject.setTagString(  tagsObject.getString("tagName") );
-                tagPriceObject.setPriceString(tagsObject.getString("avgPrice"));
-
-                tagPriceArrayList.add(tagPriceObject);
+                tag.add(tagsObject.getString("tagName"));
+                price.add("₹ "+tagsObject.getString("avgPrice"));
             }
-            obj.setTagPriceArrayList(tagPriceArrayList);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -163,41 +176,66 @@ public OutletDetailsAsyncTask(
 
 
     @Override
-    protected void onPostExecute(OutletDetails outletDetails) {
+    protected void onPostExecute(final OutletDetails outletDetails) {
         super.onPostExecute(outletDetails);
 
-        if(outletDetails != null)
-        {
+        if (outletDetails != null) {
 
             // 1. Add Default views to the LinearLayout
             outletname.setText(outletDetails.getOutletName());
             floor.setText(outletDetails.getFloor());
-            description.setText(outletDetails.getDescription());
+            description.setText(outletDetails.getShortDescription());
             website.setText(outletDetails.getWebsite());
             hubname.setText(outletDetails.getHubName());
             ImageLoader.getInstance().displayImage(outletDetails.getOutletImage(), outletimage);
-
+/*
             // 2. Add TagPrice views to the LinearLayout
-            for(int i=0;i<obj.getTagPriceArrayList().size();i++)
-            {
+            for (int i = 0; i < obj.getTagPriceArrayList().size(); i++) {
                 TextView tagText = new TextView(context),
                         priceText = new TextView(context);
-                tagText.setText("Avg price of "+obj.getTagPriceArrayList().get(i).getTagString());
-                priceText.setText(" -  Rs."+obj.getTagPriceArrayList().get(i).getPriceString());
+                tagText.setText("Avg price of " + obj.getTagPriceArrayList().get(i).getTagString());
+                priceText.setText(" -  Rs." + obj.getTagPriceArrayList().get(i).getPriceString());
                 LinearLayout newRow = new LinearLayout(context);
                 newRow.setOrientation(LinearLayout.HORIZONTAL);
                 newRow.addView(tagText);
                 newRow.addView(priceText);
                 tagPriceLinearLayout.addView(newRow);
-            }
+            }*/
 
         }
+        readmore.setVisibility(View.VISIBLE);
+        readmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if (readmore.getText() == "READ LESS") {
+                    readmore.setText("READ MORE");
+                    description.setText(outletDetails.getShortDescription());
+                } else {
+                    Log.d("entered", "Entered");
+                    description.setText(outletDetails.getLongDescription());
+                    readmore.setText("READ LESS");
+                }
 
+            }
 
+        });
+
+    mTagPrice.notifyDataSetChanged();
+        int totalHeight = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(tagpriceListView.getWidth(), View.MeasureSpec.AT_MOST);
+        for (int i = 0; i < mTagPrice.getCount(); i++) {
+            View listItem = mTagPrice.getView(i, null, tagpriceListView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = tagpriceListView.getLayoutParams();
+        params.height = totalHeight + (tagpriceListView.getDividerHeight() * (mTagPrice.getCount() - 1));
+        tagpriceListView.setLayoutParams(params);
+        //tagpriceListView.requestLayout();
+        scrollView.smoothScrollTo(0,0);
     }
-
-
 
 
 }

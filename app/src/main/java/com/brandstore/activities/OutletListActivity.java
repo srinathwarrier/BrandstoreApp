@@ -3,6 +3,7 @@ package com.brandstore.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,18 +23,22 @@ public class OutletListActivity extends ActionBarActivity {
     TextView category;
     ListView outletListView;
     ArrayList<Outlet> outletArrayList = new ArrayList();
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_outlet_list);
-
+        toolbar = (Toolbar) findViewById(R.id.outletlisttoolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
+        setSupportActionBar(toolbar);
         Bundle bundle = getIntent().getExtras();
         String query = bundle.getString("name");
-        String id=bundle.getString("id");
+        String id = bundle.getString("id");
 
-        TextView emptyView = (TextView)findViewById( R.id.outlet_list_empty_textView );
+        TextView emptyView = (TextView) findViewById(R.id.outlet_list_empty_textView);
 
         outletListView = (ListView) findViewById(R.id.outlet_list_list_view);
         outletListView.setEmptyView(emptyView);
@@ -43,7 +48,7 @@ public class OutletListActivity extends ActionBarActivity {
 
         outletListView.setAdapter(mOutletListAdapter);
 
-        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outletArrayList, query, mOutletListAdapter,id, emptyView);
+        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outletArrayList, query, mOutletListAdapter, id, emptyView, toolbar);
 
         mOutletListAsyncTask.execute();
 

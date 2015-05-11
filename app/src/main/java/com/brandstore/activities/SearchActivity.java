@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -33,20 +34,15 @@ public class SearchActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        toolbar=(Toolbar)findViewById(R.id.searchtoolbar);
+        toolbar = (Toolbar) findViewById(R.id.searchtoolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
         drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout));
 
-        getSupportActionBar().setLogo(R.drawable.logo);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        mEdit = (SearchBox) findViewById(R.id.search_box_results);
+        //mEdit = (SearchBox) findViewById(R.id.search_box_results);
         mResultList = (ListView) findViewById(R.id.list_view_results);
         mResultList.setVisibility(View.INVISIBLE);
 
@@ -54,7 +50,7 @@ public class SearchActivity extends ActionBarActivity {
         mResultsAdapter = new ResultsListViewAdapter(mSearchResult, this);
         mResultList.setAdapter(mResultsAdapter);
 
-
+/*
         mEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -79,20 +75,20 @@ public class SearchActivity extends ActionBarActivity {
                 }
             }
         });
-
+*/
         mResultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("category")||mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("hub")) {
+                if (mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("category") || mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("hub")) {
                     Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
-                    Bundle bundle=new Bundle();
-                    bundle.putString("name",mSearchResult.get(position).getName().toString());
-                    bundle.putString("id",mSearchResult.get(position).getId());
+                    Bundle bundle = new Bundle();
+                    bundle.putString("name", mSearchResult.get(position).getName().toString());
+                    bundle.putString("id", mSearchResult.get(position).getId());
                     intent.putExtras(bundle);
                     startActivity(intent);
                 } else if (mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("outlet")) {
                     Intent intent = new Intent(getApplicationContext(), OutletDetailsActivity.class);
-                    intent.putExtra("id",mSearchResult.get(position).getId());
+                    intent.putExtra("id", mSearchResult.get(position).getId());
                     startActivity(intent);
                 }
             }
@@ -108,12 +104,37 @@ public class SearchActivity extends ActionBarActivity {
         t.send(new HitBuilders.ScreenViewBuilder().build());*/
     }
 
-/*
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_search, menu);
+        MenuItem search = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) search.getActionView();
+        searchView.setIconifiedByDefault(false);
+        searchView.requestFocusFromTouch();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                if (searchView.getQuery().length() < 1) {
+                    mSearchResult.clear();
+                    mResultsAdapter.notifyDataSetChanged();
+                } else {
+                    SearchResultsAsyncTask mSearchAsyncTask = new SearchResultsAsyncTask(s.toString(), mResultsAdapter, mSearchResult);
+                    mSearchAsyncTask.execute();
+                    mResultList.setVisibility(View.VISIBLE);
+                }
+
+                return false;
+
+            }
+        });
         return true;
     }
 
@@ -131,7 +152,7 @@ public class SearchActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-*/
+
     @Override
     protected void onResume() {
         super.onResume();

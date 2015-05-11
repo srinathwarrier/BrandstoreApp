@@ -18,21 +18,24 @@ import java.util.ArrayList;
  */
 public class TagPriceListViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    ArrayList<TagPrice>tagPriceArrayList ;
-    public TagPriceListViewAdapter(ArrayList<TagPrice> newTagPriceArrayList,Activity context)
-    {
+   ArrayList<String> tag;
+    ArrayList<String>price;
+
+    public TagPriceListViewAdapter(ArrayList<String>tag,ArrayList<String> price, Activity context) {
         this.inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.tagPriceArrayList = newTagPriceArrayList;
+        this.tag=tag;
+        this.price=price;
     }
+
     @Override
     public int getCount() {
-        return tagPriceArrayList.size();
+        return tag.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return tagPriceArrayList.get(position);
+        return null;
     }
 
     @Override
@@ -47,21 +50,20 @@ public class TagPriceListViewAdapter extends BaseAdapter {
             mHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.tag_price_list_view_item, null);
             mHolder.tagTextView = (TextView) convertView.findViewById(R.id.Tag);
-            mHolder.priceTextView=(TextView)convertView.findViewById(R.id.Price);
+            mHolder.priceTextView = (TextView) convertView.findViewById(R.id.Price);
 
             convertView.setTag(mHolder);
         } else {
             mHolder = (ViewHolder) convertView.getTag();
         }
 
-        TagPrice tagPriceObject = tagPriceArrayList.get(position);
-        mHolder.tagTextView.setText(tagPriceObject.getTagString());
-        mHolder.priceTextView.setText(tagPriceObject.getPriceString());
+
+        mHolder.tagTextView.setText(tag.get(position).toString());
+        mHolder.priceTextView.setText(price.get(position).toString());
         return convertView;
     }
 
-    class ViewHolder
-    {
+    class ViewHolder {
         TextView tagTextView;
         TextView priceTextView;
     }

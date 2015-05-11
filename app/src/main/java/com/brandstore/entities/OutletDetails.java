@@ -12,8 +12,44 @@ public class OutletDetails {
     private String Floor;
     private String HubName;
     private String Website;
-    private String Description;
-    private ArrayList<TagPrice> tagPriceArrayList;
+
+    public ArrayList<String> getTag() {
+        return Tag;
+    }
+
+    public void setTag(ArrayList<String> tag) {
+        Tag = tag;
+    }
+
+    public ArrayList<String> getPrice() {
+        return Price;
+    }
+
+    public void setPrice(ArrayList<String> price) {
+        Price = price;
+    }
+
+    private ArrayList<String>Tag;
+    private ArrayList<String>Price;
+    public String getShortDescription() {
+        return ShortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        ShortDescription = shortDescription;
+    }
+
+    public String getLongDescription() {
+        return LongDescription;
+    }
+
+    public void setLongDescription(String longDescription) {
+        LongDescription = longDescription;
+    }
+
+    private String ShortDescription;
+    private String LongDescription;
+   // private ArrayList<TagPrice> tagPriceArrayList;
 
 
     public String getOutletImage() {
@@ -57,19 +93,12 @@ public class OutletDetails {
         Website = website;
     }
 
-    public String getDescription() {
-        return Description;
-    }
 
-    public void setDescription(String description) {
-        Description = description;
-    }
-
-    public ArrayList<TagPrice> getTagPriceArrayList() {
+   /* public ArrayList<TagPrice> getTagPriceArrayList() {
         return tagPriceArrayList;
     }
 
     public void setTagPriceArrayList(ArrayList<TagPrice> tagPriceArrayList) {
         this.tagPriceArrayList = tagPriceArrayList;
-    }
+    }*/
 }

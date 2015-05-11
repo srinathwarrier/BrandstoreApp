@@ -1,6 +1,7 @@
 package com.brandstore;
 
 import android.os.AsyncTask;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -22,21 +23,22 @@ import java.util.ArrayList;
 /**
  * Created by Ravi on 29-Mar-15.
  */
-public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
-{
+public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
     ArrayList<Outlet> mOutletArrayList;
     String query;
     OutletListAdapter mOutletListAdapter;
     Outlet obj;
     String id;
     TextView emptyView;
-    public OutletListAsyncTask(ArrayList<Outlet> outletArrayList,String text,OutletListAdapter adapter,String id, TextView theEmptyView)
-    {
-        this.id=id;
-        mOutletArrayList=outletArrayList;
-        query=text;
-        mOutletListAdapter=adapter;
+    Toolbar toolbar;
+
+    public OutletListAsyncTask(ArrayList<Outlet> outletArrayList, String text, OutletListAdapter adapter, String id, TextView theEmptyView, Toolbar toolbar) {
+        this.id = id;
+        mOutletArrayList = outletArrayList;
+        query = text;
+        mOutletListAdapter = adapter;
         emptyView = theEmptyView;
+        this.toolbar = toolbar;
     }
 
 
@@ -45,7 +47,7 @@ public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
         mOutletArrayList.clear();
         StringBuilder builder = null;
         try {
-            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" +id );
+            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" + id);
 
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -70,7 +72,7 @@ public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
 
 
             for (int i = 0; i < json.length(); i++) {
-                Log.i("Brandstore - Outletlist","Start ");
+                Log.i("Brandstore - Outletlist", "Start ");
                 obj = new Outlet();
                 JSONObject object = json.getJSONObject(i);
                 obj.setBrandOutletName(object.get("brandName").toString());
@@ -83,13 +85,12 @@ public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
                 obj.setGenderCodeString(object.get("genderCodeString").toString());
                 obj.setMallName(object.get("hubName").toString());
 
-                Log.i("Brandstore - Outletlist","object:"+obj.toString());
+                Log.i("Brandstore - Outletlist", "object:" + obj.toString());
                 mOutletArrayList.add(obj);
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -99,8 +100,9 @@ public class OutletListAsyncTask extends AsyncTask<Void,Void,Void>
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        if(mOutletArrayList.size()==0)
-        {
+        toolbar.setTitle(mOutletArrayList.get(0).getRelevantTag().toString());
+        toolbar.setSubtitle(mOutletArrayList.size() + " " + "Outlets");
+        if (mOutletArrayList.size() == 0) {
             emptyView.setText("No Outlets Found !!!");
         }
         mOutletListAdapter.notifyDataSetChanged();

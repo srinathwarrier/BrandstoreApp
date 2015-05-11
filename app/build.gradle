@@ -22,7 +22,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:support-v4:21.0.2'
+    compile 'com.android.support:support-v4:22.0.0'
     compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'org.json:json:20141113'
     compile 'com.google.code.gson:gson:2.3'
@@ -30,4 +30,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'com.google.android.gms:play-services:7.0.0'
+
 }

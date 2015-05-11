@@ -10,11 +10,10 @@ import java.util.HashMap;
 // import com.google.android.apps.mobileplayground;
 
 
-
 /**
  * Created by I076324 on 4/28/2015.
  */
-public class AnalyticsSampleApp extends Application{
+public class AnalyticsSampleApp extends Application {
     // The following line should be changed to include the correct property id.
     private static final String PROPERTY_ID = "UA-60355049-1";
 
@@ -23,6 +22,7 @@ public class AnalyticsSampleApp extends Application{
         GLOBAL_TRACKER, // Tracker used by all the apps from a company. eg: roll-up tracking.
         ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
     }
+
     HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 
     public AnalyticsSampleApp() {

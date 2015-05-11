@@ -3,13 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brandstore.activities.OutletListActivity">
 
-    <item android:id="@+id/sale_button" android:title="On Sale"
+    <item
+        android:id="@+id/sale_button"
+        android:title="On Sale"
         android:icon="@drawable/offers"
         android:showAsAction="always"
         app:showAsAction="always">
 
-        </item>
-    <item android:id="@+id/favourited" android:title="Favourites"
-        android:icon="@drawable/ic_action_favorite" android:showAsAction="always"
-        app:showAsAction="always"/>
+    </item>
+    <item
+        android:id="@+id/favourited"
+        android:title="Favourites"
+        android:icon="@drawable/ic_action_favorite"
+        android:showAsAction="always"
+        app:showAsAction="always" />
 </menu>

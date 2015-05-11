@@ -17,13 +17,13 @@ import com.brandstore.R;
 public class CategoryGridViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private int CategoryImages[];
-private String CategoryNames[];
+    private String CategoryNames[];
 
-    public CategoryGridViewAdapter(Activity context,int images[],String categories[]) {
+    public CategoryGridViewAdapter(Activity context, int images[], String categories[]) {
         this.inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        CategoryImages=images;
-        CategoryNames=categories;
+        CategoryImages = images;
+        CategoryNames = categories;
 
     }
 
@@ -55,7 +55,7 @@ private String CategoryNames[];
             mHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.category_grid_view_single_item, null);
             mHolder.CategoryImage = (ImageView) convertView.findViewById(R.id.category_image);
-mHolder.CategoryName=(TextView)convertView.findViewById(R.id.category_name);
+            mHolder.CategoryName = (TextView) convertView.findViewById(R.id.category_name);
             convertView.setTag(mHolder);
         } else {
             mHolder = (ViewHolder) convertView.getTag();
