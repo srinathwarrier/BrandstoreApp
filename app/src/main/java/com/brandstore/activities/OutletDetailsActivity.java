@@ -1,17 +1,23 @@
 package com.brandstore.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.brandstore.adapters.RelatedBrandsListViewAdapter;
+import com.brandstore.entities.RelatedBrands;
+import com.brandstore.utils.HorizontalListView;
 
 import com.brandstore.OutletDetailsAsyncTask;
 import com.brandstore.R;
@@ -34,6 +40,8 @@ Toolbar toolbar;
     TagPriceListViewAdapter mTagPriceListViewAdapter;
     ArrayList<String> tag = new ArrayList();
     ArrayList<String> price= new ArrayList();
+    HorizontalListView relatedBrands;
+    ArrayList<RelatedBrands> brandsarray= new ArrayList();
 
 
     @Override
@@ -44,12 +52,13 @@ Toolbar toolbar;
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
 
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String id = getIntent().getStringExtra("id");
 
         // get the list of UI Elements' Objects
-ScrollView scroll=(ScrollView)findViewById(R.id.outletDetails_ScrollView);
+        ScrollView scroll=(ScrollView)findViewById(R.id.outletDetails_ScrollView);
         outletimage = (ImageView) findViewById(R.id.outlet_image);
         outletname = (TextView) findViewById(R.id.outletDetails_brandName);
         floor = (TextView) findViewById(R.id.outletDetails_floorName);
@@ -64,6 +73,11 @@ ScrollView scroll=(ScrollView)findViewById(R.id.outletDetails_ScrollView);
         tagprice=(ListView)findViewById(R.id.tag_and_price);
         mTagPriceListViewAdapter=new TagPriceListViewAdapter(tag,price,this);
         tagprice.setAdapter(mTagPriceListViewAdapter);
+
+
+        RelatedBrandsListViewAdapter relatedBrandsListViewAdapter=new RelatedBrandsListViewAdapter(brandsarray,this);
+        relatedBrands=(HorizontalListView)findViewById(R.id.relatedbrands);
+        relatedBrands.setAdapter(relatedBrandsListViewAdapter);
 
 
         OutletDetailsAsyncTask mOutletDetailsAsyncTask = new OutletDetailsAsyncTask(
@@ -81,9 +95,21 @@ ScrollView scroll=(ScrollView)findViewById(R.id.outletDetails_ScrollView);
                 scroll,
                 readmore,
                 toolbar,
+                relatedBrandsListViewAdapter,
+                brandsarray,
                 this);
         mOutletDetailsAsyncTask.execute();
         scroll.scrollTo(0,0);
+
+
+        relatedBrands.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), OutletDetailsActivity.class);
+                intent.putExtra("id", brandsarray.get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 
 

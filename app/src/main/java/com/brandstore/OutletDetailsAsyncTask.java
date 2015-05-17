@@ -14,8 +14,10 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.brandstore.adapters.RelatedBrandsListViewAdapter;
 import com.brandstore.adapters.TagPriceListViewAdapter;
 import com.brandstore.entities.OutletDetails;
+import com.brandstore.entities.RelatedBrands;
 import com.brandstore.entities.TagPrice;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -62,6 +64,8 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, OutletDetails>
     ArrayList<String> price;
 ScrollView scrollView;
     Toolbar toolbar;
+    ArrayList<RelatedBrands> brandsArray;
+    RelatedBrandsListViewAdapter relatedBrandsListViewAdapter;
 
     public OutletDetailsAsyncTask(
             TagPriceListViewAdapter TagPrice,
@@ -78,6 +82,8 @@ ScrollView scrollView;
             ScrollView scrollView,
             Button readmore,
             Toolbar toolbar,
+            RelatedBrandsListViewAdapter relatedBrandsListViewAdapter,
+            ArrayList<RelatedBrands>brandsArray,
             Context context) {
 
         this.outletimage = outletimage;
@@ -87,6 +93,7 @@ ScrollView scrollView;
         this.description = description;
         this.website = website;
         id = ids;
+        this.brandsArray=brandsArray;
         this.context = context;
         this.readmore = readmore;
         mTagPrice=TagPrice;
@@ -94,6 +101,7 @@ ScrollView scrollView;
         this.price=price;
         this.scrollView=scrollView;
         this.toolbar=toolbar;
+        this.relatedBrandsListViewAdapter=relatedBrandsListViewAdapter;
         this.tagpriceListView = tagpriceListView;
 
 
@@ -169,6 +177,19 @@ ScrollView scrollView;
                 price.add("₹ "+tagsObject.getString("avgPrice"));
             }
 
+            RelatedBrands obj1;
+            JSONArray relatedBrandsArray=jsonobject.getJSONArray("relatedBrandsArray");
+            JSONObject relatedBrandsObject;
+
+            for(int i=0;i<relatedBrandsArray.length();i++)
+            {
+                obj1=new RelatedBrands();
+                relatedBrandsObject=relatedBrandsArray.getJSONObject(i);
+                obj1.setId(relatedBrandsObject.getString("outletID"));
+                obj1.setImage(relatedBrandsObject.getString("imageUrl"));
+                obj1.setName(relatedBrandsObject.getString("brandName"));
+                brandsArray.add(obj1);
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -225,7 +246,7 @@ ScrollView scrollView;
             }
 
         });
-
+    relatedBrandsListViewAdapter.notifyDataSetChanged();
     mTagPrice.notifyDataSetChanged();
         toolbar.setTitle(outletDetails.getOutletName());
 

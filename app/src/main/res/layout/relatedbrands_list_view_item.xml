@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/relatedbrandsimage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY"/>
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="100dp"
+        android:src="@null"/>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:textSize="17sp"
+        android:layout_below="@id/relatedbrandsimage"
+        android:layout_alignLeft="@id/relatedbrandsimage"
+        android:id="@+id/relatedbrandsname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"/>
+</RelativeLayout>
