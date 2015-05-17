@@ -66,6 +66,7 @@ ScrollView scrollView;
     Toolbar toolbar;
     ArrayList<RelatedBrands> brandsArray;
     RelatedBrandsListViewAdapter relatedBrandsListViewAdapter;
+    ImageView first,second,third;
 
     public OutletDetailsAsyncTask(
             TagPriceListViewAdapter TagPrice,
@@ -84,6 +85,9 @@ ScrollView scrollView;
             Toolbar toolbar,
             RelatedBrandsListViewAdapter relatedBrandsListViewAdapter,
             ArrayList<RelatedBrands>brandsArray,
+            ImageView first,
+            ImageView second,
+            ImageView third,
             Context context) {
 
         this.outletimage = outletimage;
@@ -103,7 +107,9 @@ ScrollView scrollView;
         this.toolbar=toolbar;
         this.relatedBrandsListViewAdapter=relatedBrandsListViewAdapter;
         this.tagpriceListView = tagpriceListView;
-
+this.first=first;
+        this.second=second;
+        this.third=third;
 
         File cacheDir = StorageUtils.getCacheDirectory(context);
         DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -165,6 +171,7 @@ ScrollView scrollView;
             obj.setHubName(jsonobject.getString("hubName"));
             obj.setLongDescription(jsonobject.getString("description"));
             obj.setShortDescription(obj.getLongDescription().substring(0, 100).concat("..."));
+            obj.setGenderCodeString(jsonobject.get("genderCodeString").toString());
 
 
             JSONArray tagsArray = jsonobject.getJSONArray("tagsArray");
@@ -246,6 +253,19 @@ ScrollView scrollView;
             }
 
         });
+
+        if(obj.getGenderCodeString().contains("M"))
+        {
+            first.setVisibility(View.VISIBLE);
+        }
+        if(obj.getGenderCodeString().contains("F"))
+        {
+            second.setVisibility(View.VISIBLE);
+        }
+        if(obj.getGenderCodeString().contains("K"))
+        {
+            third.setVisibility(View.VISIBLE);
+        }
     relatedBrandsListViewAdapter.notifyDataSetChanged();
     mTagPrice.notifyDataSetChanged();
         toolbar.setTitle(outletDetails.getOutletName());

@@ -23,7 +23,13 @@ import com.brandstore.OutletDetailsAsyncTask;
 import com.brandstore.R;
 import com.brandstore.adapters.TagPriceListViewAdapter;
 import com.brandstore.entities.TagPrice;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class OutletDetailsActivity extends ActionBarActivity {
@@ -42,7 +48,7 @@ Toolbar toolbar;
     ArrayList<String> price= new ArrayList();
     HorizontalListView relatedBrands;
     ArrayList<RelatedBrands> brandsarray= new ArrayList();
-
+    ImageView first,second,third;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,22 @@ Toolbar toolbar;
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
 
+        File cacheDir = StorageUtils.getCacheDirectory(this);
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
+                .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
+                .showImageOnFail(R.drawable.blank_screen) // resource or drawable
+                .resetViewBeforeLoading(true)  // default
+
+                .cacheInMemory(true) // default
+                .cacheOnDisk(true) // default
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+
+                .diskCache(new UnlimitedDiscCache(cacheDir))
+                .defaultDisplayImageOptions(options)
+                .build();
+        ImageLoader.getInstance().init(config);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -65,7 +87,9 @@ Toolbar toolbar;
         hubname = (TextView) findViewById(R.id.outletDetails_hubName);
         description = (TextView) findViewById(R.id.outletDetails_description);
         website = (TextView) findViewById(R.id.outletDetails_website);
-
+        first= (ImageView) findViewById(R.id.first);
+        second= (ImageView) findViewById(R.id.second);
+        third= (ImageView) findViewById(R.id.third);
         readmore = (Button) findViewById(R.id.readmore);
         readmore.setVisibility(View.INVISIBLE);
 
@@ -97,6 +121,7 @@ Toolbar toolbar;
                 toolbar,
                 relatedBrandsListViewAdapter,
                 brandsarray,
+                first,second,third,
                 this);
         mOutletDetailsAsyncTask.execute();
         scroll.scrollTo(0,0);

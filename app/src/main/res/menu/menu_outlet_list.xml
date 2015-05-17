@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brandstore.activities.OutletListActivity">
-
+<!--
     <item
         android:id="@+id/sale_button"
         android:title="On Sale"
@@ -16,5 +16,5 @@
         android:title="Favourites"
         android:icon="@drawable/ic_action_favorite"
         android:showAsAction="always"
-        app:showAsAction="always" />
+        app:showAsAction="always" />-->
 </menu>

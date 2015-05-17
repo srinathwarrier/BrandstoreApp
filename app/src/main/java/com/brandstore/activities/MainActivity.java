@@ -18,6 +18,13 @@ import com.brandstore.adapters.CategoryGridViewAdapter;
 import com.brandstore.fragments.NavigationDrawerFragment;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.StorageUtils;
+
+import java.io.File;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -35,6 +42,22 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        File cacheDir = StorageUtils.getCacheDirectory(this);
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
+                .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
+                .showImageOnFail(R.drawable.blank_screen) // resource or drawable
+                .resetViewBeforeLoading(true)  // default
+
+                .cacheInMemory(true) // default
+                .cacheOnDisk(true) // default
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+
+                .diskCache(new UnlimitedDiscCache(cacheDir))
+                .defaultDisplayImageOptions(options)
+                .build();
+        ImageLoader.getInstance().init(config);
         NavigationDrawerFragment drawerFragment;
         // Get tracker.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -46,18 +69,18 @@ public class MainActivity extends ActionBarActivity {
         t.send(new HitBuilders.ScreenViewBuilder().build());
 
 
-        //TODO Need to modify using Toolbar
+
 
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
        /*Three Lines of code needed on every activity using the navigation drawer*/
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       /* getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
         drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout));
 
-
+*/
         mCategoryGridView = (GridView) findViewById(R.id.category_grid_view);
         mCategoryGridView.setAdapter(new CategoryGridViewAdapter(this, CategoryImages, CategoryNames));
 

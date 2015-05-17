@@ -15,7 +15,13 @@ import com.brandstore.OutletListAsyncTask;
 import com.brandstore.R;
 import com.brandstore.adapters.OutletListAdapter;
 import com.brandstore.entities.Outlet;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -38,7 +44,22 @@ public class OutletListActivity extends ActionBarActivity {
         Bundle bundle = getIntent().getExtras();
         String query = bundle.getString("name");
         String id = bundle.getString("id");
+        File cacheDir = StorageUtils.getCacheDirectory(this);
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
+                .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
+                .showImageOnFail(R.drawable.blank_screen) // resource or drawable
+                .resetViewBeforeLoading(true)  // default
 
+                .cacheInMemory(true) // default
+                .cacheOnDisk(true) // default
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+
+                .diskCache(new UnlimitedDiscCache(cacheDir))
+                .defaultDisplayImageOptions(options)
+                .build();
+        ImageLoader.getInstance().init(config);
         TextView emptyView = (TextView) findViewById(R.id.outlet_list_empty_textView);
 
         outletListView = (ListView) findViewById(R.id.outlet_list_list_view);

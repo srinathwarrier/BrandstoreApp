@@ -31,22 +31,7 @@ public class OutletListAdapter extends BaseAdapter {
         this.inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mOutletList = outlet;
-        File cacheDir = StorageUtils.getCacheDirectory(context);
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
-                .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
-                .showImageOnFail(R.drawable.blank_screen) // resource or drawable
-                .resetViewBeforeLoading(true)  // default
 
-                .cacheInMemory(true) // default
-                .cacheOnDisk(true) // default
-                .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-
-                .diskCache(new UnlimitedDiscCache(cacheDir))
-                .defaultDisplayImageOptions(options)
-                .build();
-        ImageLoader.getInstance().init(config);
     }
 
     @Override

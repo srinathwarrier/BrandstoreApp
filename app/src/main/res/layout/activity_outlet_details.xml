@@ -100,28 +100,34 @@
                         <ImageView
                             android:id="@+id/first"
                             android:layout_width="45dp"
-                            android:layout_height="20dp"
+                            android:layout_height="15dp"
+                            android:visibility="invisible"
                             android:layout_alignLeft="@id/outletDetails_floorName"
                             android:layout_below="@id/outletDetails_floorName"
                             android:layout_marginTop="5dp"
-                            android:src="@drawable/men" />
+                            android:src="@drawable/men"
+                            android:scaleType="fitXY"/>
 
                         <ImageView
                             android:id="@+id/second"
-                            android:layout_width="45dp"
-                            android:layout_height="20dp"
+                            android:layout_width="50dp"
+                            android:layout_height="15dp"
                             android:layout_alignTop="@id/first"
+                            android:visibility="invisible"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@id/first"
+                            android:scaleType="fitXY"
                             android:src="@drawable/women" />
 
                         <ImageView
                             android:id="@+id/third"
-                            android:layout_width="45dp"
-                            android:layout_height="20dp"
+                            android:layout_width="50dp"
+                            android:layout_height="15dp"
                             android:layout_alignTop="@id/first"
+                            android:visibility="invisible"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@id/second"
+                            android:scaleType="fitXY"
                             android:src="@drawable/kids" />
                     </RelativeLayout>
 
@@ -248,12 +254,12 @@ android:layout_marginTop="7dp"
         </LinearLayout>
     </ScrollView>
 
-
+<!--
     <fragment
         android:id="@+id/navigation_drawer_fragment"
         android:name="com.brandstore.fragments.NavigationDrawerFragment"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        tools:layout="@layout/fragment_navigation_drawer"></fragment>
+        tools:layout="@layout/fragment_navigation_drawer"></fragment>-->
 </android.support.v4.widget.DrawerLayout>

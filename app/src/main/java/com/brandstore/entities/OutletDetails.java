@@ -13,6 +13,15 @@ public class OutletDetails {
     private String HubName;
     private String Website;
 
+    public String getGenderCodeString() {
+        return GenderCodeString;
+    }
+
+    public void setGenderCodeString(String genderCodeString) {
+        GenderCodeString = genderCodeString;
+    }
+
+    private String GenderCodeString;
     public ArrayList<String> getTag() {
         return Tag;
     }

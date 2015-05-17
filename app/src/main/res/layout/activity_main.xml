@@ -40,7 +40,7 @@
 
         </GridView>
     </LinearLayout>
-
+<!--
     <fragment
         android:id="@+id/navigation_drawer_fragment"
         android:name="com.brandstore.fragments.NavigationDrawerFragment"
@@ -49,5 +49,5 @@
         android:layout_gravity="start"
         tools:layout="@layout/fragment_navigation_drawer">
 
-    </fragment>
+    </fragment>-->
 </android.support.v4.widget.DrawerLayout>
