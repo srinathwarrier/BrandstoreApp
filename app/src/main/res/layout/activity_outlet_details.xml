@@ -10,7 +10,8 @@
         android:id="@+id/outletDetails_ScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -242,15 +243,14 @@
                 android:textSize="20sp"
                 android:fontFamily="sans-serif-clight"/>
 
-            <com.brandstore.utils.HorizontalListView
+            <com.brandstore1.utils.HorizontalListView
                 android:id="@+id/relatedbrands"
-android:layout_marginTop="7dp"
-
+                android:layout_marginTop="7dp"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginLeft="13dp">
 
-            </com.brandstore.utils.HorizontalListView>
+            </com.brandstore1.utils.HorizontalListView>
         </LinearLayout>
     </ScrollView>
 

@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00f"
-    tools:context="com.brandstore.fragments.NavigationDrawerFragment">
+    tools:context="com.brandstore1.fragments.NavigationDrawerFragment">
 
 </ListView>

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.brandstore.activities.OutletListActivity">
+    tools:context="com.brandstore1.activities.OutletListActivity">
 <!--
     <item
         android:id="@+id/sale_button"

@@ -77,6 +77,7 @@ Toolbar toolbar;
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         String id = getIntent().getStringExtra("id");
 
         // get the list of UI Elements' Objects

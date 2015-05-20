@@ -41,6 +41,7 @@ public class OutletListActivity extends ActionBarActivity {
         toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         Bundle bundle = getIntent().getExtras();
         String query = bundle.getString("name");
         String id = bundle.getString("id");
@@ -70,7 +71,7 @@ public class OutletListActivity extends ActionBarActivity {
 
         outletListView.setAdapter(mOutletListAdapter);
 
-        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outletArrayList, query, mOutletListAdapter, id, emptyView, toolbar);
+        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outletArrayList, query, mOutletListAdapter, id, emptyView, toolbar,this);
 
         mOutletListAsyncTask.execute();
 

@@ -1,5 +1,6 @@
 package com.brandstore1;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -67,6 +68,7 @@ ScrollView scrollView;
     ArrayList<RelatedBrands> brandsArray;
     RelatedBrandsListViewAdapter relatedBrandsListViewAdapter;
     ImageView first,second,third;
+    ProgressDialog progress;
 
     public OutletDetailsAsyncTask(
             TagPriceListViewAdapter TagPrice,
@@ -107,7 +109,7 @@ ScrollView scrollView;
         this.toolbar=toolbar;
         this.relatedBrandsListViewAdapter=relatedBrandsListViewAdapter;
         this.tagpriceListView = tagpriceListView;
-this.first=first;
+        this.first=first;
         this.second=second;
         this.third=third;
 
@@ -134,7 +136,14 @@ this.first=first;
     protected void onPreExecute() {
         super.onPreExecute();
 
+        progress = new ProgressDialog(this.context);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.setCancelable(false);
+        progress.setCanceledOnTouchOutside(false);
+        progress.show();
     }
+
 
     @Override
     protected OutletDetails doInBackground(Void... params) {
@@ -283,6 +292,8 @@ this.first=first;
         tagpriceListView.setLayoutParams(params);
         //tagpriceListView.requestLayout();
         scrollView.smoothScrollTo(0,0);
+        scrollView.setVisibility(View.VISIBLE);
+        progress.dismiss();
     }
 
 

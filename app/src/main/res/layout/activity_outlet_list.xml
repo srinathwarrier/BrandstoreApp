@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
 
-        tools:context="com.brandstore.activities.OutletListActivity">
+        tools:context="com.brandstore1.activities.OutletListActivity">
 
         <include
             android:id="@+id/outletlisttoolbar"
@@ -32,7 +32,6 @@
             android:id="@+id/outlet_list_empty_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Loading outlets..."
             android:visibility="gone" />
     </LinearLayout>
 <!--

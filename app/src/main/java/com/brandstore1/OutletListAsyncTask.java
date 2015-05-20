@@ -1,5 +1,7 @@
 package com.brandstore1;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,16 +33,32 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
     String id;
     TextView emptyView;
     Toolbar toolbar;
+    ProgressDialog progress;
+    Context mContext;
 
-    public OutletListAsyncTask(ArrayList<Outlet> outletArrayList, String text, OutletListAdapter adapter, String id, TextView theEmptyView, Toolbar toolbar) {
+    public OutletListAsyncTask(ArrayList<Outlet> outletArrayList, String text, OutletListAdapter adapter, String id, TextView theEmptyView, Toolbar toolbar, Context context) {
         this.id = id;
         mOutletArrayList = outletArrayList;
         query = text;
         mOutletListAdapter = adapter;
         emptyView = theEmptyView;
         this.toolbar = toolbar;
+        this.mContext = context;
     }
 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        toolbar.setTitle("");
+
+        progress = new ProgressDialog(this.mContext);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.setCancelable(false);
+        progress.setCanceledOnTouchOutside(false);
+        progress.show();
+    }
 
     @Override
     protected Void doInBackground(Void... params) {
@@ -106,6 +124,8 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
             emptyView.setText("No Outlets Found !!!");
         }
         mOutletListAdapter.notifyDataSetChanged();
+        progress.dismiss();
+        //OutletList
 
     }
 }
