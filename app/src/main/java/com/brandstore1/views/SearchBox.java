@@ -1,4 +1,4 @@
-package com.brandstore.views;
+package com.brandstore1.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-import com.brandstore.R;
+import com.brandstore1.R;
 
 
 public class SearchBox extends EditText {
