@@ -1,4 +1,4 @@
-package com.brandstore.adapters;
+package com.brandstore1.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.brandstore.R;
-import com.brandstore.entities.Outlet;
+import com.brandstore1.R;
+import com.brandstore1.entities.Outlet;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

@@ -1,4 +1,4 @@
-package com.brandstore;
+package com.brandstore1;
 
 import android.app.Application;
 

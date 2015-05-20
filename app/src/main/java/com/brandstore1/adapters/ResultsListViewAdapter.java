@@ -1,4 +1,4 @@
-package com.brandstore.adapters;
+package com.brandstore1.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.brandstore.R;
-import com.brandstore.entities.SearchResults;
+import com.brandstore1.R;
+import com.brandstore1.entities.SearchResults;
 
 import java.util.ArrayList;
 

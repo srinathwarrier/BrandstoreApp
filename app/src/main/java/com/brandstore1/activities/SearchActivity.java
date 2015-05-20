@@ -1,4 +1,4 @@
-package com.brandstore.activities;
+package com.brandstore1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,19 +12,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.brandstore.R;
-import com.brandstore.SearchResultsAsyncTask;
-import com.brandstore.adapters.ResultsListViewAdapter;
-import com.brandstore.entities.SearchResults;
-import com.brandstore.fragments.NavigationDrawerFragment;
-import com.brandstore.views.SearchBox;
+import com.brandstore1.R;
+import com.brandstore1.SearchResultsAsyncTask;
+import com.brandstore1.adapters.ResultsListViewAdapter;
+import com.brandstore1.entities.SearchResults;
+import com.brandstore1.fragments.NavigationDrawerFragment;
+//import com.brandstore1.views.SearchBox;
 
 import java.util.ArrayList;
 
 
 public class SearchActivity extends ActionBarActivity {
     ResultsListViewAdapter mResultsAdapter;
-    SearchBox mEdit;
+    //SearchBox mEdit;
     ListView mResultList;
     NavigationDrawerFragment drawerFragment;
     ArrayList<SearchResults> mSearchResult = new ArrayList<>();

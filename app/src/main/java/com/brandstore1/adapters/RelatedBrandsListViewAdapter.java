@@ -1,4 +1,4 @@
-package com.brandstore.adapters;
+package com.brandstore1.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.brandstore.R;
-import com.brandstore.entities.RelatedBrands;
+import com.brandstore1.R;
+import com.brandstore1.entities.RelatedBrands;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

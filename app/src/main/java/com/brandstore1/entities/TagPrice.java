@@ -1,4 +1,4 @@
-package com.brandstore.entities;
+package com.brandstore1.entities;
 
 /**
  * Created by I076324 on 4/26/2015.

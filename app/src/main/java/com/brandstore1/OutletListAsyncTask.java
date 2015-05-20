@@ -1,12 +1,12 @@
-package com.brandstore;
+package com.brandstore1;
 
 import android.os.AsyncTask;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.brandstore.adapters.OutletListAdapter;
-import com.brandstore.entities.Outlet;
+import com.brandstore1.adapters.OutletListAdapter;
+import com.brandstore1.entities.Outlet;
 
 import org.json.JSONArray;
 import org.json.JSONException;

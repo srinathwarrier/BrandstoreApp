@@ -1,4 +1,4 @@
-package com.brandstore.entities;
+package com.brandstore1.entities;
 
 import java.util.ArrayList;
 

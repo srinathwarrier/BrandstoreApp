@@ -1,10 +1,10 @@
-package com.brandstore;
+package com.brandstore1;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.brandstore.adapters.ResultsListViewAdapter;
-import com.brandstore.entities.SearchResults;
+import com.brandstore1.adapters.ResultsListViewAdapter;
+import com.brandstore1.entities.SearchResults;
 
 import org.json.JSONArray;
 import org.json.JSONException;

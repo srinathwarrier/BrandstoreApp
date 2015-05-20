@@ -1,4 +1,4 @@
-package com.brandstore.adapters;
+package com.brandstore1.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.brandstore.R;
+import com.brandstore1.R;
 
 /**
  * Created by Ravi on 26-Mar-15.

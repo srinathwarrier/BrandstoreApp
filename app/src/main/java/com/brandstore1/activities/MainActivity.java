@@ -1,4 +1,4 @@
-package com.brandstore.activities;
+package com.brandstore1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.brandstore.AnalyticsSampleApp;
-import com.brandstore.R;
-import com.brandstore.adapters.CategoryGridViewAdapter;
-import com.brandstore.fragments.NavigationDrawerFragment;
+import com.brandstore1.AnalyticsSampleApp;
+import com.brandstore1.R;
+import com.brandstore1.adapters.CategoryGridViewAdapter;
+import com.brandstore1.fragments.NavigationDrawerFragment;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;

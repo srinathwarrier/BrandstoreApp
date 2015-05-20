@@ -25,7 +25,7 @@
  *
  */
 
-package com.brandstore.utils;
+package com.brandstore1.utils;
 
 import java.util.LinkedList;
 import java.util.Queue;

@@ -1,4 +1,4 @@
-package com.brandstore.activities;
+package com.brandstore1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,14 +15,14 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.brandstore.adapters.RelatedBrandsListViewAdapter;
-import com.brandstore.entities.RelatedBrands;
-import com.brandstore.utils.HorizontalListView;
+import com.brandstore1.adapters.RelatedBrandsListViewAdapter;
+import com.brandstore1.entities.RelatedBrands;
+import com.brandstore1.utils.HorizontalListView;
 
-import com.brandstore.OutletDetailsAsyncTask;
-import com.brandstore.R;
-import com.brandstore.adapters.TagPriceListViewAdapter;
-import com.brandstore.entities.TagPrice;
+import com.brandstore1.OutletDetailsAsyncTask;
+import com.brandstore1.R;
+import com.brandstore1.adapters.TagPriceListViewAdapter;
+import com.brandstore1.entities.TagPrice;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

@@ -1,4 +1,4 @@
-package com.brandstore.activities;
+package com.brandstore1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.brandstore.OutletListAsyncTask;
-import com.brandstore.R;
-import com.brandstore.adapters.OutletListAdapter;
-import com.brandstore.entities.Outlet;
+import com.brandstore1.OutletListAsyncTask;
+import com.brandstore1.R;
+import com.brandstore1.adapters.OutletListAdapter;
+import com.brandstore1.entities.Outlet;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

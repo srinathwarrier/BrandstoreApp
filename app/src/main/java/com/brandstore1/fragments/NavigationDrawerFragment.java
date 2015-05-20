@@ -1,4 +1,4 @@
-package com.brandstore.fragments;
+package com.brandstore1.fragments;
 
 
 import android.annotation.TargetApi;
@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.brandstore.R;
+import com.brandstore1.R;
 
 
 /**
