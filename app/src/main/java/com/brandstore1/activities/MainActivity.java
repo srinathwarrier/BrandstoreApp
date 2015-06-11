@@ -69,8 +69,6 @@ public class MainActivity extends ActionBarActivity {
         t.send(new HitBuilders.ScreenViewBuilder().build());
 
 
-
-
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

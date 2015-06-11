@@ -1,10 +1,12 @@
 package com.brandstore1;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.brandstore1.adapters.ResultsListViewAdapter;
 import com.brandstore1.entities.SearchResults;
+import com.brandstore1.utils.CircularProgressDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,33 +24,40 @@ import java.util.ArrayList;
 /**
  * Created by Ravi on 27-Mar-15.
  */
-public class SearchResultsAsyncTask extends AsyncTask<String, Void, Void> {
+public class SearchResultsAsyncTask extends AsyncTask<String, Void, String> {
     String query;
     SearchResults obj;
     ResultsListViewAdapter mResultsAdapter;
+    Context mContext;
+    int currentTime ;
 
     ArrayList<SearchResults> mSearchResults;
 
-    public SearchResultsAsyncTask(String text, ResultsListViewAdapter adapter, ArrayList<SearchResults> searchResults) {
+
+
+    public SearchResultsAsyncTask(String text, ResultsListViewAdapter adapter, ArrayList<SearchResults> searchResults, Context context) {
         query = text;
         mResultsAdapter = adapter;
         mSearchResults = searchResults;
+        mContext =context;
+        currentTime= (int)System.currentTimeMillis();
 
     }
 
     @Override
     protected void onPreExecute() {
-
         super.onPreExecute();
+        mSearchResults.clear();
+
     }
 
     @Override
-    protected Void doInBackground(String... params) {
+    protected String doInBackground(String... params) {
         //url = "http://brandstore.co.in/database/scripts/getSuggestions.php?query=" + params;
 
-        mSearchResults.clear();
         StringBuilder builder = null;
         try {
+            Log.i("SearchResultsAsyncTask","currentTime: "+currentTime +" and query:"+query);
             URL url = new URL("http://awsm-awsmproject.rhcloud.com/getSuggestions?q=" + query + "&userid=" + 6);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoOutput(false);
@@ -59,6 +68,7 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, Void> {
                     urlConnection.getInputStream());
             BufferedReader reader = new BufferedReader(isr);
             while ((line = reader.readLine()) != null) builder.append(line);
+            return (builder.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -68,9 +78,17 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, Void> {
         }
 
 
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(String resultString) {
+        super.onPostExecute(resultString);
+
+
         try {
 
-            JSONArray json = new JSONArray(builder.toString());
+            JSONArray json = new JSONArray(resultString);
             if (json.length() == 0) {
                 obj = new SearchResults();
                 obj.setCategory(" ");
@@ -93,14 +111,8 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, Void> {
             e.printStackTrace();
         }
 
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-
         mResultsAdapter.notifyDataSetChanged();
+
 
     }
 }

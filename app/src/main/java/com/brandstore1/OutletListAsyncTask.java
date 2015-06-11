@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.brandstore1.adapters.OutletListAdapter;
 import com.brandstore1.entities.Outlet;
+import com.brandstore1.utils.CircularProgressDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +34,8 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
     String id;
     TextView emptyView;
     Toolbar toolbar;
-    ProgressDialog progress;
+
+    CircularProgressDialog circularProgressDialog;
     Context mContext;
 
     public OutletListAsyncTask(ArrayList<Outlet> outletArrayList, String text, OutletListAdapter adapter, String id, TextView theEmptyView, Toolbar toolbar, Context context) {
@@ -49,15 +51,10 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
         toolbar.setTitle("");
 
-        progress = new ProgressDialog(this.mContext);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.setIndeterminate(true);
-        progress.setCancelable(false);
-        progress.setCanceledOnTouchOutside(false);
-        progress.show();
+        circularProgressDialog = new CircularProgressDialog(this.mContext);
+        circularProgressDialog = CircularProgressDialog.show(this.mContext,"","");
     }
 
     @Override
@@ -124,7 +121,7 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
             emptyView.setText("No Outlets Found !!!");
         }
         mOutletListAdapter.notifyDataSetChanged();
-        progress.dismiss();
+        circularProgressDialog.dismiss();
         //OutletList
 
     }

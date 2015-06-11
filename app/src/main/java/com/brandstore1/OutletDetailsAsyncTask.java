@@ -20,6 +20,7 @@ import com.brandstore1.adapters.TagPriceListViewAdapter;
 import com.brandstore1.entities.OutletDetails;
 import com.brandstore1.entities.RelatedBrands;
 import com.brandstore1.entities.TagPrice;
+import com.brandstore1.utils.CircularProgressDialog;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -42,7 +43,7 @@ import java.util.ArrayList;
 /**
  * Created by Ravi on 30-Mar-15.
  */
-public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, OutletDetails> {
+public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
 
     String id;  // Input parameter
 
@@ -63,12 +64,13 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, OutletDetails>
     ListView tagpriceListView;
     ArrayList<String> tag;
     ArrayList<String> price;
-ScrollView scrollView;
+    ScrollView scrollView;
     Toolbar toolbar;
     ArrayList<RelatedBrands> brandsArray;
     RelatedBrandsListViewAdapter relatedBrandsListViewAdapter;
     ImageView first,second,third;
-    ProgressDialog progress;
+    CircularProgressDialog circularProgressDialog;
+
 
     public OutletDetailsAsyncTask(
             TagPriceListViewAdapter TagPrice,
@@ -81,7 +83,7 @@ ScrollView scrollView;
             TextView website,
             ArrayList<String>tag,
             ArrayList<String>price,
-           ListView tagpriceListView,
+            ListView tagpriceListView,
             ScrollView scrollView,
             Button readmore,
             Toolbar toolbar,
@@ -119,12 +121,11 @@ ScrollView scrollView;
                 .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
                 .showImageOnFail(R.drawable.blank_screen) // resource or drawable
                 .resetViewBeforeLoading(true)  // default
-
                 .cacheInMemory(true) // default
                 .cacheOnDisk(true) // default
                 .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
 
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 .diskCache(new UnlimitedDiscCache(cacheDir))
                 .defaultDisplayImageOptions(options)
                 .build();
@@ -136,44 +137,45 @@ ScrollView scrollView;
     protected void onPreExecute() {
         super.onPreExecute();
 
-        progress = new ProgressDialog(this.context);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.setIndeterminate(true);
-        progress.setCancelable(false);
-        progress.setCanceledOnTouchOutside(false);
-        progress.show();
+        circularProgressDialog = new CircularProgressDialog(this.context);
+        circularProgressDialog = CircularProgressDialog.show(this.context,"","");
+        tag.clear();
+        price.clear();
     }
 
 
     @Override
-    protected OutletDetails doInBackground(Void... params) {
-        tag.clear();
-        price.clear();
+    protected String doInBackground(Void... params) {
         StringBuilder builder = null;
         try {
             URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutletDetails?id=" + id);
-
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
 
             String line;
             builder = new StringBuilder();
-            InputStreamReader isr = new InputStreamReader(
-                    urlConnection.getInputStream());
+            InputStreamReader isr = new InputStreamReader(urlConnection.getInputStream());
             BufferedReader reader = new BufferedReader(isr);
             while ((line = reader.readLine()) != null) builder.append(line);
+
+            return (builder.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
+    }
 
-        try {
 
-            JSONObject jsonobject = new JSONObject(builder.toString());
+    @Override
+    protected void onPostExecute(String resultString) {
+        super.onPostExecute(resultString);
+
+    try {
+
+            JSONObject jsonobject = new JSONObject(resultString);
 
             obj = new OutletDetails();
-
             obj.setOutletName(jsonobject.getString("brandName"));
             obj.setOutletImage(jsonobject.getString("imageUrl"));
             obj.setFloor(jsonobject.getString("floorNumber").concat(", "));
@@ -185,8 +187,6 @@ ScrollView scrollView;
 
             JSONArray tagsArray = jsonobject.getJSONArray("tagsArray");
             JSONObject tagsObject;
-
-
             for (int i = 0; i < tagsArray.length(); i++) {
                 tagsObject = tagsArray.getJSONObject(i);
                 tag.add(tagsObject.getString("tagName"));
@@ -207,93 +207,94 @@ ScrollView scrollView;
                 brandsArray.add(obj1);
             }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+            final OutletDetails outletDetails = obj;
+            if (outletDetails != null) {
+
+                // 1. Add Default views to the LinearLayout
+                outletname.setText(outletDetails.getOutletName());
+                floor.setText(outletDetails.getFloor());
+                description.setText(outletDetails.getShortDescription());
+                website.setText(outletDetails.getWebsite());
+                hubname.setText(outletDetails.getHubName());
+                ImageLoader.getInstance().displayImage(outletDetails.getOutletImage(), outletimage);
+    /*
+                // 2. Add TagPrice views to the LinearLayout
+                for (int i = 0; i < obj.getTagPriceArrayList().size(); i++) {
+                    TextView tagText = new TextView(context),
+                            priceText = new TextView(context);
+                    tagText.setText("Avg price of " + obj.getTagPriceArrayList().get(i).getTagString());
+                    priceText.setText(" -  Rs." + obj.getTagPriceArrayList().get(i).getPriceString());
+                    LinearLayout newRow = new LinearLayout(context);
+                    newRow.setOrientation(LinearLayout.HORIZONTAL);
+                    newRow.addView(tagText);
+                    newRow.addView(priceText);
+                    tagPriceLinearLayout.addView(newRow);
+                }*/
+
+            }
+            readmore.setVisibility(View.VISIBLE);
+            readmore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (readmore.getText() == "READ LESS") {
+                        readmore.setText("READ MORE");
+                        description.setText(outletDetails.getShortDescription());
+                    } else {
+                        Log.d("entered", "Entered");
+                        description.setText(outletDetails.getLongDescription());
+                        readmore.setText("READ LESS");
+                    }
+
+                }
+
+            });
+
+            if(obj.getGenderCodeString().contains("M"))
+            {
+                first.setVisibility(View.VISIBLE);
+            }
+            if(obj.getGenderCodeString().contains("F"))
+            {
+                second.setVisibility(View.VISIBLE);
+            }
+            if(obj.getGenderCodeString().contains("K"))
+            {
+                third.setVisibility(View.VISIBLE);
+            }
+
+            toolbar.setTitle(outletDetails.getOutletName());
+
+            int totalHeight = 0;
+            int desiredWidth = View.MeasureSpec.makeMeasureSpec(tagpriceListView.getWidth(), View.MeasureSpec.AT_MOST);
+            for (int i = 0; i < mTagPrice.getCount(); i++) {
+                View listItem = mTagPrice.getView(i, null, tagpriceListView);
+                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+                totalHeight += listItem.getMeasuredHeight();
+            }
+
+            ViewGroup.LayoutParams params = tagpriceListView.getLayoutParams();
+            params.height = totalHeight + (tagpriceListView.getDividerHeight() * (mTagPrice.getCount() - 1));
+            tagpriceListView.setLayoutParams(params);
+            //tagpriceListView.requestLayout();
+
+
+        }catch (JSONException e) {
+                e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return obj;
-    }
 
-
-    @Override
-    protected void onPostExecute(final OutletDetails outletDetails) {
-        super.onPostExecute(outletDetails);
-
-        if (outletDetails != null) {
-
-            // 1. Add Default views to the LinearLayout
-            outletname.setText(outletDetails.getOutletName());
-            floor.setText(outletDetails.getFloor());
-            description.setText(outletDetails.getShortDescription());
-            website.setText(outletDetails.getWebsite());
-            hubname.setText(outletDetails.getHubName());
-            ImageLoader.getInstance().displayImage(outletDetails.getOutletImage(), outletimage);
-/*
-            // 2. Add TagPrice views to the LinearLayout
-            for (int i = 0; i < obj.getTagPriceArrayList().size(); i++) {
-                TextView tagText = new TextView(context),
-                        priceText = new TextView(context);
-                tagText.setText("Avg price of " + obj.getTagPriceArrayList().get(i).getTagString());
-                priceText.setText(" -  Rs." + obj.getTagPriceArrayList().get(i).getPriceString());
-                LinearLayout newRow = new LinearLayout(context);
-                newRow.setOrientation(LinearLayout.HORIZONTAL);
-                newRow.addView(tagText);
-                newRow.addView(priceText);
-                tagPriceLinearLayout.addView(newRow);
-            }*/
-
-        }
-        readmore.setVisibility(View.VISIBLE);
-        readmore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (readmore.getText() == "READ LESS") {
-                    readmore.setText("READ MORE");
-                    description.setText(outletDetails.getShortDescription());
-                } else {
-                    Log.d("entered", "Entered");
-                    description.setText(outletDetails.getLongDescription());
-                    readmore.setText("READ LESS");
-                }
-
-            }
-
-        });
-
-        if(obj.getGenderCodeString().contains("M"))
-        {
-            first.setVisibility(View.VISIBLE);
-        }
-        if(obj.getGenderCodeString().contains("F"))
-        {
-            second.setVisibility(View.VISIBLE);
-        }
-        if(obj.getGenderCodeString().contains("K"))
-        {
-            third.setVisibility(View.VISIBLE);
-        }
-    relatedBrandsListViewAdapter.notifyDataSetChanged();
-    mTagPrice.notifyDataSetChanged();
-        toolbar.setTitle(outletDetails.getOutletName());
-
-        int totalHeight = 0;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(tagpriceListView.getWidth(), View.MeasureSpec.AT_MOST);
-        for (int i = 0; i < mTagPrice.getCount(); i++) {
-            View listItem = mTagPrice.getView(i, null, tagpriceListView);
-            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = tagpriceListView.getLayoutParams();
-        params.height = totalHeight + (tagpriceListView.getDividerHeight() * (mTagPrice.getCount() - 1));
-        tagpriceListView.setLayoutParams(params);
-        //tagpriceListView.requestLayout();
-        scrollView.smoothScrollTo(0,0);
+        scrollView.smoothScrollTo(0, 0);
         scrollView.setVisibility(View.VISIBLE);
-        progress.dismiss();
+
+        circularProgressDialog.dismiss();
+        mTagPrice.notifyDataSetChanged();
+        relatedBrandsListViewAdapter.notifyDataSetChanged();
+
+
+
     }
 
 

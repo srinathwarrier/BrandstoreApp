@@ -46,7 +46,7 @@ public class ResultsListViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder1 mHolder;
-        Log.d("SearchResult", "" + mSearchResult.size() + " " + mSearchResult.toString());
+        Log.d("SearchResult size", "" + mSearchResult.size() );
         if (mSearchResult.size() != 0) {
 
             if (convertView == null) {
@@ -61,8 +61,13 @@ public class ResultsListViewAdapter extends BaseAdapter {
                 mHolder = (ViewHolder1) convertView.getTag();
             }
 
-            mHolder.textView2.setText(mSearchResult.get(position).getCategory());
-            mHolder.textView.setText(mSearchResult.get(position).getName());
+            try{
+                mHolder.textView2.setText(mSearchResult.get(position).getCategory());
+                mHolder.textView.setText(mSearchResult.get(position).getName());
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
 
         }
         return convertView;

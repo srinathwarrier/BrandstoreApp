@@ -1,5 +1,6 @@
 package com.brandstore1.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +30,7 @@ public class SearchActivity extends ActionBarActivity {
     NavigationDrawerFragment drawerFragment;
     ArrayList<SearchResults> mSearchResult = new ArrayList<>();
     Toolbar toolbar;
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class SearchActivity extends ActionBarActivity {
         setContentView(R.layout.activity_search);
         toolbar = (Toolbar) findViewById(R.id.searchtoolbar);
         setSupportActionBar(toolbar);
+        mContext=this;
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
@@ -127,7 +130,7 @@ public class SearchActivity extends ActionBarActivity {
                     mSearchResult.clear();
                     mResultsAdapter.notifyDataSetChanged();
                 } else {
-                    SearchResultsAsyncTask mSearchAsyncTask = new SearchResultsAsyncTask(s.toString(), mResultsAdapter, mSearchResult);
+                    SearchResultsAsyncTask mSearchAsyncTask = new SearchResultsAsyncTask(s.toString(), mResultsAdapter, mSearchResult, mContext);
                     mSearchAsyncTask.execute();
                     mResultList.setVisibility(View.VISIBLE);
                 }
