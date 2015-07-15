@@ -5,4 +5,21 @@
     <item name="white" type="color">#FFFFFF</item>
     <item name="colorPrimary" type="color">#26C6DA</item>
     <item name="colorPrimaryDark" type="color">#0097A7</item>
+
+
+    <color name="my_primary">#ED1C24</color>
+    <color name="my_primary_dark">#CC0000</color>
+    <color name="my_primary_light">#B3E5FC</color>
+    <!--<color name="my_accent">#FF5722</color>-->
+    <color name="my_accent">#FF0000</color>
+    <color name="my_primary_text">#ffffff</color>
+    <color name="my_secondary_text">#ffffff</color>
+    <color name="my_icons">#FFFFFF</color>
+    <color name="my_divider">#B6B6B6</color>
+
+    <color name="nav_drawer_header_bg">#26C6DA</color>
+    <color name="nav_drawer_body_bg">#FFFFFF</color>
+    <color name="nav_drawer_header_text">#FFFFFF</color>
+    <color name="drawer_item_text">#000000</color>
+
 </resources>

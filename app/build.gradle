@@ -7,8 +7,8 @@ android {
         applicationId 'com.brandstore1'
         minSdkVersion 9
         targetSdkVersion 21
-        versionCode 3
-        versionName "1.2"
+        versionCode 5
+        versionName "1.4"
     }
     buildTypes {
         release {
@@ -30,6 +30,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'com.google.android.gms:play-services:7.0.0'
+    compile 'com.android.support:design:22.2.0'
 
 
 }

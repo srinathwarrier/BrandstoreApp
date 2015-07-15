@@ -2,11 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brandstore1.activities.OutletListActivity">
-<!--
-    <item
+    <!--<item
         android:id="@+id/sale_button"
         android:title="On Sale"
-        android:icon="@drawable/offers"
+        android:icon="@drawable/sale"
         android:showAsAction="always"
         app:showAsAction="always">
 
@@ -16,5 +15,13 @@
         android:title="Favourites"
         android:icon="@drawable/ic_action_favorite"
         android:showAsAction="always"
-        app:showAsAction="always" />-->
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/filter_button"
+        android:title="Filter"
+        android:icon="@drawable/ic_action_filter"
+        android:showAsAction="always"
+        app:showAsAction="always" />
+    -->
+
 </menu>

@@ -11,6 +11,7 @@
         app:showAsAction="always"
         android:actionViewClass="android.support.v7.widget.SearchView"
         app:actionViewClass="android.support.v7.widget.SearchView"
+        android:focusable="false"
 
         />
 </menu>

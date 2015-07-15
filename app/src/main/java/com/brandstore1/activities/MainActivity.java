@@ -1,9 +1,14 @@
 package com.brandstore1.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,6 +23,7 @@ import com.brandstore1.adapters.CategoryGridViewAdapter;
 import com.brandstore1.fragments.NavigationDrawerFragment;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.nearby.connection.Connections;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -26,16 +32,34 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity{
 
     GridView mCategoryGridView;
-    Toolbar toolbar;
     int CategoryImages[] = {R.drawable.accessories, R.drawable.denims, R.drawable.footwear, R.drawable.handbags, R.drawable.kidswear,
             R.drawable.luggage, R.drawable.mensethnic, R.drawable.sportswear, R.drawable.unisex,
             R.drawable.watcheseyewear, R.drawable.westernmen, R.drawable.westernunisex, R.drawable.westernwomen, R.drawable.womensethnic};
 
     String CategoryNames[] = {"ACCESSORIES AND GIFTS", "DENIMS", "FOOTWEAR", "HAND BAGS", "KID'S WEAR", "LUGGAGE", "MEN'S ETHNIC WEAR", "SPORTSWEAR", "UNISEX APPAREL",
             "WATCHES AND EYEWEAR", "WESTERN MEN'S APPAREL", "WESTERN UNISEX APPAREL", "WESTERN WOMEN'S APPAREL", "WOMEN'S ETHNIC WEAR"};
+
+
+    // Navigation drawer :
+    private Toolbar mToolbar;
+    private NavigationView mNavigationView;
+    private DrawerLayout mDrawerLayout;
+
+    private static final String PREFERENCES_FILE = "mymaterialapp_settings";
+    private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
+    private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
+
+    private boolean mUserLearnedDrawer;
+    private boolean mFromSavedInstanceState;
+    private int mCurrentSelectedPosition;
+
+
+    // SearchView
+    SearchView searchView;
+
 
 
     @Override
@@ -48,7 +72,6 @@ public class MainActivity extends ActionBarActivity {
                 .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
                 .showImageOnFail(R.drawable.blank_screen) // resource or drawable
                 .resetViewBeforeLoading(true)  // default
-
                 .cacheInMemory(true) // default
                 .cacheOnDisk(true) // default
                 .build();
@@ -59,9 +82,54 @@ public class MainActivity extends ActionBarActivity {
                 .build();
         ImageLoader.getInstance().init(config);
         NavigationDrawerFragment drawerFragment;
+
+        // Toolbar methods
+        setUpToolbar();
+
+        /*
+        //NavigationDrawer methods:
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mUserLearnedDrawer = Boolean.valueOf(readSharedSetting(this, PREF_USER_LEARNED_DRAWER, "false"));
+
+        if (savedInstanceState != null) {
+            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
+            mFromSavedInstanceState = true;
+        }
+
+        setUpNavDrawer();
+
+        mNavigationView = (NavigationView) findViewById(R.id.navigationView);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                menuItem.setChecked(true);
+                boolean returnValue = true;
+                switch (menuItem.getItemId()) {
+                    case R.id.drawer_item_slate:
+                        mCurrentSelectedPosition = 0;
+                        returnValue = true;
+                        break;
+                    case R.id.drawer_item_treasure:
+                        mCurrentSelectedPosition = 1;
+                        returnValue = true;
+                        break;
+                    case R.id.drawer_item_switch:
+                        mCurrentSelectedPosition = 0;
+                        returnValue = true;
+                        break;
+                    default:
+                        returnValue = true;
+                }
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                return returnValue;
+
+            }
+        });
+        */
+
+
         // Get tracker.
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         Tracker t = ((AnalyticsSampleApp) getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
         t.setScreenName("MainActivity");
 
@@ -73,12 +141,8 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-       /*Three Lines of code needed on every activity using the navigation drawer*/
-       /* getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-        drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout));
 
-*/
+
         mCategoryGridView = (GridView) findViewById(R.id.category_grid_view);
         mCategoryGridView.setAdapter(new CategoryGridViewAdapter(this, CategoryImages, CategoryNames));
 
@@ -143,7 +207,6 @@ public class MainActivity extends ActionBarActivity {
             case 13:
                 s = "88,90,80,81,115,116";
                 break; // Women's ethnic wear
-
             default:
                 break;
         }
@@ -155,7 +218,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem search = menu.findItem(R.id.search1);
-        final SearchView searchView = (SearchView) search.getActionView();
+        searchView = (SearchView) search.getActionView();
         searchView.setIconifiedByDefault(false);
         searchView.setQueryHint("Let's go shopping!");
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
@@ -187,5 +250,59 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setUpToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
+    }
+
+
+    /*
+        Navigation Drawer methods
+     */
+    private void setUpNavDrawer() {
+        if (mToolbar != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            mToolbar.setNavigationIcon(null);
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+            });
+        }
+        if (!mUserLearnedDrawer) {
+            mDrawerLayout.openDrawer(GravityCompat.START);
+            mUserLearnedDrawer = true;
+            saveSharedSetting(this, PREF_USER_LEARNED_DRAWER, "true");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        //mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION, 0);
+        //Menu menu = mNavigationView.getMenu();
+        //menu.getItem(mCurrentSelectedPosition).setChecked(true);
+    }
+
+    public static String readSharedSetting(Context ctx, String settingName, String defaultValue) {
+        SharedPreferences sharedPref = ctx.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        return sharedPref.getString(settingName, defaultValue);
+    }
+    public static void saveSharedSetting(Context ctx, String settingName, String settingValue) {
+        SharedPreferences sharedPref = ctx.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(settingName, settingValue);
+        editor.apply();
     }
 }

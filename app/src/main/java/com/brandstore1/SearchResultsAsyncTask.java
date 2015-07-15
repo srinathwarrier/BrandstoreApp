@@ -58,7 +58,8 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, String> {
         StringBuilder builder = null;
         try {
             Log.i("SearchResultsAsyncTask","currentTime: "+currentTime +" and query:"+query);
-            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getSuggestions?q=" + query + "&userid=" + 6);
+            //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getSuggestions?q=" + query + "&userid=" + 6);
+            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getSuggestions?q=" + query + "&userid=" + 6);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoOutput(false);
             Log.d("response", "" + urlConnection.getResponseCode());

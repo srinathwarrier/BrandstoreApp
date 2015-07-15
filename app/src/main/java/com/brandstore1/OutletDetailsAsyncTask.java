@@ -148,7 +148,10 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
         StringBuilder builder = null;
         try {
-            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutletDetails?id=" + id);
+            //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutletDetails?id=" + id);
+            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getOutletDetails?id=" + id);
+
+
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
             String line;

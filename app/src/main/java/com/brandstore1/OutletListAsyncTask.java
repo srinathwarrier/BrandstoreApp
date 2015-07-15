@@ -62,11 +62,10 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
         mOutletArrayList.clear();
         StringBuilder builder = null;
         try {
-            URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" + id);
-
+            //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" + id);
+            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getOutlets?userid=6&type=category&id=" + id);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
 
             String line;
             builder = new StringBuilder();
@@ -115,10 +114,14 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        toolbar.setTitle(mOutletArrayList.get(0).getRelevantTag().toString());
-        toolbar.setSubtitle(mOutletArrayList.size() + " " + "Outlets");
-        if (mOutletArrayList.size() == 0) {
-            emptyView.setText("No Outlets Found !!!");
+        try {
+            toolbar.setTitle(mOutletArrayList.get(0).getRelevantTag().toString());
+            toolbar.setSubtitle(mOutletArrayList.size() + " " + "Outlets");
+            if (mOutletArrayList.size() == 0) {
+                emptyView.setText("No Outlets Found !!!");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
         mOutletListAdapter.notifyDataSetChanged();
         circularProgressDialog.dismiss();

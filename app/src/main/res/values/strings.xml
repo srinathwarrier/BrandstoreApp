@@ -10,5 +10,10 @@
     <string name="title_activity_outlet_list">OutletList</string>
     <string name="title_activity_outlet_details">OutletDetails</string>
 
+    <string name="nav_item_categories">Categories</string>
+    <string name="nav_item_favorite">Favorite</string>
+    <string name="nav_item_sale">On Sale</string>
+
+
 
 </resources>
