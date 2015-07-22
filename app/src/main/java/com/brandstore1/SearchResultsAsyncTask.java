@@ -30,6 +30,7 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, String> {
     ResultsListViewAdapter mResultsAdapter;
     Context mContext;
     int currentTime ;
+    static int lastCallTime;
 
     ArrayList<SearchResults> mSearchResults;
 
@@ -41,13 +42,13 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, String> {
         mSearchResults = searchResults;
         mContext =context;
         currentTime= (int)System.currentTimeMillis();
+        lastCallTime = currentTime;
 
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mSearchResults.clear();
 
     }
 
@@ -56,8 +57,19 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, String> {
         //url = "http://brandstore.co.in/database/scripts/getSuggestions.php?query=" + params;
 
         StringBuilder builder = null;
+        if(lastCallTime>currentTime){
+            Log.i("SearchResults doInBg","Query:"+query+" lastCallTime>currentTime : "+lastCallTime+" > "+currentTime);
+        }
+        else if(lastCallTime<currentTime){
+            Log.i("SearchResults doInBg","Query:"+query+" lastCallTime<currentTime : "+lastCallTime+" < "+currentTime);
+        }
+        else{
+            Log.i("SearchResults doInBg","Query:"+query+" lastCallTime=currentTime : "+lastCallTime+" = "+currentTime);
+        }
+
+
         try {
-            Log.i("SearchResultsAsyncTask","currentTime: "+currentTime +" and query:"+query);
+            //Log.i("SearchResultsAsyncTask","currentTime: "+currentTime +" and query:"+query);
             //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getSuggestions?q=" + query + "&userid=" + 6);
             URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getSuggestions?q=" + query + "&userid=" + 6);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -86,31 +98,44 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String resultString) {
         super.onPostExecute(resultString);
 
+        if(lastCallTime>currentTime){
+            Log.i("SearchResults postExec","Query:"+query+" lastCallTime>currentTime : "+lastCallTime+" > "+currentTime);
+        }
+        else if(lastCallTime<currentTime){
+            Log.i("SearchResults postExec","Query:"+query+" lastCallTime<currentTime : "+lastCallTime+" < "+currentTime);
+        }
+        else{
+            Log.i("SearchResults postExec", "Query:" + query + " lastCallTime=currentTime : " + lastCallTime + " = " + currentTime);
+            mSearchResults.clear();
+            try {
 
-        try {
-
-            JSONArray json = new JSONArray(resultString);
-            if (json.length() == 0) {
-                obj = new SearchResults();
-                obj.setCategory(" ");
-                obj.setName("No results found");
-                obj.setId("0");
-                mSearchResults.add(obj);
-            } else {
-                for (int i = 0; i < json.length(); i++) {
+                JSONArray json = new JSONArray(resultString);
+                if (json.length() == 0 || query.length()<1) {
                     obj = new SearchResults();
-                    JSONObject object = json.getJSONObject(i);
-                    obj.setCategory(object.get("type").toString());
-                    obj.setName(object.get("name").toString());
-                    obj.setId(object.get("Id").toString());
+                    obj.setCategory(" ");
+                    String text = (query.length()<1)?("Start typing to view suggestions"):("No results found");
+                    obj.setName(text);
+                    obj.setId("0");
                     mSearchResults.add(obj);
                 }
+                else {
+                    for (int i = 0; i < json.length(); i++) {
+                        obj = new SearchResults();
+                        JSONObject object = json.getJSONObject(i);
+                        obj.setCategory(object.get("type").toString());
+                        obj.setName(object.get("name").toString());
+                        obj.setId(object.get("Id").toString());
+                        mSearchResults.add(obj);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+
 
         mResultsAdapter.notifyDataSetChanged();
 

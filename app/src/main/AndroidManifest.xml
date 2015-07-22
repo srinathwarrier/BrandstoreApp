@@ -30,7 +30,7 @@
         </activity>
         <activity
             android:name=".activities.SearchActivity"
-            android:label="@string/title_activity_sample"
+            android:label="@string/title_activity_search"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysVisible">

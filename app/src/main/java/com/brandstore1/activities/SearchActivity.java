@@ -2,7 +2,10 @@ package com.brandstore1.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
@@ -15,6 +18,7 @@ import android.widget.ListView;
 
 import com.brandstore1.R;
 import com.brandstore1.SearchResultsAsyncTask;
+import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
 import com.brandstore1.adapters.ResultsListViewAdapter;
 import com.brandstore1.entities.SearchResults;
 import com.brandstore1.fragments.NavigationDrawerFragment;
@@ -23,7 +27,7 @@ import com.brandstore1.fragments.NavigationDrawerFragment;
 import java.util.ArrayList;
 
 
-public class SearchActivity extends ActionBarActivity {
+public class SearchActivity extends ActionBarActivity implements SearchView.OnQueryTextListener{
     ResultsListViewAdapter mResultsAdapter;
     //SearchBox mEdit;
     ListView mResultList;
@@ -31,11 +35,18 @@ public class SearchActivity extends ActionBarActivity {
     ArrayList<SearchResults> mSearchResult = new ArrayList<>();
     Toolbar toolbar;
     Context mContext;
+    SearchView searchView;
+    SQLiteDatabase sqLiteDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        sqLiteDatabase = openOrCreateDatabase("brandstoreDB",MODE_PRIVATE,null);
+        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
+        updateSuggestionsAsyncTask.execute();
+
         toolbar = (Toolbar) findViewById(R.id.searchtoolbar);
         setSupportActionBar(toolbar);
         mContext=this;
@@ -113,32 +124,13 @@ public class SearchActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem search = menu.findItem(R.id.search);
-        final SearchView searchView = (SearchView) search.getActionView();
-        searchView.setIconifiedByDefault(false);
-        searchView.requestFocusFromTouch();
-        searchView.setQueryHint("Type brand store or product category");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-
-                if (searchView.getQuery().length() < 1) {
-                    mSearchResult.clear();
-                    mResultsAdapter.notifyDataSetChanged();
-                } else {
-                    SearchResultsAsyncTask mSearchAsyncTask = new SearchResultsAsyncTask(s.toString(), mResultsAdapter, mSearchResult, mContext);
-                    mSearchAsyncTask.execute();
-                    mResultList.setVisibility(View.VISIBLE);
-                }
-
-                return false;
-
-            }
-        });
+        searchView = (SearchView) MenuItemCompat.getActionView(search);
+        if(searchView!=null){
+            searchView.setIconifiedByDefault(false);
+            searchView.requestFocusFromTouch();
+            searchView.setQueryHint("Type brand or product");
+            searchView.setOnQueryTextListener(this);
+        }
         return true;
     }
 
@@ -162,5 +154,57 @@ public class SearchActivity extends ActionBarActivity {
         super.onResume();
         mResultsAdapter = new ResultsListViewAdapter(mSearchResult, this);
         mResultList.setAdapter(mResultsAdapter);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (searchView.getQuery().length() < 1) {
+            mSearchResult.clear();
+            SearchResults obj= new SearchResults();
+            obj.setId("0");
+            obj.setName("Start typing to view suggestions");
+            obj.setCategory(" ");
+            mSearchResult.add(obj);
+            mResultsAdapter.notifyDataSetChanged();
+        } else {
+            String s="%" + newText+ "%";
+            Cursor res= sqLiteDatabase.rawQuery("Select * from Suggestions where name like '" +s +"';", null);
+            res.moveToFirst();
+            if(res.getCount()==0)
+            {
+                mSearchResult.clear();
+                SearchResults obj= new SearchResults();
+                obj.setId("0");
+                obj.setName("No results found");
+                obj.setCategory(" ");
+                mSearchResult.add(obj);
+            }
+            else {
+
+                mSearchResult.clear();
+                while (res.isAfterLast() == false) {
+
+                    SearchResults obj = new SearchResults();
+                    obj.setId(res.getString(0));
+                    obj.setName(res.getString(1));
+                    obj.setCategory(res.getString(2));
+                    mSearchResult.add(obj);
+                    res.moveToNext();
+
+                }
+            }
+
+            //SearchResultsAsyncTask mSearchAsyncTask = new SearchResultsAsyncTask(newText, mResultsAdapter, mSearchResult, mContext);
+            //mSearchAsyncTask.execute();
+            mResultsAdapter.notifyDataSetChanged();
+            mResultList.setVisibility(View.VISIBLE);
+        }
+
+        return false;
     }
 }

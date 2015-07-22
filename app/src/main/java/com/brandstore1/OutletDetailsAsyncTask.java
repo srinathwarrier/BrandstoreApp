@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -52,6 +53,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
     TextView outletname;
     TextView floor;
     TextView hubname;
+    TextView offerDetails;
     TextView website;
     TextView description;
     Button readmore;
@@ -64,6 +66,8 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
     ListView tagpriceListView;
     ArrayList<String> tag;
     ArrayList<String> price;
+    //ArrayList<String> offersArrayList;
+    TextView offerContentTextView;
     ScrollView scrollView;
     Toolbar toolbar;
     ArrayList<RelatedBrands> brandsArray;
@@ -78,12 +82,15 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             TextView outletname,
             TextView floor,
             TextView hubname,
+            TextView offerDetails,
             String ids,
             TextView description,
             TextView website,
             ArrayList<String>tag,
             ArrayList<String>price,
             ListView tagpriceListView,
+            ArrayList<String> offersArrayList,
+            TextView offerContentTextView,
             ScrollView scrollView,
             Button readmore,
             Toolbar toolbar,
@@ -98,6 +105,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
         this.outletname = outletname;
         this.floor = floor;
         this.hubname = hubname;
+        this.offerDetails = offerDetails;
         this.description = description;
         this.website = website;
         id = ids;
@@ -107,6 +115,8 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
         mTagPrice=TagPrice;
         this.tag=tag;
         this.price=price;
+        //this.offersArrayList = offersArrayList;
+        this.offerContentTextView = offerContentTextView;
         this.scrollView=scrollView;
         this.toolbar=toolbar;
         this.relatedBrandsListViewAdapter=relatedBrandsListViewAdapter;
@@ -210,6 +220,19 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
                 brandsArray.add(obj1);
             }
 
+        JSONArray offersArray = jsonobject.getJSONArray("offersArray");
+        JSONObject offersObject;
+        String offerString="";
+        for (int i = 0; i < offersArray.length(); i++) {
+            offersObject = offersArray.getJSONObject(i);
+            offerString+=offersObject.getString("offerDesc")+"\n";
+            //offersArrayList.add(offersObject.getString("offerDesc"));
+        }
+        //String offerString = getStringFromOfferArrayList(offersArrayList);
+        if(offerString.equals("")){offerString="No Ongoing Offers !!!";}
+        offerContentTextView.setText(offerString);
+
+
             final OutletDetails outletDetails = obj;
             if (outletDetails != null) {
 
@@ -272,7 +295,8 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             int desiredWidth = View.MeasureSpec.makeMeasureSpec(tagpriceListView.getWidth(), View.MeasureSpec.AT_MOST);
             for (int i = 0; i < mTagPrice.getCount(); i++) {
                 View listItem = mTagPrice.getView(i, null, tagpriceListView);
-                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+                listItem.setLayoutParams(new ViewGroup.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                listItem.measure(View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
                 totalHeight += listItem.getMeasuredHeight();
             }
 
@@ -280,6 +304,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             params.height = totalHeight + (tagpriceListView.getDividerHeight() * (mTagPrice.getCount() - 1));
             tagpriceListView.setLayoutParams(params);
             //tagpriceListView.requestLayout();
+
 
 
         }catch (JSONException e) {
@@ -298,6 +323,19 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
 
 
 
+
+
+    }
+
+    public String getStringFromOfferArrayList(ArrayList offersArrayList){
+        if(offersArrayList==null || offersArrayList.size()==0){
+            return ("No Ongoing Offers !!!");
+        }
+        else{
+            String returnValue="";
+        }
+
+        return "";
     }
 
 

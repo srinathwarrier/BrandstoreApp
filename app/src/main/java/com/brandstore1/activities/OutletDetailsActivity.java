@@ -39,13 +39,17 @@ public class OutletDetailsActivity extends ActionBarActivity {
     TextView website;
     TextView description;
     TextView hubname;
+    TextView offerDetails;
     ListView tagprice;
     LinearLayout tagPriceLinearLayout;
     Button readmore;
+    TextView offerContentTextView;
+
 Toolbar toolbar;
     TagPriceListViewAdapter mTagPriceListViewAdapter;
     ArrayList<String> tag = new ArrayList();
     ArrayList<String> price= new ArrayList();
+    ArrayList<String> offersArrayList= new ArrayList();
     HorizontalListView relatedBrands;
     ArrayList<RelatedBrands> brandsarray= new ArrayList();
     ImageView first,second,third;
@@ -86,6 +90,7 @@ Toolbar toolbar;
         outletname = (TextView) findViewById(R.id.outletDetails_brandName);
         floor = (TextView) findViewById(R.id.outletDetails_floorName);
         hubname = (TextView) findViewById(R.id.outletDetails_hubName);
+        offerDetails = (TextView) findViewById(R.id.outletDetails_offer_content);
         description = (TextView) findViewById(R.id.outletDetails_description);
         website = (TextView) findViewById(R.id.outletDetails_website);
         first= (ImageView) findViewById(R.id.first);
@@ -93,6 +98,8 @@ Toolbar toolbar;
         third= (ImageView) findViewById(R.id.third);
         readmore = (Button) findViewById(R.id.readmore);
         readmore.setVisibility(View.INVISIBLE);
+        offerContentTextView = (TextView) findViewById(R.id.outletDetails_offer_content);
+
 
 
         tagprice=(ListView)findViewById(R.id.tag_and_price);
@@ -111,12 +118,15 @@ Toolbar toolbar;
                 outletname,
                 floor,
                 hubname,
+                offerDetails,
                 id,
                 description,
                 website,
                 tag,
                 price,
                 tagprice,
+                offersArrayList,
+                offerContentTextView,
                 scroll,
                 readmore,
                 toolbar,
