@@ -124,7 +124,7 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
             e.printStackTrace();
         }
         mOutletListAdapter.notifyDataSetChanged();
-        circularProgressDialog.dismiss();
+         circularProgressDialog.dismiss();
         //OutletList
 
     }

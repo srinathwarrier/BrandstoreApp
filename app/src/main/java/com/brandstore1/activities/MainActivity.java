@@ -42,8 +42,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             R.drawable.luggage, R.drawable.mensethnic, R.drawable.sportswear, R.drawable.unisex,
             R.drawable.watcheseyewear, R.drawable.westernmen, R.drawable.westernunisex, R.drawable.westernwomen, R.drawable.womensethnic};
 
+    //region test
     String CategoryNames[] = {"ACCESSORIES AND GIFTS", "DENIMS", "FOOTWEAR", "HAND BAGS", "KID'S WEAR", "LUGGAGE", "MEN'S ETHNIC WEAR", "SPORTSWEAR", "UNISEX APPAREL",
             "WATCHES AND EYEWEAR", "WESTERN MEN'S APPAREL", "WESTERN UNISEX APPAREL", "WESTERN WOMEN'S APPAREL", "WOMEN'S ETHNIC WEAR"};
+    //endregion
 
 
     // Navigation drawer :
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // Toolbar methods
         setUpToolbar();
 
-        /*
+
         //NavigationDrawer methods:
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mUserLearnedDrawer = Boolean.valueOf(readSharedSetting(this, PREF_USER_LEARNED_DRAWER, "false"));
@@ -105,20 +107,19 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-
                 menuItem.setChecked(true);
                 boolean returnValue = true;
                 switch (menuItem.getItemId()) {
-                    case R.id.drawer_item_slate:
+                    case R.id.drawer_item_categories:
                         mCurrentSelectedPosition = 0;
                         returnValue = true;
                         break;
-                    case R.id.drawer_item_treasure:
+                    case R.id.drawer_item_favorite:
                         mCurrentSelectedPosition = 1;
                         returnValue = true;
                         break;
-                    case R.id.drawer_item_switch:
-                        mCurrentSelectedPosition = 0;
+                    case R.id.drawer_item_sale:
+                        mCurrentSelectedPosition = 2;
                         returnValue = true;
                         break;
                     default:
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
             }
         });
-        */
+
 
 
         // Get tracker.
@@ -312,9 +313,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        //mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION, 0);
-        //Menu menu = mNavigationView.getMenu();
-        //menu.getItem(mCurrentSelectedPosition).setChecked(true);
+        mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION, 0);
+        Menu menu = mNavigationView.getMenu();
+        menu.getItem(mCurrentSelectedPosition).setChecked(true);
     }
 
     public static String readSharedSetting(Context ctx, String settingName, String defaultValue) {
