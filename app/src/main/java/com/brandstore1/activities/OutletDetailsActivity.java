@@ -9,13 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brandstore1.adapters.RelatedBrandsListViewAdapter;
+import com.brandstore1.entities.OutletDetails;
 import com.brandstore1.entities.RelatedBrands;
 import com.brandstore1.utils.HorizontalListView;
 
@@ -42,7 +45,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
     ListView tagprice;
     LinearLayout tagPriceLinearLayout;
     Button readmore;
-Toolbar toolbar;
+    Toolbar toolbar;
     TagPriceListViewAdapter mTagPriceListViewAdapter;
     ArrayList<String> tag = new ArrayList();
     ArrayList<String> price= new ArrayList();
@@ -161,6 +164,18 @@ if(id==android.R.id.home)
     return true;
 }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void addFavorites(View view){
+        boolean checked = ((CheckBox) view).isChecked();
+        if(checked) {
+            Toast.makeText(OutletDetailsActivity.this,OutletDetailsAsyncTask.favOutletName, Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(OutletDetailsActivity.this, "unchecked", Toast.LENGTH_LONG).show();
+        }
+
     }
 
 }

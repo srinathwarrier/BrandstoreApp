@@ -7,9 +7,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brandstore1.OutletListAsyncTask;
 import com.brandstore1.R;
@@ -30,6 +33,8 @@ public class OutletListActivity extends ActionBarActivity {
     ListView outletListView;
     ArrayList<Outlet> outletArrayList = new ArrayList();
     Toolbar toolbar;
+    CheckBox disFav;
+    OutletListAdapter mOutletListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +72,7 @@ public class OutletListActivity extends ActionBarActivity {
         outletListView.setEmptyView(emptyView);
 
 
-        OutletListAdapter mOutletListAdapter = new OutletListAdapter(outletArrayList, this);
+        mOutletListAdapter = new OutletListAdapter(outletArrayList, this, toolbar);
 
         outletListView.setAdapter(mOutletListAdapter);
 
@@ -84,6 +89,9 @@ public class OutletListActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+
+        displayFavorites();
     }
 
 
@@ -111,4 +119,33 @@ public class OutletListActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void displayFavorites(){
+
+        disFav = (CheckBox)findViewById(R.id.display_favorites);
+        disFav.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOutletListAdapter.resetData();
+                if (((CheckBox)view).isChecked()) {
+
+                    //filter favorites
+
+                    mOutletListAdapter.getFilter().filter("X");
+
+
+                }
+                else {
+                    mOutletListAdapter.getFilter().filter("Y");
+                }
+
+
+            }
+        });
+
+    }
+
+
+
+
 }

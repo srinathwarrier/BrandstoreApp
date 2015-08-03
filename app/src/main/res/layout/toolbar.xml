@@ -7,5 +7,4 @@
     app:theme="@style/ToolBarTheme"
    >
 
-
 </android.support.v7.widget.Toolbar>

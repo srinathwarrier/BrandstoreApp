@@ -98,7 +98,7 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
                 obj.setPrice(object.get("avgPrice").toString());
                 obj.setGenderCodeString(object.get("genderCodeString").toString());
                 obj.setMallName(object.get("hubName").toString());
-
+                obj.setIsFavorite(object.get("isFavorite").toString());
                 Log.i("Brandstore - Outletlist", "object:" + obj.toString());
                 mOutletArrayList.add(obj);
             }

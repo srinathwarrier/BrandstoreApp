@@ -17,6 +17,7 @@ public class Outlet {
     private String genderCodeString;
     private String descriptionString;
     private String websiteString;
+    private String isFavorite;
 
     public String getGenderCodeString() {
         return genderCodeString;
@@ -107,5 +108,13 @@ public class Outlet {
 
     public void setWebsiteString(String websiteString) {
         this.websiteString = websiteString;
+    }
+
+    public String getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(String isFavorite) {
+       this.isFavorite = isFavorite;
     }
 }

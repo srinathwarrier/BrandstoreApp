@@ -2,10 +2,13 @@ package com.brandstore1.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,15 +26,20 @@ import java.util.ArrayList;
 /**
  * Created by Ravi on 29-Mar-15.
  */
-public class OutletListAdapter extends BaseAdapter {
-    ArrayList<Outlet> mOutletList;
-    private LayoutInflater inflater;
 
-    public OutletListAdapter(ArrayList<Outlet> outlet, Activity context) {
+public class OutletListAdapter extends BaseAdapter implements Filterable {
+    ArrayList<Outlet> mOutletList;
+    ArrayList<Outlet> origOutletList;
+    private LayoutInflater inflater;
+    private Filter filter;
+    Toolbar toolbar;
+
+    public OutletListAdapter(ArrayList<Outlet> outlet, Activity context, Toolbar toolbar) {
         this.inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mOutletList = outlet;
-
+        origOutletList = outlet;
+        this.toolbar = toolbar;
     }
 
     @Override
@@ -52,6 +60,7 @@ public class OutletListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder1 mHolder;
+
         if (convertView == null) {
             mHolder = new ViewHolder1();
             convertView = inflater.inflate(R.layout.outlet_list_list_view_item, null);
@@ -108,4 +117,73 @@ public class OutletListAdapter extends BaseAdapter {
         ImageView kids;
 
     }
+
+    public void resetData() {
+        mOutletList = origOutletList;
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (filter == null){
+            filter  = new OutletFilter();
+        }
+        return filter;
+    }
+
+
+    private class OutletFilter extends Filter
+    {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence filterFav) {
+
+            FilterResults result = new FilterResults();
+
+            if(filterFav == "X")
+            {
+                ArrayList<Outlet> filteredOutlets = new ArrayList<Outlet>();
+
+                for(int i = 0, l = mOutletList.size(); i < l; i++)
+                {
+                    Outlet m = mOutletList.get(i);
+                   //if(m.getBrandOutletName().startsWith("L"))
+                     if(m.getIsFavorite().compareTo("1") == 0)
+                        filteredOutlets.add(m);
+
+                }
+
+                result.values = filteredOutlets;
+                result.count = filteredOutlets.size();
+
+
+            }
+            else
+            {
+
+                    result.values = mOutletList;
+                    result.count = mOutletList.size();
+
+
+            }
+
+            return result;
+        }
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence filterFav, FilterResults results) {
+
+            if (results.count == 0)
+                notifyDataSetInvalidated();
+            else {
+                mOutletList = (ArrayList<Outlet>) results.values;
+                toolbar.setSubtitle(getCount() + " " + "Outlets");
+                notifyDataSetChanged();
+
+            }
+
+        }
+    }
+
+
+
 }
