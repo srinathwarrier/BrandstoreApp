@@ -47,7 +47,7 @@ import java.util.ArrayList;
 public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
 
     String id;  // Input parameter
-
+    public static String favOutletName;
     // UI Element Objects
     ImageView outletimage;
     TextView outletname;
@@ -237,6 +237,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             if (outletDetails != null) {
 
                 // 1. Add Default views to the LinearLayout
+                favOutletName = outletDetails.getOutletName();
                 outletname.setText(outletDetails.getOutletName());
                 floor.setText(outletDetails.getFloor());
                 description.setText(outletDetails.getShortDescription());
