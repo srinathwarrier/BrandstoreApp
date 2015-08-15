@@ -17,7 +17,7 @@
             android:id="@+id/outletlisttoolbar"
             layout="@layout/toolbar" />
 
-        <CheckBox
+        <!--<CheckBox
             android:id="@+id/display_favorites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:button="@drawable/favorites"
             android:onClick="displayFavorites"
             android:layout_marginTop="-43dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp" />-->
 
         <ListView
             android:id="@+id/outlet_list_list_view"

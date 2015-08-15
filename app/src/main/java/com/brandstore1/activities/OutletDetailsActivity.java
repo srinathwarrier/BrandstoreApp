@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +18,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.brandstore1.AddFavOutletAsyncTask;
+import com.brandstore1.CheckFavoritesAsyncTask;
 import com.brandstore1.adapters.RelatedBrandsListViewAdapter;
+import com.brandstore1.entities.Outlet;
 import com.brandstore1.entities.OutletDetails;
 import com.brandstore1.entities.RelatedBrands;
 import com.brandstore1.utils.HorizontalListView;
@@ -32,8 +36,23 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class OutletDetailsActivity extends ActionBarActivity {
     ImageView outletimage;
@@ -55,6 +74,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
     HorizontalListView relatedBrands;
     ArrayList<RelatedBrands> brandsarray= new ArrayList();
     ImageView first,second,third;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +104,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
-        String id = getIntent().getStringExtra("id");
+        id = getIntent().getStringExtra("id");
 
         // get the list of UI Elements' Objects
         ScrollView scroll=(ScrollView)findViewById(R.id.outletDetails_ScrollView);
@@ -113,7 +133,6 @@ public class OutletDetailsActivity extends ActionBarActivity {
         relatedBrands=(HorizontalListView)findViewById(R.id.relatedbrands);
         relatedBrands.setAdapter(relatedBrandsListViewAdapter);
 
-
         OutletDetailsAsyncTask mOutletDetailsAsyncTask = new OutletDetailsAsyncTask(
                 mTagPriceListViewAdapter,
                 outletimage,
@@ -137,7 +156,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
                 first,second,third,
                 this);
         mOutletDetailsAsyncTask.execute();
-        scroll.scrollTo(0,0);
+        scroll.scrollTo(0, 0);
 
 
         relatedBrands.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -148,6 +167,12 @@ public class OutletDetailsActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+        CheckBox cb = (CheckBox) findViewById(R.id.favorites);
+        CheckFavoritesAsyncTask mCheckFavoritesAsyncTask = new CheckFavoritesAsyncTask(id, cb);
+
+
+
     }
 
 
@@ -178,12 +203,17 @@ if(id==android.R.id.home)
 
     public void addFavorites(View view){
         boolean checked = ((CheckBox) view).isChecked();
+        boolean operation;
         if(checked) {
-            Toast.makeText(OutletDetailsActivity.this,OutletDetailsAsyncTask.favOutletName, Toast.LENGTH_LONG).show();
+            //Toast.makeText(OutletDetailsActivity.this,id, Toast.LENGTH_LONG).show();
+            operation = true;
+
         }
         else{
-            Toast.makeText(OutletDetailsActivity.this, "unchecked", Toast.LENGTH_LONG).show();
+            operation = false;
         }
+        AddFavOutletAsyncTask mAddFavOutletAsyncTask = new AddFavOutletAsyncTask(id,operation);
+        mAddFavOutletAsyncTask.execute();
 
     }
 

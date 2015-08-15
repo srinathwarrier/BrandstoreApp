@@ -63,7 +63,9 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
         StringBuilder builder = null;
         try {
             //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" + id);
-            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getOutlets?userid=6&type=category&id=" + id);
+            //URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getOutlets?userid=6&type=category&id=" + id);
+            System.out.println("tagid "+id);
+            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getOutlets?type=tag&userid=1&tagid="+id);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -98,7 +100,8 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
                 obj.setPrice(object.get("avgPrice").toString());
                 obj.setGenderCodeString(object.get("genderCodeString").toString());
                 obj.setMallName(object.get("hubName").toString());
-                obj.setIsFavorite(object.get("isFavorite").toString());
+                obj.setIsFavorite((Boolean) (object.get("isFavorite")));
+                obj.setIsOnSale((Boolean)(object.get("isOnSale")));
                 Log.i("Brandstore - Outletlist", "object:" + obj.toString());
                 mOutletArrayList.add(obj);
             }

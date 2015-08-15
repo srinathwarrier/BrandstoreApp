@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -47,7 +48,7 @@ import java.util.ArrayList;
 public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
 
     String id;  // Input parameter
-    public static String favOutletName;
+
     // UI Element Objects
     ImageView outletimage;
     TextView outletname;
@@ -141,6 +142,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
                 .build();
         ImageLoader.getInstance().init(config);
 
+
     }
 
     @Override
@@ -156,6 +158,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
+        //CheckBox cb = (CheckBox) findViewById(R.id.favorites);
         StringBuilder builder = null;
         try {
             //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutletDetails?id=" + id);
@@ -237,7 +240,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             if (outletDetails != null) {
 
                 // 1. Add Default views to the LinearLayout
-                favOutletName = outletDetails.getOutletName();
+
                 outletname.setText(outletDetails.getOutletName());
                 floor.setText(outletDetails.getFloor());
                 description.setText(outletDetails.getShortDescription());

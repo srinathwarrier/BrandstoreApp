@@ -1,6 +1,8 @@
 package com.brandstore1.activities;
 
+import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,7 +35,9 @@ public class OutletListActivity extends ActionBarActivity {
     ListView outletListView;
     ArrayList<Outlet> outletArrayList = new ArrayList();
     Toolbar toolbar;
-    CheckBox disFav;
+    MenuItem disFav;
+    MenuItem sale;
+    Menu menu;
     OutletListAdapter mOutletListAdapter;
 
     @Override
@@ -72,7 +76,7 @@ public class OutletListActivity extends ActionBarActivity {
         outletListView.setEmptyView(emptyView);
 
 
-        mOutletListAdapter = new OutletListAdapter(outletArrayList, this, toolbar);
+        mOutletListAdapter = new OutletListAdapter(outletArrayList, this, toolbar, emptyView);
 
         outletListView.setAdapter(mOutletListAdapter);
 
@@ -91,14 +95,18 @@ public class OutletListActivity extends ActionBarActivity {
         });
 
 
-        displayFavorites();
+
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_outlet_list, menu);
+        displayFavorites(menu);
+        displaySale(menu);
         return true;
     }
 
@@ -117,17 +125,18 @@ public class OutletListActivity extends ActionBarActivity {
             return true;
         }
 
+
+
         return super.onOptionsItemSelected(item);
     }
 
-    public void displayFavorites(){
-
-        disFav = (CheckBox)findViewById(R.id.display_favorites);
+    public void displayFavorites(Menu menu){
+/*
         disFav.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 mOutletListAdapter.resetData();
-                if (((CheckBox)view).isChecked()) {
+                if (disFav.isChecked()) {
 
                     //filter favorites
 
@@ -142,10 +151,59 @@ public class OutletListActivity extends ActionBarActivity {
 
             }
         });
+*/
+
+        disFav = menu.findItem(R.id.display_favorites);
+        disFav.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                mOutletListAdapter.resetData();
+                if (!disFav.isChecked()) {
+                    //filter favorites
+                    disFav.setChecked(true);
+                    disFav.setIcon(android.R.drawable.btn_star_big_on);
+                    mOutletListAdapter.getFilter().filter("X");
+
+
+
+                } else {
+                    disFav.setChecked(false);
+                    disFav.setIcon(android.R.drawable.btn_star_big_off);
+                    mOutletListAdapter.getFilter().filter("Y");
+
+
+                }
+                return true;
+            }
+        });
 
     }
 
+    public void displaySale(Menu menu){
+        sale = menu.findItem(R.id.on_sale);
+        sale.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                mOutletListAdapter.resetData();
+                if (!sale.isChecked()) {
+                    //filter OnSale Outlets
+                    sale.setChecked(true);
+                    sale.setIcon(R.drawable.sale_on);
+                    mOutletListAdapter.getSaleFilter().filter("X");
 
 
+
+                } else {
+                    sale.setChecked(false);
+                    sale.setIcon(R.drawable.sale);
+                    mOutletListAdapter.getSaleFilter().filter("Y");
+
+
+                }
+                return true;
+            }
+        });
+
+    }
 
 }

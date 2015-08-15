@@ -23,5 +23,22 @@
         android:showAsAction="always"
         app:showAsAction="always" />
     -->
+    <item
+        android:id="@+id/on_sale"
+        android:title=""
+        android:icon="@drawable/sale"
+        android:clickable="true"
+        android:checked="false"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/display_favorites"
+        android:title=""
+        android:icon="@android:drawable/btn_star_big_off"
+        android:clickable="true"
+        android:checked="false"
+        app:showAsAction="always"
+        />
 
 </menu>

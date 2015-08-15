@@ -20,6 +20,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -31,15 +33,18 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
     ArrayList<Outlet> mOutletList;
     ArrayList<Outlet> origOutletList;
     private LayoutInflater inflater;
-    private Filter filter;
+    private Filter favFilter;
+    private Filter saleFilter;
     Toolbar toolbar;
+    TextView emptyView;
 
-    public OutletListAdapter(ArrayList<Outlet> outlet, Activity context, Toolbar toolbar) {
+    public OutletListAdapter(ArrayList<Outlet> outlet, Activity context, Toolbar toolbar, TextView emptyView) {
         this.inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mOutletList = outlet;
         origOutletList = outlet;
         this.toolbar = toolbar;
+        this.emptyView =  emptyView;
     }
 
     @Override
@@ -124,30 +129,30 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public Filter getFilter() {
-        if (filter == null){
-            filter  = new OutletFilter();
+        if (favFilter == null){
+            favFilter  = new OutletFavFilter();
         }
-        return filter;
+        return favFilter;
     }
 
 
-    private class OutletFilter extends Filter
+    private class OutletFavFilter extends Filter
     {
 
         @Override
-        protected FilterResults performFiltering(CharSequence filterFav) {
+        protected FilterResults performFiltering(CharSequence filter) {
 
             FilterResults result = new FilterResults();
 
-            if(filterFav == "X")
+            if(filter == "X")
             {
                 ArrayList<Outlet> filteredOutlets = new ArrayList<Outlet>();
 
                 for(int i = 0, l = mOutletList.size(); i < l; i++)
                 {
                     Outlet m = mOutletList.get(i);
-                   //if(m.getBrandOutletName().startsWith("L"))
-                     if(m.getIsFavorite().compareTo("1") == 0)
+
+                   if(m.getIsFavorite())
                         filteredOutlets.add(m);
 
                 }
@@ -170,20 +175,77 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
         }
         @SuppressWarnings("unchecked")
         @Override
-        protected void publishResults(CharSequence filterFav, FilterResults results) {
+        protected void publishResults(CharSequence filter, FilterResults results) {
 
+            mOutletList = (ArrayList<Outlet>) results.values;
+            toolbar.setSubtitle(getCount() + " " + "Outlets");
+            notifyDataSetChanged();
             if (results.count == 0)
-                notifyDataSetInvalidated();
-            else {
-                mOutletList = (ArrayList<Outlet>) results.values;
-                toolbar.setSubtitle(getCount() + " " + "Outlets");
-                notifyDataSetChanged();
+                emptyView.setText("No Favorites Found !!!");
 
-            }
 
         }
     }
 
+    public Filter getSaleFilter() {
+        if (saleFilter == null){
+            saleFilter  = new OutletSaleFilter();
+        }
+        return saleFilter;
+    }
+
+
+    private class OutletSaleFilter extends Filter
+    {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence filterSale) {
+
+            FilterResults result = new FilterResults();
+
+            if(filterSale == "X")
+            {
+                ArrayList<Outlet> filteredOnSaleOutlets = new ArrayList<Outlet>();
+
+                for(int i = 0, l = mOutletList.size(); i < l; i++)
+                {
+                    Outlet m = mOutletList.get(i);
+
+                    System.out.println(m.getIsOnSale()) ;
+                    if(m.getIsOnSale())
+                        filteredOnSaleOutlets.add(m);
+
+                }
+
+                result.values = filteredOnSaleOutlets;
+                result.count = filteredOnSaleOutlets.size();
+
+
+            }
+            else
+            {
+
+                result.values = mOutletList;
+                result.count = mOutletList.size();
+
+
+            }
+
+            return result;
+        }
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence filterFav, FilterResults results) {
+
+            mOutletList = (ArrayList<Outlet>) results.values;
+            toolbar.setSubtitle(getCount() + " " + "Outlets");
+            notifyDataSetChanged();
+            if (results.count == 0)
+                emptyView.setText("No 'On Sale' Outlets Found !!!");
+
+
+        }
+    }
 
 
 }
