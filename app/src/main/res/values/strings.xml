@@ -13,6 +13,7 @@
     <string name="nav_item_categories">Categories</string>
     <string name="nav_item_favorite">Favorite</string>
     <string name="nav_item_sale">On Sale</string>
+    <string name="title_activity_test">TestActivity</string>
 
 
 

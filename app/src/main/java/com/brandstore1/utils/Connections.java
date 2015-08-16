@@ -1,7 +1,10 @@
 package com.brandstore1.utils;
 
+import android.net.Uri;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Map;
 
 /**
  * Created by I076324 on 7/22/2015.
@@ -36,6 +39,22 @@ public class Connections {
         return request;
     }
 
+    public String getUpdateRegIdURL(String userId,String registrationId){
+        String request="";
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"updateRegID",
+                    "userid="+userId+"&regid="+registrationId,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
     public String getStartParametersOfURL(){
         if(isLiveSystem){
             return "/"+versionName+"/";
@@ -56,4 +75,6 @@ public class Connections {
         if(systemName.equals("beta")) return "Beta";
         else return "Slate";
     }
+
+
 }

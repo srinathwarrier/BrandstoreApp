@@ -90,7 +90,7 @@
                             android:layout_marginRight="15dp"
                             android:src="@drawable/off"
                             android:background="@drawable/favorites"/>
-                         -->
+
 
                         <CheckBox
                             android:id="@+id/favorites"
@@ -103,6 +103,7 @@
                             android:clickable="true"
                             android:button="@drawable/favorites"
                             android:onClick="addFavorites"/>
+                        -->
 
                         <TextView
                             android:id="@+id/outletDetails_hubName"
@@ -198,8 +199,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="7dp"
-                        android:text="Line 1 \n line 2 \n line 3"
-                        android:textSize="20sp" />
+                        android:text="Coming soon..."
+                        android:fontFamily="sans-serif-condensed"
+                        android:lineSpacingExtra="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        />
 
 
                     <ImageView
@@ -262,6 +267,19 @@
                         android:dividerHeight="2dp"
                         android:focusable="false"
                         android:focusableInTouchMode="false"></ListView>
+                    <TextView
+                        android:id="@+id/outlet_details_empty_tagPrice_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Coming soon..."
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:lineSpacingExtra="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:visibility="gone"
+                    />
 
                 </LinearLayout>
 
@@ -275,6 +293,20 @@
                 android:text="SIMILAR STORES"
                 android:textSize="20sp"
                 android:fontFamily="sans-serif-clight"/>
+
+            <TextView
+                android:id="@+id/outlet_details_empty_relatedBrands_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coming soon..."
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:lineSpacingExtra="5dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:visibility="gone"
+                />
 
             <com.brandstore1.utils.HorizontalListView
                 android:id="@+id/relatedbrands"

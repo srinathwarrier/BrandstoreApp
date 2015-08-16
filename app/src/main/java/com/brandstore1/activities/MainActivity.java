@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setUpToolbar();
 
 
+
         //NavigationDrawer methods:
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mUserLearnedDrawer = Boolean.valueOf(readSharedSetting(this, PREF_USER_LEARNED_DRAWER, "false"));
@@ -115,10 +116,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         returnValue = true;
                         break;
                     case R.id.drawer_item_favorite:
-                        mCurrentSelectedPosition = 1;
-                        returnValue = true;
+                        goToOutletListScreenAllFavorites();
+                        //mCurrentSelectedPosition = 1;
+                        //returnValue = true;
                         break;
                     case R.id.drawer_item_sale:
+                        goToOutletListScreenAllOnSale();
                         mCurrentSelectedPosition = 2;
                         returnValue = true;
                         break;
@@ -130,6 +133,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
             }
         });
+
+
 
 
 
@@ -154,17 +159,41 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mCategoryGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("name", CategoryNames[position]);
-                bundle.putString("id", getCategoryIDs(position));
-                intent.putExtras(bundle);
-                startActivity(intent);
+                goToOutletListScreen(position);
             }
         });
 
 
     }
+
+    public void goToOutletListScreen(int position){
+        Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("name", CategoryNames[position]);
+        bundle.putString("id", getCategoryIDs(position));
+        bundle.putSerializable("type", OutletListActivity.OutletListType.CLICKED_ON_CATEGORY);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public void goToOutletListScreenAllFavorites(){
+        Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("name", "My Favorites");
+        bundle.putSerializable("type", OutletListActivity.OutletListType.ALL_FAVORITE);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public void goToOutletListScreenAllOnSale(){
+        Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("name", "On Sale");
+        bundle.putSerializable("type", OutletListActivity.OutletListType.ALL_ON_SALE);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
 
     public String getCategoryIDs(int position) {
         String s = "1";
@@ -226,6 +255,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if(searchView!=null){
             searchView.setIconifiedByDefault(false);
             searchView.setQueryHint("Let's go shopping!");
+            searchView.setFocusable(false);
             //searchView.setOnQueryTextListener(this);
             /*searchView.setOnSearchClickListener(new View.OnClickListener() {
                 @Override

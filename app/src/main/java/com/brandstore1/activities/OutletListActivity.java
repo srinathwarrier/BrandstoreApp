@@ -36,20 +36,39 @@ public class OutletListActivity extends ActionBarActivity {
     CheckBox disFav;
     OutletListAdapter mOutletListAdapter;
 
+    public enum OutletListType{
+        CLICKED_ON_TAG , CLICKED_ON_CATEGORY ,SEARCHED_QUERY , ALL_FAVORITE , ALL_ON_SALE ,
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet_list);
+
+        /*
+            Toolbar setup
+         */
         toolbar = (Toolbar) findViewById(R.id.outletlisttoolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
+
+        /*
+            Bundle setup >
+            Get title for toolbar
+            Get parameter to decide call in AsyncTask
+         */
         Bundle bundle = getIntent().getExtras();
         String query = bundle.getString("name");
         String id = bundle.getString("id");
+        OutletListType outletListType = (OutletListType)bundle.get("type");
+
+
+        /*
+            UniversalImageLoader setup
+         */
         File cacheDir = StorageUtils.getCacheDirectory(this);
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
@@ -66,18 +85,28 @@ public class OutletListActivity extends ActionBarActivity {
                 .defaultDisplayImageOptions(options)
                 .build();
         ImageLoader.getInstance().init(config);
-        TextView emptyView = (TextView) findViewById(R.id.outlet_list_empty_textView);
 
+        /*
+            ListView setup
+         */
+        TextView emptyView = (TextView) findViewById(R.id.outlet_list_empty_textView);
         outletListView = (ListView) findViewById(R.id.outlet_list_list_view);
         outletListView.setEmptyView(emptyView);
 
-
+        /*
+            Adapter setup
+         */
         mOutletListAdapter = new OutletListAdapter(outletArrayList, this, toolbar);
-
         outletListView.setAdapter(mOutletListAdapter);
 
-        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outletArrayList, query, mOutletListAdapter, id, emptyView, toolbar,this);
+        /*
+            AsyncTask setup
+         */
+        // Basic (ArrayList , Adapter , this )
+        // UI Elements : ( toolbar , emptyView )
+        // Parameters : query , id , outletListType
 
+        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outletArrayList, query, mOutletListAdapter, id, emptyView, toolbar,this,outletListType );
         mOutletListAsyncTask.execute();
 
 
@@ -91,7 +120,7 @@ public class OutletListActivity extends ActionBarActivity {
         });
 
 
-        displayFavorites();
+        //displayFavorites();
     }
 
 
@@ -122,6 +151,7 @@ public class OutletListActivity extends ActionBarActivity {
 
     public void displayFavorites(){
 
+        /*
         disFav = (CheckBox)findViewById(R.id.display_favorites);
         disFav.setOnClickListener(new OnClickListener() {
             @Override
@@ -142,6 +172,7 @@ public class OutletListActivity extends ActionBarActivity {
 
             }
         });
+        */
 
     }
 

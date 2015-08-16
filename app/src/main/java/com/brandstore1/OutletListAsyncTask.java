@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.brandstore1.activities.OutletListActivity;
 import com.brandstore1.adapters.OutletListAdapter;
 import com.brandstore1.entities.Outlet;
 import com.brandstore1.utils.CircularProgressDialog;
@@ -26,26 +27,59 @@ import java.util.ArrayList;
 /**
  * Created by Ravi on 29-Mar-15.
  */
-public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
+public class OutletListAsyncTask extends AsyncTask<Void, Void, String> {
     ArrayList<Outlet> mOutletArrayList;
     String query;
     OutletListAdapter mOutletListAdapter;
     Outlet obj;
-    String id;
+    String tagId;
     TextView emptyView;
     Toolbar toolbar;
 
     CircularProgressDialog circularProgressDialog;
     Context mContext;
 
-    public OutletListAsyncTask(ArrayList<Outlet> outletArrayList, String text, OutletListAdapter adapter, String id, TextView theEmptyView, Toolbar toolbar, Context context) {
-        this.id = id;
-        mOutletArrayList = outletArrayList;
-        query = text;
-        mOutletListAdapter = adapter;
-        emptyView = theEmptyView;
-        this.toolbar = toolbar;
+    String urlString;
+
+    public OutletListAsyncTask(ArrayList<Outlet> outletArrayList,
+                               String text,
+                               OutletListAdapter adapter,
+                               String id,
+                               TextView theEmptyView,
+                               Toolbar toolbar,
+                               Context context,
+                               OutletListActivity.OutletListType outletListType) {
+        // Basic
+        this.mOutletArrayList = outletArrayList;
+        this.mOutletListAdapter = adapter;
         this.mContext = context;
+
+        // UI Elements
+        this.emptyView = theEmptyView;
+        this.toolbar = toolbar;
+
+        // Parameters
+        String userId = "1";
+        this.tagId = id;
+        this.query = text;
+        this.urlString = "http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getOutlets?userid="+userId+"&id=" + this.tagId;
+
+        switch(outletListType){
+            case ALL_FAVORITE:
+                this.urlString = "http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getAllFavoriteOutlets?userid="+userId;
+                break;
+            case ALL_ON_SALE:
+                this.urlString = "http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getAllOnSaleOutlets";
+                break;
+            case CLICKED_ON_CATEGORY: // same as single tagId
+            case CLICKED_ON_TAG:
+                this.urlString = "http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getOutlets?type=tag&userid="+userId+"&tagid=" + this.tagId;
+                break;
+            case SEARCHED_QUERY:
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -58,12 +92,12 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected String doInBackground(Void... params) {
         mOutletArrayList.clear();
         StringBuilder builder = null;
         try {
             //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" + id);
-            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getOutlets?userid=6&type=category&id=" + id);
+            URL url = new URL(urlString);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -74,22 +108,29 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
             );
             BufferedReader reader = new BufferedReader(isr);
             while ((line = reader.readLine()) != null) builder.append(line);
+
+            return (builder.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(String resultString) {
+        super.onPostExecute(resultString);
         try {
 
-            JSONArray json = new JSONArray(builder.toString());
-
+            JSONArray json = new JSONArray(resultString);
 
             for (int i = 0; i < json.length(); i++) {
                 Log.i("Brandstore - Outletlist", "Start ");
                 obj = new Outlet();
                 JSONObject object = json.getJSONObject(i);
-                obj.setBrandOutletName(object.get("brandName").toString());
+                obj.setBrandOutletName(object.get("outletName").toString());
                 obj.setImageUrl(object.get("imageUrl").toString());
                 obj.setContactNumber(object.get("phoneNumber").toString());
                 obj.setFloorNumber(object.get("floorNumber").toString());
@@ -99,6 +140,7 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
                 obj.setGenderCodeString(object.get("genderCodeString").toString());
                 obj.setMallName(object.get("hubName").toString());
                 obj.setIsFavorite(object.get("isFavorite").toString());
+                obj.setIsOnSale(object.get("isOnSale").toString());
                 Log.i("Brandstore - Outletlist", "object:" + obj.toString());
                 mOutletArrayList.add(obj);
             }
@@ -108,12 +150,7 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
             e.printStackTrace();
         }
 
-        return null;
-    }
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
         try {
             toolbar.setTitle(mOutletArrayList.get(0).getRelevantTag().toString());
             toolbar.setSubtitle(mOutletArrayList.size() + " " + "Outlets");
