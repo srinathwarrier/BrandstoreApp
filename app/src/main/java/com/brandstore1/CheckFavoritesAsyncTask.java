@@ -43,7 +43,7 @@ public class CheckFavoritesAsyncTask extends AsyncTask<Void, Void, Integer> {
         Integer operation = 0;
         try {
             //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" + id);
-            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getAllFavoriteOutlets?userid=1");
+            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getAllFavoriteOutlets?userid=6");
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 

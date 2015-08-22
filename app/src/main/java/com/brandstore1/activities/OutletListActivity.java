@@ -35,9 +35,8 @@ public class OutletListActivity extends ActionBarActivity {
     ListView outletListView;
     ArrayList<Outlet> outletArrayList = new ArrayList();
     Toolbar toolbar;
-    MenuItem disFav;
-    MenuItem sale;
-    Menu menu;
+    MenuItem favoriteMenuItem;
+    MenuItem saleMenuItem;
     OutletListAdapter mOutletListAdapter;
 
     @Override
@@ -93,20 +92,18 @@ public class OutletListActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-
         getMenuInflater().inflate(R.menu.menu_outlet_list, menu);
-        displayFavorites(menu);
-        displaySale(menu);
+
+        // Initialize the menuItem variables
+        favoriteMenuItem = menu.findItem(R.id.display_favorites);
+        saleMenuItem = menu.findItem(R.id.on_sale);
+
         return true;
     }
 
@@ -117,93 +114,51 @@ public class OutletListActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-
-        if(id==android.R.id.home)
-        {
-           onBackPressed();
-            return true;
+        switch(id){
+            case android.R.id.home:
+                //noinspection SimplifiableIfStatement
+                onBackPressed();
+                return true;
+            case R.id.display_favorites:
+                onFavoriteMenuItemClicked(!item.isChecked());
+                break;
+            case R.id.on_sale:
+                onSaleMenuItemClicked(!item.isChecked());
+                break;
         }
-
-
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void displayFavorites(Menu menu){
-/*
-        disFav.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mOutletListAdapter.resetData();
-                if (disFav.isChecked()) {
+    public void onFavoriteMenuItemClicked(boolean toBeSelected){
+        mOutletListAdapter.resetData();
+        if (toBeSelected) {
+            //filter favorites
+            favoriteMenuItem.setChecked(true);
+            favoriteMenuItem.setIcon(android.R.drawable.btn_star_big_on);
+            mOutletListAdapter.getFilter().filter("X");
+        } else {
+            favoriteMenuItem.setChecked(false);
+            favoriteMenuItem.setIcon(android.R.drawable.btn_star_big_off);
+            mOutletListAdapter.getFilter().filter("Y");
 
-                    //filter favorites
-
-                    mOutletListAdapter.getFilter().filter("X");
-
-
-                }
-                else {
-                    mOutletListAdapter.getFilter().filter("Y");
-                }
-
-
-            }
-        });
-*/
-
-        disFav = menu.findItem(R.id.display_favorites);
-        disFav.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                mOutletListAdapter.resetData();
-                if (!disFav.isChecked()) {
-                    //filter favorites
-                    disFav.setChecked(true);
-                    disFav.setIcon(android.R.drawable.btn_star_big_on);
-                    mOutletListAdapter.getFilter().filter("X");
-
-
-
-                } else {
-                    disFav.setChecked(false);
-                    disFav.setIcon(android.R.drawable.btn_star_big_off);
-                    mOutletListAdapter.getFilter().filter("Y");
-
-
-                }
-                return true;
-            }
-        });
-
+        }
     }
 
-    public void displaySale(Menu menu){
-        sale = menu.findItem(R.id.on_sale);
-        sale.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                mOutletListAdapter.resetData();
-                if (!sale.isChecked()) {
-                    //filter OnSale Outlets
-                    sale.setChecked(true);
-                    sale.setIcon(R.drawable.sale_on);
-                    mOutletListAdapter.getSaleFilter().filter("X");
+    public void onSaleMenuItemClicked(boolean toBeSelected){
+        mOutletListAdapter.resetData();
+        if (toBeSelected) {
+            //filter OnSale Outlets
+            saleMenuItem.setChecked(true);
+            saleMenuItem.setIcon(R.drawable.sale_on);
+            mOutletListAdapter.getSaleFilter().filter("X");
 
+        } else {
+            saleMenuItem.setChecked(false);
+            saleMenuItem.setIcon(R.drawable.sale);
+            mOutletListAdapter.getSaleFilter().filter("Y");
 
-
-                } else {
-                    sale.setChecked(false);
-                    sale.setIcon(R.drawable.sale);
-                    mOutletListAdapter.getSaleFilter().filter("Y");
-
-
-                }
-                return true;
-            }
-        });
-
+        }
     }
 
 }

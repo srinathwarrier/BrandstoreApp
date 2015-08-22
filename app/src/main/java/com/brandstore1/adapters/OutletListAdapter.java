@@ -110,17 +110,11 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
         TextView floorAndHubNameTextView;
 
         TextView tagAndPriceTextView;
-        //TextView tagNameTextView;
-        //TextView avgPriceTextView;
-
-        TextView textView2;
 
         ImageView image;
-        //ImageView logoOnTop;
         ImageView male;
         ImageView female;
         ImageView kids;
-
     }
 
     public void resetData() {

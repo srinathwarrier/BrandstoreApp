@@ -59,7 +59,7 @@ public class AddFavOutletAsyncTask extends AsyncTask<Void, Void, Void> {
 
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/setFavoriteOutlet?userid=1&outletid="+this.id+"&set="+this.operation);
+            HttpPost httpPost = new HttpPost("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/setFavoriteOutlet?userid=6&outletid="+this.id+"&set="+this.operation);
             HttpResponse response = httpClient.execute(httpPost);
 
 
