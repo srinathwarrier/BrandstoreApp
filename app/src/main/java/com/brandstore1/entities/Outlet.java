@@ -17,8 +17,8 @@ public class Outlet {
     private String genderCodeString;
     private String descriptionString;
     private String websiteString;
-    private boolean isFavorite;
-    private boolean isOnSale;
+    private String isFavorite;
+    private String isOnSale;
 
     public String getGenderCodeString() {
         return genderCodeString;
@@ -111,26 +111,20 @@ public class Outlet {
         this.websiteString = websiteString;
     }
 
-
-    public boolean getIsFavorite() {
+    public String getIsFavorite() {
         return isFavorite;
     }
 
-    public void setIsFavorite(boolean isFavorite) {
-       this.isFavorite = isFavorite;
+    public void setIsFavorite(String isFavorite) {
+        this.isFavorite = isFavorite;
     }
 
-
-    public boolean getIsOnSale() {
+    public String getIsOnSale() {
         return isOnSale;
     }
 
-    public void setIsOnSale(boolean isOnSale) {
+    public void setIsOnSale(String isOnSale) {
         this.isOnSale = isOnSale;
     }
 
-
- //   public String getFavoriteOutlet() {return isFavorite;}
-
-   // public void setFavoriteOutlet(String isFavorite) {this.isFavorite = isFavorite; }
 }

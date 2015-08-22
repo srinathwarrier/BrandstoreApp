@@ -75,7 +75,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
     RelatedBrandsListViewAdapter relatedBrandsListViewAdapter;
     ImageView first,second,third;
     CircularProgressDialog circularProgressDialog;
-
+    TextView emptyRelatedBrandsView;
 
     public OutletDetailsAsyncTask(
             TagPriceListViewAdapter TagPrice,
@@ -83,7 +83,6 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             TextView outletname,
             TextView floor,
             TextView hubname,
-            TextView offerDetails,
             String ids,
             TextView description,
             TextView website,
@@ -97,6 +96,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             Toolbar toolbar,
             RelatedBrandsListViewAdapter relatedBrandsListViewAdapter,
             ArrayList<RelatedBrands>brandsArray,
+            TextView theEmptyRelatedBrandsView,
             ImageView first,
             ImageView second,
             ImageView third,
@@ -106,7 +106,6 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
         this.outletname = outletname;
         this.floor = floor;
         this.hubname = hubname;
-        this.offerDetails = offerDetails;
         this.description = description;
         this.website = website;
         id = ids;
@@ -121,6 +120,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
         this.scrollView=scrollView;
         this.toolbar=toolbar;
         this.relatedBrandsListViewAdapter=relatedBrandsListViewAdapter;
+        this.emptyRelatedBrandsView = theEmptyRelatedBrandsView;
         this.tagpriceListView = tagpriceListView;
         this.first=first;
         this.second=second;
@@ -192,7 +192,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             JSONObject jsonobject = new JSONObject(resultString);
 
             obj = new OutletDetails();
-            obj.setOutletName(jsonobject.getString("brandName"));
+            obj.setOutletName(jsonobject.getString("outletName"));
             obj.setOutletImage(jsonobject.getString("imageUrl"));
             obj.setFloor(jsonobject.getString("floorNumber").concat(", "));
             obj.setHubName(jsonobject.getString("hubName"));
@@ -222,6 +222,11 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
                 obj1.setName(relatedBrandsObject.getString("brandName"));
                 brandsArray.add(obj1);
             }
+        if(brandsArray.size()==0){
+            emptyRelatedBrandsView.setVisibility(View.VISIBLE);
+        }else{
+            emptyRelatedBrandsView.setVisibility(View.GONE);
+        }
 
         JSONArray offersArray = jsonobject.getJSONArray("offersArray");
         JSONObject offersObject;
@@ -232,8 +237,8 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             //offersArrayList.add(offersObject.getString("offerDesc"));
         }
         //String offerString = getStringFromOfferArrayList(offersArrayList);
-        if(offerString.equals("")){offerString="No Ongoing Offers !!!";}
-        offerContentTextView.setText(offerString);
+        //if(offerString.equals("")){offerString="No Ongoing Offers !!!";}
+        if(!offerString.equals("")){offerContentTextView.setText(offerString);}
 
 
             final OutletDetails outletDetails = obj;

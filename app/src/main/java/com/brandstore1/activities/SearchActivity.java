@@ -98,6 +98,7 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
                     Bundle bundle = new Bundle();
                     bundle.putString("name", mSearchResult.get(position).getName().toString());
                     bundle.putString("id", mSearchResult.get(position).getId());
+                    bundle.putSerializable("type", OutletListActivity.OutletListType.CLICKED_ON_TAG);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 } else if (mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("outlet")) {

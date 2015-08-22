@@ -61,9 +61,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
     TextView website;
     TextView description;
     TextView hubname;
-    TextView offerDetails;
     ListView tagprice;
-    LinearLayout tagPriceLinearLayout;
     Button readmore;
     TextView offerContentTextView;
     Toolbar toolbar;
@@ -75,6 +73,8 @@ public class OutletDetailsActivity extends ActionBarActivity {
     ArrayList<RelatedBrands> brandsarray= new ArrayList();
     ImageView first,second,third;
     String id;
+    TextView emptyTagPriceView;
+    TextView emptyRelatedBrandsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +112,6 @@ public class OutletDetailsActivity extends ActionBarActivity {
         outletname = (TextView) findViewById(R.id.outletDetails_brandName);
         floor = (TextView) findViewById(R.id.outletDetails_floorName);
         hubname = (TextView) findViewById(R.id.outletDetails_hubName);
-        offerDetails = (TextView) findViewById(R.id.outletDetails_offer_content);
         description = (TextView) findViewById(R.id.outletDetails_description);
         website = (TextView) findViewById(R.id.outletDetails_website);
         first= (ImageView) findViewById(R.id.first);
@@ -121,16 +120,18 @@ public class OutletDetailsActivity extends ActionBarActivity {
         readmore = (Button) findViewById(R.id.readmore);
         readmore.setVisibility(View.INVISIBLE);
         offerContentTextView = (TextView) findViewById(R.id.outletDetails_offer_content);
-
-
+        emptyTagPriceView = (TextView) findViewById(R.id.outlet_details_empty_tagPrice_textView);
+        emptyRelatedBrandsView = (TextView) findViewById(R.id.outlet_details_empty_relatedBrands_textView);
 
         tagprice=(ListView)findViewById(R.id.tag_and_price);
+        tagprice.setEmptyView(emptyTagPriceView);
         mTagPriceListViewAdapter=new TagPriceListViewAdapter(tag,price,this);
         tagprice.setAdapter(mTagPriceListViewAdapter);
 
 
         RelatedBrandsListViewAdapter relatedBrandsListViewAdapter=new RelatedBrandsListViewAdapter(brandsarray,this);
         relatedBrands=(HorizontalListView)findViewById(R.id.relatedbrands);
+        //relatedBrands.setEmptyView(emptyRelatedBrandsView);
         relatedBrands.setAdapter(relatedBrandsListViewAdapter);
 
         OutletDetailsAsyncTask mOutletDetailsAsyncTask = new OutletDetailsAsyncTask(
@@ -139,7 +140,6 @@ public class OutletDetailsActivity extends ActionBarActivity {
                 outletname,
                 floor,
                 hubname,
-                offerDetails,
                 id,
                 description,
                 website,
@@ -153,6 +153,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
                 toolbar,
                 relatedBrandsListViewAdapter,
                 brandsarray,
+                emptyRelatedBrandsView,
                 first,second,third,
                 this);
         mOutletDetailsAsyncTask.execute();
@@ -168,8 +169,9 @@ public class OutletDetailsActivity extends ActionBarActivity {
             }
         });
 
-        CheckBox cb = (CheckBox) findViewById(R.id.favorites);
-        CheckFavoritesAsyncTask mCheckFavoritesAsyncTask = new CheckFavoritesAsyncTask(id, cb);
+        // Commenting this, since checkbox is commented in XML file as well.
+        //CheckBox cb = (CheckBox) findViewById(R.id.favorites);
+        //CheckFavoritesAsyncTask mCheckFavoritesAsyncTask = new CheckFavoritesAsyncTask(id, cb);
 
 
 
@@ -192,11 +194,11 @@ public class OutletDetailsActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
 
-if(id==android.R.id.home)
-{
-    onBackPressed();
-    return true;
-}
+        if(id==android.R.id.home)
+        {
+            onBackPressed();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

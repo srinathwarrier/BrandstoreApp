@@ -146,7 +146,7 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
                 {
                     Outlet m = mOutletList.get(i);
 
-                   if(m.getIsFavorite())
+                   if(m.getIsFavorite().equals("true"))
                         filteredOutlets.add(m);
 
                 }
@@ -206,7 +206,7 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
                     Outlet m = mOutletList.get(i);
 
                     System.out.println(m.getIsOnSale()) ;
-                    if(m.getIsOnSale())
+                    if(m.getIsOnSale().equals("true"))
                         filteredOnSaleOutlets.add(m);
 
                 }
