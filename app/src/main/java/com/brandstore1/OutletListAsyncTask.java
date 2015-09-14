@@ -64,7 +64,6 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, Void> {
         try {
             //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" + id);
             //URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getOutlets?userid=6&type=category&id=" + id);
-            System.out.println("tagid "+id);
             URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getOutlets?type=tag&userid=1&tagid="+id);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
