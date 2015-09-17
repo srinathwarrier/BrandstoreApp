@@ -1,0 +1,126 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/loginbg"
+    android:alpha="1"
+    tools:context="com.brandstore1.activities.SignUpActivity"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_vertical|center_horizontal"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SIGN UP"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/login_ll1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:gravity="center_horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/signup_first_name"
+                android:hint="@string/signup_first_name"
+                android:paddingLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@drawable/shapeloginedittext"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:layout_weight="1"
+                android:lines="1"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                />
+            <EditText
+                android:id="@+id/signup_last_name"
+                android:hint="@string/signup_last_name"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@drawable/shapeloginedittext"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:layout_weight="1"
+                android:lines="1"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                />
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/signup_email"
+            android:hint="@string/signup_email"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shapeloginedittext"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            />
+        <EditText
+            android:id="@+id/signup_password"
+            android:hint="@string/signup_password"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shapeloginedittext"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            />
+        <EditText
+            android:id="@+id/signup_confirm_password"
+            android:hint="@string/signup_confirm_password"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shapeloginedittext"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            />
+        <Button
+            android:id="@+id/signup_button"
+            android:text="@string/signup_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>

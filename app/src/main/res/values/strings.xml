@@ -14,7 +14,22 @@
     <string name="nav_item_favorite">Favorite</string>
     <string name="nav_item_sale">On Sale</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_splashscreen">SplashScreenActivity</string>
 
+    <string name="login_password">Password</string>
+    <string name="login_email">Email</string>
+    <string name="login_signin">Sign In</string>
+    <string name="login_forgot_password">FORGOT PASSWORD?</string>
+    <string name="login_signup"><u>Sign Up</u></string>
+
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="signup_first_name">First Name</string>
+    <string name="signup_last_name">Last Name</string>
+    <string name="signup_email">Email</string>
+    <string name="signup_password">Password</string>
+    <string name="signup_confirm_password">Confirm Password</string>
+    <string name="signup_button">Sign Up</string>
 
 
 </resources>

@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
 
-    private static final String PREFERENCES_FILE = "mymaterialapp_settings";
+    private static final String PREFERENCES_FILE = "BrandstoreApp";
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
 
