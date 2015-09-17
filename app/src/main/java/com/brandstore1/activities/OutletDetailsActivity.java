@@ -75,6 +75,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
     String id;
     TextView emptyTagPriceView;
     TextView emptyRelatedBrandsView;
+    MenuItem tmt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +183,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_outlet_details, menu);
+        takeMeThere(menu);
         return true;
     }
 
@@ -206,16 +208,30 @@ public class OutletDetailsActivity extends ActionBarActivity {
     public void addFavorites(View view){
         boolean checked = ((CheckBox) view).isChecked();
         boolean operation;
-        if(checked) {
-            //Toast.makeText(OutletDetailsActivity.this,id, Toast.LENGTH_LONG).show();
-            operation = true;
-
-        }
-        else{
-            operation = false;
-        }
+        //Toast.makeText(OutletDetailsActivity.this,id, Toast.LENGTH_LONG).show();
+        operation = checked;
         AddFavOutletAsyncTask mAddFavOutletAsyncTask = new AddFavOutletAsyncTask(id,operation);
         mAddFavOutletAsyncTask.execute();
+
+    }
+
+    public void takeMeThere(Menu menu){
+        tmt = menu.findItem(R.id.take_me_there);
+        tmt.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                try {
+                    Intent intent = new Intent(getApplicationContext(), TakeMeThereActivity.class);
+                    intent.getStringExtra("id");
+                    intent.putExtra("name", (String) outletname.getText());
+                    intent.putExtra("type", TakeMeThereActivity.TMT_type.TO_KNOWN);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    System.out.println("Exception ss" + e);
+                }
+                return true;
+            }
+        });
 
     }
 

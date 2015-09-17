@@ -92,6 +92,20 @@
             android:name=".activities.SignUpActivity"
             android:label="@string/title_activity_sign_up" >
         </activity>
+        <activity
+            android:name=".activities.TakeMeThereActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_outlet_details">
+        </activity>
+        <activity
+            android:name=".activities.SearchTMTActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_outlet_details">
+        </activity>
+
+
     </application>
 
 </manifest>
