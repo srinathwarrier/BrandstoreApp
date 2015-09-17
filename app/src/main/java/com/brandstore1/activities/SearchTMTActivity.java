@@ -41,6 +41,7 @@ public class SearchTMTActivity extends ActionBarActivity {
     SearchView searchView;
     SQLiteDatabase sqLiteDatabase;
     EditText from_outlet;
+    String to_from;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,9 @@ public class SearchTMTActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Bundle bundle = getIntent().getExtras();
+        to_from = bundle.getString("search");
+
         from_outlet =(EditText) findViewById(R.id.tmt_outlet);
 
         mResultList = (ListView) findViewById(R.id.list_view_results);
@@ -73,10 +77,13 @@ public class SearchTMTActivity extends ActionBarActivity {
                 //from_outlet.clearFocus();
                 //Intent intent = new Intent(getApplicationContext(), SearchTMTActivity.class);
                 //String message=editText1.getText().toString();
-                String message = mSearchResult.get(position).getName().toString();
+                //String name = mSearchResult.get(position).getName().toString();
+                //String outlet_id = mSearchResult.get(position).getId().toString();
                 Intent intent=new Intent();
-                intent.putExtra("MESSAGE",message);
-                setResult(2,intent);
+                intent.putExtra("outlet_name",mSearchResult.get(position).getName().toString());
+                intent.putExtra("outlet_id",mSearchResult.get(position).getId().toString());
+                intent.putExtra("TO_FROM",to_from);
+                setResult(2, intent);
                 finish();//finishing activity
 
             }
@@ -108,7 +115,7 @@ public class SearchTMTActivity extends ActionBarActivity {
                 } else {
 
                     String s1 = "%" + s + "%";
-                    Cursor res = sqLiteDatabase.rawQuery("Select * from Suggestions where name like '" + s1 + "';", null);
+                    Cursor res = sqLiteDatabase.rawQuery("Select * from Suggestions where name like '" + s1 + "'AND category = 'outlet';", null);
                     res.moveToFirst();
                     if (res.getCount() == 0) {
                         mSearchResult.clear();

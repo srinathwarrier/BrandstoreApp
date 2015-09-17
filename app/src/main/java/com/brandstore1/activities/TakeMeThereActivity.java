@@ -38,10 +38,16 @@ public class TakeMeThereActivity extends ActionBarActivity{
     Menu menu;
     EditText to;
     TakeMeThereAdapter takeMeThereAdapter;
-    private EditText filterFrom;
+    private EditText from;
+    private EditText filter;
     private ArrayAdapter<String> listAdapter;
     String to_id;
+    String from_id;
     TextView emptyView;
+
+    public enum TMT_type{
+        TO_KNOWN , TO_UNKNOWN ,
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,89 +66,46 @@ public class TakeMeThereActivity extends ActionBarActivity{
 
         pathListView = (ListView) findViewById(R.id.tmt_list_view);
         pathListView.setEmptyView(emptyView);
-        Bundle bundle = getIntent().getExtras();
-        to_id = bundle.getString("id");
-        String name = bundle.getString("name");
 
-        to = (EditText) findViewById(R.id.tmt_to);
-        to.setText(name);
-
-        filterFrom = (EditText)findViewById(R.id.tmt_from);
-        //outletListView = (ListView) findViewById(R.id.outlet_list);
         takeMeThereAdapter = new TakeMeThereAdapter(pathArrayList, this, toolbar, emptyView);
-
         pathListView.setAdapter(takeMeThereAdapter);
-        //outletListView.setAdapter(takeMeThereAdapter);
 
-        //TakeMeThereAsyncTask pathListAsyncTask = new TakeMeThereAsyncTask(takeMeThereAdapter, to_id,  emptyView, toolbar, this);
-        //pathListAsyncTask.execute();
+        Bundle bundle = getIntent().getExtras();
+        TMT_type tmtType = (TMT_type)bundle.get("type");
+        //tmtType = TMT_type.TO_UNKNOWN;
+        to = (EditText) findViewById(R.id.tmt_to);
+        from = (EditText)findViewById(R.id.tmt_from);
+
+        switch(tmtType){
+            case TO_KNOWN:
+                to_id = bundle.getString("id");
+                to.setText(bundle.getString("name"));
+                break;
+            case TO_UNKNOWN:
+                to.setEnabled(true);
+                to.setText("To");
+                to.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gotoSearchTMT(to);
+                    }
+                });
+
+                break;
+            default:
+                break;
+        }
 
 
-        filterFrom.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    // Always use a TextKeyListener when clearing a TextView to prevent android
-                    // warnings in the log
-                    //TextKeyListener.clear((filterFrom).getText());
-                    filterFrom.clearFocus();
-                    Intent intent = new Intent(getApplicationContext(), SearchTMTActivity.class);
-                    startActivityForResult(intent, 2);
-
-                }
-            }
-        });
-
-
-
-        filterFrom.setOnClickListener(new View.OnClickListener() {
+        from.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                filterFrom.clearFocus();
-                Intent intent = new Intent(getApplicationContext(), SearchTMTActivity.class);
-                try {
-                    startActivityForResult(intent, 2);
-                }catch (Exception e){
-
-                }
-            }
-        });
-      /*
-        final String [] listViewAdapterContent = {"School", "House", "Building", "Food", "Sports", "Dress", "Ring"};
-
-        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listViewAdapterContent);
-        outletListView.setAdapter(listAdapter);
-        outletListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                filterFrom.setText(listViewAdapterContent[position]);
-                //outletListView.setEmptyView(findViewById(R.id.tmt_list_empty_editText));
-
-
-                pathListAsyncTask.execute();
-                TakeMeThereActivity.this.listAdapter.getFilter().filter("w");
-            }
-        });
-
-        filterFrom.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TakeMeThereActivity.this.listAdapter.getFilter().filter(s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+                gotoSearchTMT(from);
 
             }
         });
-      */
+
+
     }
 
     @Override
@@ -150,12 +113,23 @@ public class TakeMeThereActivity extends ActionBarActivity{
     {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
-        if(requestCode==2)
-        {
-            String message=data.getStringExtra("MESSAGE");
-            filterFrom.setText(message);
-            TakeMeThereAsyncTask pathListAsyncTask = new TakeMeThereAsyncTask(takeMeThereAdapter, to_id,  emptyView, toolbar, this);
-            pathListAsyncTask.execute();
+        if(data != null){
+           if(requestCode==2) {
+               String outlet_name = data.getStringExtra("outlet_name");
+               String outlet_id = data.getStringExtra("outlet_id");
+               String to_from = data.getStringExtra("TO_FROM");
+               System.out.println("soup" + to_from);
+               if(to_from.compareToIgnoreCase("tmt_from")== 0) {
+                   from.setText(outlet_name);
+                   from_id = outlet_id;
+               }
+               else if (to_from.compareToIgnoreCase("tmt_to")== 0) {
+                   to.setText(outlet_name);
+                   to_id = outlet_id;
+               }
+               TakeMeThereAsyncTask pathListAsyncTask = new TakeMeThereAsyncTask(takeMeThereAdapter, to_id,from_id, emptyView, toolbar, this);
+               pathListAsyncTask.execute();
+           }
 
         }
     }
@@ -188,5 +162,13 @@ public class TakeMeThereActivity extends ActionBarActivity{
     }
 
 
+    public void gotoSearchTMT(EditText search){
 
+        search.clearFocus();
+        Intent intent = new Intent(getApplicationContext(), SearchTMTActivity.class);
+        intent.putExtra("search", search.getTag().toString());
+        startActivityForResult(intent, 2);
+
+
+    }
 }

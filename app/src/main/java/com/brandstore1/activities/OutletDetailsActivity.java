@@ -221,10 +221,11 @@ if(id==android.R.id.home)
                 try {
                     Intent intent = new Intent(getApplicationContext(), TakeMeThereActivity.class);
                     intent.getStringExtra("id");
-                    intent.putExtra("name",(String)outletname.getText());
+                    intent.putExtra("name", (String) outletname.getText());
+                    intent.putExtra("type", TakeMeThereActivity.TMT_type.TO_KNOWN);
                     startActivity(intent);
-                }catch(Exception e){
-                    System.out.println("Exception ss"+e);
+                } catch (Exception e) {
+                    System.out.println("Exception ss" + e);
                 }
                 return true;
             }

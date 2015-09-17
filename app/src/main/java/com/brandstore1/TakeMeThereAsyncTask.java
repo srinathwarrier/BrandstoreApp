@@ -30,14 +30,16 @@ import java.util.Arrays;
 public class TakeMeThereAsyncTask extends AsyncTask<Void, Void, Void> {
     ArrayList<String> pathArrayList = new ArrayList<String>();
     String to_id;
+    String from_id;
     Toolbar toolbar;
     TakeMeThereAdapter takeMeThereAdapter;
     Context mContext;
     CircularProgressDialog circularProgressDialog;
     TextView emptyView;
 
-    public TakeMeThereAsyncTask(TakeMeThereAdapter adapter, String id, TextView theEmptyView, Toolbar toolbar, Context context) {
-        this.to_id = id;
+    public TakeMeThereAsyncTask(TakeMeThereAdapter adapter, String to_id, String from_id, TextView theEmptyView, Toolbar toolbar, Context context) {
+        this.to_id = to_id;
+        this.from_id = from_id ;
         takeMeThereAdapter = adapter;
         emptyView = theEmptyView;
         this.toolbar = toolbar;
@@ -60,7 +62,7 @@ public class TakeMeThereAsyncTask extends AsyncTask<Void, Void, Void> {
         StringBuilder builder = null;
         try {
 
-            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getTakeMeThereCommands?fromoutletid=70&tooutletid=220");
+            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getTakeMeThereCommands?fromoutletid="+from_id+"&tooutletid="+to_id);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
