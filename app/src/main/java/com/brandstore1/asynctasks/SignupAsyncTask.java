@@ -37,6 +37,7 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
     String emailId;
     String password;
     String genderCode;
+    String dobString;
     Context mContext;
     User user ;
     CircularProgressDialog circularProgressDialog;
@@ -47,6 +48,7 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
                            String emailId,
                            String password,
                            String genderCode,
+                           String dobString,
                            Context mContext)
     {
         this.firstName = firstName;
@@ -54,6 +56,7 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
         this.emailId=emailId;
         this.password=password;
         this.genderCode = genderCode;
+        this.dobString = dobString;
         this.mContext = mContext;
     }
 

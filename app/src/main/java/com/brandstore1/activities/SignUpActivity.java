@@ -10,11 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brandstore1.R;
 import com.brandstore1.asynctasks.LoginAsyncTask;
 import com.brandstore1.asynctasks.SignupAsyncTask;
 import com.brandstore1.interfaces.SignupAsyncResponse;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignUpActivity extends ActionBarActivity implements SignupAsyncResponse{
 
@@ -25,6 +29,12 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
     EditText confirmPasswordEditText;
     Button signUpButton;
     Context mContext;
+    private Pattern pattern;
+    private Matcher matcher;
+
+    private static final String EMAIL_PATTERN =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 
     @Override
@@ -46,11 +56,18 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
                 String firstNameString = firstNameEditText.getText().toString();
                 String lastNameString = lastNameEditText.getText().toString();
                 String emailString = emailEditText.getText().toString();
-                String passwordString = passwordEditText .getText().toString();
+                String passwordString = passwordEditText.getText().toString();
+                String confirmPasswordString = confirmPasswordEditText.getText().toString();
                 String genderCode = "M";
-                SignupAsyncTask signupAsyncTask = new SignupAsyncTask( firstNameString, lastNameString, emailString , passwordString ,genderCode, mContext);
-                signupAsyncTask.signupAsyncResponseDelegate = SignUpActivity.this;
-                signupAsyncTask.execute();
+                String dobString = "08091990"; // MMDDYYYY
+                String checkValidFormData = isValidFormData(firstNameString, lastNameString, emailString, passwordString, confirmPasswordString, genderCode, dobString);
+                if (checkValidFormData.equals("VALID")) {
+                    SignupAsyncTask signupAsyncTask = new SignupAsyncTask(firstNameString, lastNameString, emailString, passwordString, genderCode, dobString, mContext);
+                    signupAsyncTask.signupAsyncResponseDelegate = SignUpActivity.this;
+                    signupAsyncTask.execute();
+                } else {
+                    Toast.makeText(mContext, checkValidFormData, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -81,7 +98,37 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
 
     public void goToMainActivityScreen(){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        finish();
+    }
+
+    public String isValidFormData(String firstNameString ,
+                                   String lastNameString ,
+                                   String emailString ,
+                                   String passwordString ,
+                                   String confirmPasswordString ,
+                                   String genderCode ,
+                                   String dobString){
+        if(! validateEmail(emailString)){
+            return "Enter a valid Email address.";
+        }
+        if(!firstNameString.equals("")) {
+
+        }
+        if(passwordString.equals("")){
+            return "Password cannot be empty.";
+        }
+        if(!passwordString.equals(confirmPasswordString)){
+            return "Passwords do not match.";
+        }
+        return "VALID";
+    }
+
+    public boolean validateEmail(String emailString){
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(emailString);
+        return matcher.matches();
     }
 
 }

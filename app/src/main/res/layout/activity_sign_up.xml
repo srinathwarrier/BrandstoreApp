@@ -57,7 +57,9 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:scrollHorizontally="true"
+                android:imeOptions="actionNext"
                 />
             <EditText
                 android:id="@+id/signup_last_name"
@@ -72,7 +74,9 @@
                 android:layout_weight="1"
                 android:lines="1"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:scrollHorizontally="true"
+                android:imeOptions="actionNext"
                 />
         </LinearLayout>
 

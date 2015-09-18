@@ -41,7 +41,6 @@
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login"
-            android:noHistory="true"
             >
         </activity>
         <activity

@@ -199,7 +199,7 @@ public class Connections {
                     "http",
                     ipAddress,
                     getStartParametersOfURL() +"getTakeMeThereCommands",
-                    "userid="+userId+"&fromoutletid="+fromOutletId+"tooutletid="+toOutletId,
+                    "userid="+userId+"&fromoutletid="+fromOutletId+"&tooutletid="+toOutletId,
                     null);
             request = uri.toASCIIString();
         }catch (URISyntaxException e) {
