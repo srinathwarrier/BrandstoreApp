@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.brandstore1.OutletListAsyncTask;
+import com.brandstore1.asynctasks.OutletListAsyncTask;
 import com.brandstore1.R;
 import com.brandstore1.adapters.OutletListAdapter;
 import com.brandstore1.entities.Outlet;

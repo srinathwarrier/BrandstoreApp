@@ -1,4 +1,4 @@
-package com.brandstore1;
+package com.brandstore1.asynctasks;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,6 +11,7 @@ import com.brandstore1.activities.OutletListActivity;
 import com.brandstore1.adapters.OutletListAdapter;
 import com.brandstore1.entities.Outlet;
 import com.brandstore1.utils.CircularProgressDialog;
+import com.brandstore1.utils.Connections;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,18 +63,19 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, String> {
         String userId = "6";
         this.tagId = id;
         this.query = text;
-        this.urlString = "http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getOutlets?userid="+userId+"&id=" + this.tagId;
+        Connections connections = new Connections();
+        this.urlString = connections.getOutletListURL(userId,this.tagId);
 
         switch(outletListType){
             case ALL_FAVORITE:
-                this.urlString = "http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getAllFavoriteOutlets?userid="+userId;
+                this.urlString = connections.getAllFavoriteOutletsURL(userId);
                 break;
             case ALL_ON_SALE:
-                this.urlString = "http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getAllOnSaleOutlets";
+                this.urlString = connections.getAllOnSaleOutletsURL(userId);
                 break;
             case CLICKED_ON_CATEGORY: // same as single tagId
             case CLICKED_ON_TAG:
-                this.urlString = "http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getOutlets?type=tag&userid="+userId+"&tagid=" + this.tagId;
+                this.urlString = connections.getOutletListURL(userId,this.tagId);
                 break;
             case SEARCHED_QUERY:
                 break;
@@ -96,7 +98,6 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, String> {
         mOutletArrayList.clear();
         StringBuilder builder = null;
         try {
-            //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" + id);
             URL url = new URL(urlString);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

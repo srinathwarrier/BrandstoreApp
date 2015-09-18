@@ -1,4 +1,4 @@
-package com.brandstore1;
+package com.brandstore1.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.brandstore1.adapters.OutletListAdapter;
 import com.brandstore1.entities.Outlet;
 import com.brandstore1.utils.CircularProgressDialog;
+import com.brandstore1.utils.Connections;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -59,7 +60,8 @@ public class AddFavOutletAsyncTask extends AsyncTask<Void, Void, Void> {
 
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/setFavoriteOutlet?userid=6&outletid="+this.id+"&set="+this.operation);
+            String urlString = new Connections().getSetFavoriteOutletURL("6",this.id, this.operation);
+            HttpPost httpPost = new HttpPost(urlString);
             HttpResponse response = httpClient.execute(httpPost);
 
 

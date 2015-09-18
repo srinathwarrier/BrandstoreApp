@@ -1,7 +1,9 @@
-package com.brandstore1;
+package com.brandstore1.asynctasks;
 
 import android.os.AsyncTask;
 import android.widget.CheckBox;
+
+import com.brandstore1.utils.Connections;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -43,7 +45,8 @@ public class CheckFavoritesAsyncTask extends AsyncTask<Void, Void, Integer> {
         Integer operation = 0;
         try {
             //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutlets?userid=6&type=category&id=" + id);
-            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getAllFavoriteOutlets?userid=6");
+            String urlString = new Connections().getAllFavoriteOutletsURL("6");
+            URL url = new URL(urlString);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 

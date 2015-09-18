@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,47 +11,27 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.brandstore1.AddFavOutletAsyncTask;
-import com.brandstore1.CheckFavoritesAsyncTask;
+import com.brandstore1.asynctasks.AddFavOutletAsyncTask;
+import com.brandstore1.asynctasks.CheckFavoritesAsyncTask;
 import com.brandstore1.adapters.RelatedBrandsListViewAdapter;
-import com.brandstore1.entities.Outlet;
-import com.brandstore1.entities.OutletDetails;
 import com.brandstore1.entities.RelatedBrands;
 import com.brandstore1.utils.HorizontalListView;
 
-import com.brandstore1.OutletDetailsAsyncTask;
+import com.brandstore1.asynctasks.OutletDetailsAsyncTask;
 import com.brandstore1.R;
 import com.brandstore1.adapters.TagPriceListViewAdapter;
-import com.brandstore1.entities.TagPrice;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class OutletDetailsActivity extends ActionBarActivity {
     ImageView outletimage;
@@ -171,8 +150,8 @@ public class OutletDetailsActivity extends ActionBarActivity {
         });
 
         // Commenting this, since checkbox is commented in XML file as well.
-        //CheckBox cb = (CheckBox) findViewById(R.id.favorites);
-        //CheckFavoritesAsyncTask mCheckFavoritesAsyncTask = new CheckFavoritesAsyncTask(id, cb);
+        CheckBox cb = (CheckBox) findViewById(R.id.favorites);
+        CheckFavoritesAsyncTask mCheckFavoritesAsyncTask = new CheckFavoritesAsyncTask(id, cb);
 
 
 
@@ -222,7 +201,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 try {
                     Intent intent = new Intent(getApplicationContext(), TakeMeThereActivity.class);
-                    intent.getStringExtra("id");
+                    intent.putExtra("id", id);
                     intent.putExtra("name", (String) outletname.getText());
                     intent.putExtra("type", TakeMeThereActivity.TMT_type.TO_KNOWN);
                     startActivity(intent);

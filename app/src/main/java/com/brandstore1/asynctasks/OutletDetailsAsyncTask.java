@@ -1,4 +1,4 @@
-package com.brandstore1;
+package com.brandstore1.asynctasks;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,12 +17,14 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.brandstore1.R;
 import com.brandstore1.adapters.RelatedBrandsListViewAdapter;
 import com.brandstore1.adapters.TagPriceListViewAdapter;
 import com.brandstore1.entities.OutletDetails;
 import com.brandstore1.entities.RelatedBrands;
 import com.brandstore1.entities.TagPrice;
 import com.brandstore1.utils.CircularProgressDialog;
+import com.brandstore1.utils.Connections;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -162,7 +164,8 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
         StringBuilder builder = null;
         try {
             //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutletDetails?id=" + id);
-            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getOutletDetails?id=" + id);
+            String urlString = new Connections().getOutletDetailsURL("6",id);
+            URL url = new URL(urlString);
 
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

@@ -6,10 +6,10 @@
     <bool name="ga_autoActivityTracking">true</bool>
 
     <!-- The screen names that will appear in reports -->
-    <screenName name="com.brandstore1.OutletDetailsAsyncTask">
+    <screenName name="com.brandstore1.asynctasks.OutletDetailsAsyncTask">
         OutletDetailsAsyncTask
     </screenName>
-    <screenName name="com.brandstore1.OutletListAsyncTask">
+    <screenName name="com.brandstore1.asynctasks.OutletListAsyncTask">
         OutletListAsyncTask
     </screenName>
 

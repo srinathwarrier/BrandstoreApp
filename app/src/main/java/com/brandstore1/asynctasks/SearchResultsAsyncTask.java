@@ -1,4 +1,4 @@
-package com.brandstore1;
+package com.brandstore1.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -7,6 +7,7 @@ import android.util.Log;
 import com.brandstore1.adapters.ResultsListViewAdapter;
 import com.brandstore1.entities.SearchResults;
 import com.brandstore1.utils.CircularProgressDialog;
+import com.brandstore1.utils.Connections;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,9 +70,8 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, String> {
 
 
         try {
-            //Log.i("SearchResultsAsyncTask","currentTime: "+currentTime +" and query:"+query);
-            //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getSuggestions?q=" + query + "&userid=" + 6);
-            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getSuggestions?q=" + query + "&userid=" + 6);
+            String urlString = new Connections().getSuggestionsURL("6", query);
+            URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoOutput(false);
             Log.d("response", "" + urlConnection.getResponseCode());

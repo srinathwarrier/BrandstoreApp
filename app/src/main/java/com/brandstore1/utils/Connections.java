@@ -16,10 +16,12 @@ public class Connections {
     public static String ipAddress  = "ec2-52-26-206-185.us-west-2.compute.amazonaws.com";
     private String systemName="brandstore";
     String versionName="v2";
+    String userId ="6";
     public Connections(){
         if(!isLiveSystem){
             setSystemName("beta");
         }
+        //fetch userId from SharedPreferences
     }
 
     public String getUpdateRegIdURL(String userId,String registrationId){
@@ -60,7 +62,7 @@ public class Connections {
             URI uri= new URI(
                     "http",
                     ipAddress,
-                    getStartParametersOfURLForSailsModel() +"forgotPassword",
+                    getStartParametersOfURL() +"forgotPassword",
                     "emailid="+emailId,
                     null);
             request = uri.toASCIIString();
@@ -76,7 +78,7 @@ public class Connections {
             URI uri= new URI(
                     "http",
                     ipAddress,
-                    getStartParametersOfURLForSailsModel() +"signup",
+                    getStartParametersOfURL() +"signup",
                     "firstname="+firstName+"&lastname="+lastName+"&emailid="+emailId+"&password="+password +"&gendercode="+genderCode,
                     null);
             request = uri.toASCIIString();
@@ -85,6 +87,122 @@ public class Connections {
         }
         return request;
     }
+
+    public String getSuggestionsURL(String userId, String query ){
+        String request="";
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"getSuggestions",
+                    "q="+query+"&userid="+userId,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+    public String getOutletListURL(String userId, String tagId ){
+        String request="";
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"getOutlets",
+                    "userid="+userId+"&id="+tagId,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+    public String getAllFavoriteOutletsURL(String userId ){
+        String request="";
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"getAllFavoriteOutlets",
+                    "userid="+userId,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+    public String getAllOnSaleOutletsURL(String userId ){
+        String request="";
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"getAllOnSaleOutlets",
+                    "userid="+userId,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+
+    public String getOutletDetailsURL(String userId, String outletId ){
+        String request="";
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"getOutletDetails",
+                    "userid="+userId+"&id="+outletId,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+
+    public String getSetFavoriteOutletURL(String userId , String outletId , boolean toBeSet){
+        String request="";
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"setFavoriteOutlet",
+                    "userid="+userId+"&outletid="+outletId+"&set="+toBeSet,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+    public String getTakeMeThereURL(String userId , String fromOutletId , String toOutletId  ){
+        String request="";
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"getTakeMeThereCommands",
+                    "userid="+userId+"&fromoutletid="+fromOutletId+"tooutletid="+toOutletId,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+
 
 
 

@@ -92,6 +92,7 @@
                             android:background="@drawable/favorites"/>
 
 
+                        -->
                         <CheckBox
                             android:id="@+id/favorites"
                             android:layout_width="wrap_content"
@@ -103,7 +104,6 @@
                             android:clickable="true"
                             android:button="@drawable/favorites"
                             android:onClick="addFavorites"/>
-                        -->
 
                         <TextView
                             android:id="@+id/outletDetails_hubName"

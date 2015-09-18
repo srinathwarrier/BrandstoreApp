@@ -2,26 +2,18 @@ package com.brandstore1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.text.method.TextKeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.brandstore1.R;
-import com.brandstore1.TakeMeThereAsyncTask;
+import com.brandstore1.asynctasks.TakeMeThereAsyncTask;
 import com.brandstore1.adapters.TakeMeThereAdapter;
 
 import java.util.ArrayList;

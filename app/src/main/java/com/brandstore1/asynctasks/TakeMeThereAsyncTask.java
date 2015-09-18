@@ -1,4 +1,4 @@
-package com.brandstore1;
+package com.brandstore1.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -10,6 +10,7 @@ import com.brandstore1.activities.TakeMeThereActivity;
 import com.brandstore1.adapters.TakeMeThereAdapter;
 import com.brandstore1.entities.Outlet;
 import com.brandstore1.utils.CircularProgressDialog;
+import com.brandstore1.utils.Connections;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,8 +62,8 @@ public class TakeMeThereAsyncTask extends AsyncTask<Void, Void, Void> {
         pathArrayList.clear();
         StringBuilder builder = null;
         try {
-
-            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/v2/getTakeMeThereCommands?fromoutletid="+from_id+"&tooutletid="+to_id);
+            String urlString = new Connections().getTakeMeThereURL("6",from_id,to_id);
+            URL url = new URL(urlString);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 

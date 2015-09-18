@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.brandstore1.utils.Connections;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +34,8 @@ public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
     protected Void doInBackground(Void... params) {
         StringBuilder builder = null;
         try {
-            URL url = new URL("http://ec2-52-26-206-185.us-west-2.compute.amazonaws.com/getSuggestions?q=");
+            String urlString = new Connections().getSuggestionsURL("6","");
+            URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoOutput(false);
             Log.d("response", "" + urlConnection.getResponseCode());
