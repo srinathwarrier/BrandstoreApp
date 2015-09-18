@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.brandstore1.asynctasks.AddFavOutletAsyncTask;
 import com.brandstore1.asynctasks.CheckFavoritesAsyncTask;
 import com.brandstore1.adapters.RelatedBrandsListViewAdapter;
+import com.brandstore1.entities.Outlet;
 import com.brandstore1.entities.RelatedBrands;
 import com.brandstore1.utils.HorizontalListView;
 
@@ -52,6 +53,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
     ArrayList<RelatedBrands> brandsarray= new ArrayList();
     ImageView first,second,third;
     String id;
+    Outlet outlet;
     TextView emptyTagPriceView;
     TextView emptyRelatedBrandsView;
     MenuItem tmt;
@@ -86,6 +88,8 @@ public class OutletDetailsActivity extends ActionBarActivity {
         getSupportActionBar().setTitle("");
         id = getIntent().getStringExtra("id");
 
+
+
         // get the list of UI Elements' Objects
         ScrollView scroll=(ScrollView)findViewById(R.id.outletDetails_ScrollView);
         outletimage = (ImageView) findViewById(R.id.outlet_image);
@@ -107,6 +111,11 @@ public class OutletDetailsActivity extends ActionBarActivity {
         tagprice.setEmptyView(emptyTagPriceView);
         mTagPriceListViewAdapter=new TagPriceListViewAdapter(tag,price,this);
         tagprice.setAdapter(mTagPriceListViewAdapter);
+
+        // Commenting this, since checkbox is commented in XML file as well.
+        CheckBox cb = (CheckBox) findViewById(R.id.favorites);
+        //CheckFavoritesAsyncTask mCheckFavoritesAsyncTask = new CheckFavoritesAsyncTask(id, cb);
+
 
 
         RelatedBrandsListViewAdapter relatedBrandsListViewAdapter=new RelatedBrandsListViewAdapter(brandsarray,this);
@@ -135,6 +144,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
                 brandsarray,
                 emptyRelatedBrandsView,
                 first,second,third,
+                cb,
                 this);
         mOutletDetailsAsyncTask.execute();
         scroll.scrollTo(0, 0);
@@ -149,9 +159,6 @@ public class OutletDetailsActivity extends ActionBarActivity {
             }
         });
 
-        // Commenting this, since checkbox is commented in XML file as well.
-        CheckBox cb = (CheckBox) findViewById(R.id.favorites);
-        CheckFavoritesAsyncTask mCheckFavoritesAsyncTask = new CheckFavoritesAsyncTask(id, cb);
 
 
 

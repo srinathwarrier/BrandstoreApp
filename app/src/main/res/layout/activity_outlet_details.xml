@@ -95,14 +95,15 @@
                         -->
                         <CheckBox
                             android:id="@+id/favorites"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_marginTop="13dp"
                             android:layout_marginRight="10dp"
                             android:layout_alignParentRight="true"
                             android:checked="false"
                             android:clickable="true"
-                            android:button="@drawable/favorites"
+                            android:button="@null"
+                            android:background="@drawable/favorites"
                             android:onClick="addFavorites"/>
 
                         <TextView

@@ -34,7 +34,7 @@ public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
     protected Void doInBackground(Void... params) {
         StringBuilder builder = null;
         try {
-            String urlString = new Connections().getSuggestionsURL("6","");
+            String urlString = new Connections().getSuggestionsURL("");
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoOutput(false);

@@ -12,6 +12,7 @@ public class OutletDetails {
     private String Floor;
     private String HubName;
     private String Website;
+    private boolean isFavorite;
 
     public String getGenderCodeString() {
         return GenderCodeString;
@@ -100,6 +101,14 @@ public class OutletDetails {
 
     public void setWebsite(String website) {
         Website = website;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 
 

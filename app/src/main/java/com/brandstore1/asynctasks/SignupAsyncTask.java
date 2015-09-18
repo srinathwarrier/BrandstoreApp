@@ -9,8 +9,10 @@ import android.widget.Toast;
 import com.brandstore1.entities.User;
 import com.brandstore1.interfaces.LoginAsyncResponse;
 import com.brandstore1.interfaces.SignupAsyncResponse;
+import com.brandstore1.model.Connection;
 import com.brandstore1.utils.CircularProgressDialog;
 import com.brandstore1.utils.Connections;
+import com.brandstore1.utils.MySharedPreferences;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -116,11 +118,17 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
                 String userJsonObject = gson.toJson(user);
 
                 // Save userid and userJsonObject to SharedPreferences
+                /*
                 SharedPreferences sharedPref = mContext.getSharedPreferences("BrandstoreApp",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("userid", user.getUserId());
                 editor.putString("userJsonObject", userJsonObject);
                 editor.apply();
+                */
+                MySharedPreferences.setUserId(mContext,user.getUserId());
+                MySharedPreferences.setUserJsonObjectString(mContext, userJsonObject);
+
+                Connections.setUserIdFromSharedPreferences(mContext);
 
                 //circularProgressDialog.dismiss();
 

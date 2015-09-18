@@ -14,6 +14,7 @@ import com.brandstore1.entities.User;
 import com.brandstore1.interfaces.LoginAsyncResponse;
 import com.brandstore1.utils.CircularProgressDialog;
 import com.brandstore1.utils.Connections;
+import com.brandstore1.utils.MySharedPreferences;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -110,12 +111,19 @@ public class LoginAsyncTask extends AsyncTask<Void,Void,String> {
                 String userJsonObject = gson.toJson(user);
 
                 // Save userid and userJsonObject to SharedPreferences
+                /*
                 SharedPreferences sharedPref = mContext.getSharedPreferences("BrandstoreApp",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("userid", user.getUserId());
                 editor.putString("userJsonObject", userJsonObject);
                 editor.putBoolean("hasLoggedIn", true);
                 editor.apply();
+                */
+                MySharedPreferences.setUserId(mContext , user.getUserId());
+                MySharedPreferences.setUserJsonObjectString(mContext, userJsonObject);
+                MySharedPreferences.setHasLoggedIn(mContext, true);
+
+                Connections.setUserIdFromSharedPreferences(mContext);
 
 
                 circularProgressDialog.dismiss();

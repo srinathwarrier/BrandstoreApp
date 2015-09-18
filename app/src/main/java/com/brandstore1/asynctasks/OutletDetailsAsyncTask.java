@@ -78,6 +78,8 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
     ImageView first,second,third;
     CircularProgressDialog circularProgressDialog;
     TextView emptyRelatedBrandsView;
+    CheckBox cb ;
+
 
     public OutletDetailsAsyncTask(
             TagPriceListViewAdapter TagPrice,
@@ -102,6 +104,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             ImageView first,
             ImageView second,
             ImageView third,
+            CheckBox cb,
             Context context) {
 
         this.outletimage = outletimage;
@@ -127,6 +130,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
         this.first=first;
         this.second=second;
         this.third=third;
+        this.cb=cb;
 
         File cacheDir = StorageUtils.getCacheDirectory(context);
         DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -160,11 +164,10 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-        //CheckBox cb = (CheckBox) findViewById(R.id.favorites);
         StringBuilder builder = null;
         try {
             //URL url = new URL("http://awsm-awsmproject.rhcloud.com/getOutletDetails?id=" + id);
-            String urlString = new Connections().getOutletDetailsURL("6",id);
+            String urlString = new Connections().getOutletDetailsURL(id);
             URL url = new URL(urlString);
 
 
@@ -190,11 +193,14 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String resultString) {
         super.onPostExecute(resultString);
 
-    try {
+        try {
 
             JSONObject jsonobject = new JSONObject(resultString);
-
             obj = new OutletDetails();
+
+            /*
+                Extract : Basic data
+             */
             obj.setOutletName(jsonobject.getString("outletName"));
             obj.setOutletImage(jsonobject.getString("imageUrl"));
             obj.setFloor(jsonobject.getString("floorNumber").concat(", "));
@@ -202,7 +208,11 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             obj.setLongDescription(jsonobject.getString("description"));
             obj.setShortDescription(obj.getLongDescription().substring(0, 100).concat("..."));
             obj.setGenderCodeString(jsonobject.get("genderCodeString").toString());
+            obj.setIsFavorite(Boolean.valueOf(jsonobject.get("isFavorite").toString()));
 
+            /*
+                Extract : TagsArray
+             */
 
             JSONArray tagsArray = jsonobject.getJSONArray("tagsArray");
             JSONObject tagsObject;
@@ -211,6 +221,10 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
                 tag.add(tagsObject.getString("tagName"));
                 price.add("₹ "+tagsObject.getString("avgPrice"));
             }
+
+            /*
+                Extract : Related Brands
+             */
 
             RelatedBrands obj1;
             JSONArray relatedBrandsArray=jsonobject.getJSONArray("relatedBrandsArray");
@@ -225,24 +239,31 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
                 obj1.setName(relatedBrandsObject.getString("brandName"));
                 brandsArray.add(obj1);
             }
-        if(brandsArray.size()==0){
-            emptyRelatedBrandsView.setVisibility(View.VISIBLE);
-        }else{
-            emptyRelatedBrandsView.setVisibility(View.GONE);
-        }
+            if(brandsArray.size()==0){
+                emptyRelatedBrandsView.setVisibility(View.VISIBLE);
+            }else{
+                emptyRelatedBrandsView.setVisibility(View.GONE);
+            }
 
-        JSONArray offersArray = jsonobject.getJSONArray("offersArray");
-        JSONObject offersObject;
-        String offerString="";
-        for (int i = 0; i < offersArray.length(); i++) {
-            offersObject = offersArray.getJSONObject(i);
-            offerString+=offersObject.getString("offerDesc")+"\n";
-            //offersArrayList.add(offersObject.getString("offerDesc"));
-        }
-        //String offerString = getStringFromOfferArrayList(offersArrayList);
-        //if(offerString.equals("")){offerString="No Ongoing Offers !!!";}
-        if(!offerString.equals("")){offerContentTextView.setText(offerString);}
+            /*
+                Extract : Offers
+             */
 
+            JSONArray offersArray = jsonobject.getJSONArray("offersArray");
+            JSONObject offersObject;
+            String offerString="";
+            for (int i = 0; i < offersArray.length(); i++) {
+                offersObject = offersArray.getJSONObject(i);
+                offerString+=offersObject.getString("offerDesc")+"\n";
+                //offersArrayList.add(offersObject.getString("offerDesc"));
+            }
+            if(!offerString.equals("")){
+                offerContentTextView.setText(offerString);
+            }
+
+            /*
+                Set UI : Basic data
+             */
 
             final OutletDetails outletDetails = obj;
             if (outletDetails != null) {
@@ -255,26 +276,15 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
                 website.setText(outletDetails.getWebsite());
                 hubname.setText(outletDetails.getHubName());
                 ImageLoader.getInstance().displayImage(outletDetails.getOutletImage(), outletimage);
-    /*
-                // 2. Add TagPrice views to the LinearLayout
-                for (int i = 0; i < obj.getTagPriceArrayList().size(); i++) {
-                    TextView tagText = new TextView(context),
-                            priceText = new TextView(context);
-                    tagText.setText("Avg price of " + obj.getTagPriceArrayList().get(i).getTagString());
-                    priceText.setText(" -  Rs." + obj.getTagPriceArrayList().get(i).getPriceString());
-                    LinearLayout newRow = new LinearLayout(context);
-                    newRow.setOrientation(LinearLayout.HORIZONTAL);
-                    newRow.addView(tagText);
-                    newRow.addView(priceText);
-                    tagPriceLinearLayout.addView(newRow);
-                }*/
-
             }
+
+            /*
+                Set UI : Add readmore button
+             */
             readmore.setVisibility(View.VISIBLE);
             readmore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     if (readmore.getText() == "READ LESS") {
                         readmore.setText("READ MORE");
                         description.setText(outletDetails.getShortDescription());
@@ -283,11 +293,12 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
                         description.setText(outletDetails.getLongDescription());
                         readmore.setText("READ LESS");
                     }
-
                 }
-
             });
 
+            /*
+                Set UI : Add gender tag elements
+            */
             if(obj.getGenderCodeString().contains("M"))
             {
                 first.setVisibility(View.VISIBLE);
@@ -301,8 +312,20 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
                 third.setVisibility(View.VISIBLE);
             }
 
+            /*
+                Set UI : Set toolbar name
+             */
             toolbar.setTitle(outletDetails.getOutletName());
 
+            /*
+                Set UI : Favorite checkbox
+             */
+            cb.setChecked(outletDetails.isFavorite());
+
+
+            /*
+                Set UI : Calculate height to decide tagPrice dimensions
+             */
             int totalHeight = 0;
             int desiredWidth = View.MeasureSpec.makeMeasureSpec(tagpriceListView.getWidth(), View.MeasureSpec.AT_MOST);
             for (int i = 0; i < mTagPrice.getCount(); i++) {
@@ -316,8 +339,6 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             params.height = totalHeight + (tagpriceListView.getDividerHeight() * (mTagPrice.getCount() - 1));
             tagpriceListView.setLayoutParams(params);
             //tagpriceListView.requestLayout();
-
-
 
         }catch (JSONException e) {
                 e.printStackTrace();

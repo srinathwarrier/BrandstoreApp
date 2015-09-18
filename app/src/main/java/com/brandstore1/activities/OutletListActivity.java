@@ -22,6 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -40,7 +41,7 @@ public class OutletListActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-         super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet_list);
 
         /*
@@ -118,6 +119,11 @@ public class OutletListActivity extends ActionBarActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // notifyAdapter
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -159,11 +165,11 @@ public class OutletListActivity extends ActionBarActivity {
         if (toBeSelected) {
             //filter favorites
             favoriteMenuItem.setChecked(true);
-            favoriteMenuItem.setIcon(android.R.drawable.btn_star_big_on);
+            favoriteMenuItem.setIcon(R.drawable.favselect);
             mOutletListAdapter.getFilter().filter("X");
         } else {
             favoriteMenuItem.setChecked(false);
-            favoriteMenuItem.setIcon(android.R.drawable.btn_star_big_off);
+            favoriteMenuItem.setIcon(R.drawable.fav);
             mOutletListAdapter.getFilter().filter("Y");
         }
     }
@@ -178,7 +184,7 @@ public class OutletListActivity extends ActionBarActivity {
 
         } else {
             saleMenuItem.setChecked(false);
-            saleMenuItem.setIcon(R.drawable.sale);
+            saleMenuItem.setIcon(R.drawable.saleicon);
             mOutletListAdapter.getSaleFilter().filter("Y");
 
         }

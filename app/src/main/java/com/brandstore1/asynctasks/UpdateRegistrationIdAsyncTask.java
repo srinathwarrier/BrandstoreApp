@@ -37,7 +37,7 @@ public class UpdateRegistrationIdAsyncTask extends AsyncTask<Void,Void,Void> {
     protected Void doInBackground(Void... params) {
         StringBuilder builder = null;
         try {
-            String urlString = new Connections().getUpdateRegIdURL(userId,registrationId);
+            String urlString = new Connections().getUpdateRegIdURL(registrationId);
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 

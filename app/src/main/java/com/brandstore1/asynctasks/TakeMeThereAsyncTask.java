@@ -62,7 +62,7 @@ public class TakeMeThereAsyncTask extends AsyncTask<Void, Void, Void> {
         pathArrayList.clear();
         StringBuilder builder = null;
         try {
-            String urlString = new Connections().getTakeMeThereURL("6",from_id,to_id);
+            String urlString = new Connections().getTakeMeThereURL(from_id,to_id);
             URL url = new URL(urlString);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

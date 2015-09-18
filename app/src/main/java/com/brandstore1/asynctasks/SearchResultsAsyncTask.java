@@ -70,7 +70,7 @@ public class SearchResultsAsyncTask extends AsyncTask<String, Void, String> {
 
 
         try {
-            String urlString = new Connections().getSuggestionsURL("6", query);
+            String urlString = new Connections().getSuggestionsURL(query);
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoOutput(false);

@@ -1,5 +1,6 @@
 package com.brandstore1.utils;
 
+import android.content.Context;
 import android.net.Uri;
 
 import java.net.URI;
@@ -16,28 +17,17 @@ public class Connections {
     public static String ipAddress  = "ec2-52-26-206-185.us-west-2.compute.amazonaws.com";
     private String systemName="brandstore";
     String versionName="v2";
-    String userId ="6";
+    static String userId ="6";
     public Connections(){
         if(!isLiveSystem){
             setSystemName("beta");
         }
-        //fetch userId from SharedPreferences
+
     }
 
-    public String getUpdateRegIdURL(String userId,String registrationId){
-        String request="";
-        try {
-            URI uri= new URI(
-                    "http",
-                    ipAddress,
-                    getStartParametersOfURL() +"updateRegID",
-                    "userid="+userId+"&regid="+registrationId,
-                    null);
-            request = uri.toASCIIString();
-        }catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return request;
+    public static void setUserIdFromSharedPreferences(Context mContext){
+        //fetch userId from SharedPreferences
+        userId = MySharedPreferences.getUserId(mContext);
     }
 
     public String getLoginURL(String emailId , String password){
@@ -88,7 +78,23 @@ public class Connections {
         return request;
     }
 
-    public String getSuggestionsURL(String userId, String query ){
+    public String getUpdateRegIdURL(String registrationId){
+        String request="";
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"updateRegID",
+                    "userid="+userId+"&regid="+registrationId,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+    public String getSuggestionsURL(String query ){
         String request="";
         try {
             URI uri= new URI(
@@ -104,14 +110,14 @@ public class Connections {
         return request;
     }
 
-    public String getOutletListURL(String userId, String tagId ){
+    public String getOutletListURL(String tagId ){
         String request="";
         try {
             URI uri= new URI(
                     "http",
                     ipAddress,
                     getStartParametersOfURL() +"getOutlets",
-                    "userid="+userId+"&id="+tagId,
+                    "type=tag&userid="+userId+"&tagid="+tagId,
                     null);
             request = uri.toASCIIString();
         }catch (URISyntaxException e) {
@@ -120,7 +126,7 @@ public class Connections {
         return request;
     }
 
-    public String getAllFavoriteOutletsURL(String userId ){
+    public String getAllFavoriteOutletsURL(){
         String request="";
         try {
             URI uri= new URI(
@@ -136,7 +142,7 @@ public class Connections {
         return request;
     }
 
-    public String getAllOnSaleOutletsURL(String userId ){
+    public String getAllOnSaleOutletsURL(){
         String request="";
         try {
             URI uri= new URI(
@@ -153,7 +159,7 @@ public class Connections {
     }
 
 
-    public String getOutletDetailsURL(String userId, String outletId ){
+    public String getOutletDetailsURL( String outletId ){
         String request="";
         try {
             URI uri= new URI(
@@ -170,7 +176,7 @@ public class Connections {
     }
 
 
-    public String getSetFavoriteOutletURL(String userId , String outletId , boolean toBeSet){
+    public String getSetFavoriteOutletURL( String outletId , boolean toBeSet){
         String request="";
         try {
             URI uri= new URI(
@@ -186,7 +192,7 @@ public class Connections {
         return request;
     }
 
-    public String getTakeMeThereURL(String userId , String fromOutletId , String toOutletId  ){
+    public String getTakeMeThereURL(String fromOutletId , String toOutletId  ){
         String request="";
         try {
             URI uri= new URI(

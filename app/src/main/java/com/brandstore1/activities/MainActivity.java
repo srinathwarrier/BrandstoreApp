@@ -24,6 +24,7 @@ import com.brandstore1.AnalyticsSampleApp;
 import com.brandstore1.R;
 import com.brandstore1.adapters.CategoryGridViewAdapter;
 import com.brandstore1.fragments.NavigationDrawerFragment;
+import com.brandstore1.utils.MySharedPreferences;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.nearby.connection.Connections;
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private DrawerLayout mDrawerLayout;
 
     private static final String PREFERENCES_FILE = "BrandstoreApp";
-    private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
 
     private boolean mUserLearnedDrawer;
@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         //NavigationDrawer methods:
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mUserLearnedDrawer = Boolean.valueOf(readSharedSetting(this, PREF_USER_LEARNED_DRAWER, "false"));
+        mUserLearnedDrawer = Boolean.valueOf(MySharedPreferences.getUserLearnedDrawer(this));
+        //readSharedSetting(this, PREF_USER_LEARNED_DRAWER, "false")
 
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
@@ -330,7 +331,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if (!mUserLearnedDrawer) {
             mDrawerLayout.openDrawer(GravityCompat.START);
             mUserLearnedDrawer = true;
-            saveSharedSetting(this, PREF_USER_LEARNED_DRAWER, "true");
+            //saveSharedSetting(this, PREF_USER_LEARNED_DRAWER, "true");
+            MySharedPreferences.setUserLearnedDrawer(this,"true");
         }
     }
 
@@ -346,17 +348,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION, 0);
         Menu menu = mNavigationView.getMenu();
         menu.getItem(mCurrentSelectedPosition).setChecked(true);
-    }
-
-    public static String readSharedSetting(Context ctx, String settingName, String defaultValue) {
-        SharedPreferences sharedPref = ctx.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
-        return sharedPref.getString(settingName, defaultValue);
-    }
-    public static void saveSharedSetting(Context ctx, String settingName, String settingValue) {
-        SharedPreferences sharedPref = ctx.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(settingName, settingValue);
-        editor.apply();
     }
 
     @Override

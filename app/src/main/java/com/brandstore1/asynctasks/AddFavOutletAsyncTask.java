@@ -60,7 +60,7 @@ public class AddFavOutletAsyncTask extends AsyncTask<Void, Void, Void> {
 
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            String urlString = new Connections().getSetFavoriteOutletURL("6",this.id, this.operation);
+            String urlString = new Connections().getSetFavoriteOutletURL(this.id, this.operation);
             HttpPost httpPost = new HttpPost(urlString);
             HttpResponse response = httpClient.execute(httpPost);
 

@@ -1,12 +1,324 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.brandstore1.activities.TestActivity">
+<android.support.v4.widget.DrawerLayout
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/outletdetailstoolbar"
+                layout="@layout/toolbar" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/outletDetails_outer_LinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp">
+
+                        <ImageView
+                            android:id="@+id/outletbackground"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:background="@drawable/background" />
+
+                        <requestFocus />
+
+                        <ImageView
+                            android:id="@+id/outlet_image"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_centerInParent="true"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/blank_screen" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp">
+
+
+                        <TextView
+                            android:id="@+id/outletDetails_brandName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Outlet Name"
+                            android:textColor="@color/black"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:id="@+id/outletDetails_floorName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/outletDetails_brandName"
+                            android:layout_below="@id/outletDetails_brandName"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Floor, "
+                            android:textSize="15sp" />
+                        <!--
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignBottom="@id/outletDetails_brandName"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="15dp"
+                            android:src="@drawable/off"
+                            android:background="@drawable/favorites"/>
+
+
+                        -->
+                        <CheckBox
+                            android:id="@+id/favorites"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="13dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_alignParentRight="true"
+                            android:checked="false"
+                            android:clickable="true"
+                            android:button="@null"
+                            android:background="@drawable/favorites"
+                            android:onClick="addFavorites"/>
+
+                        <TextView
+                            android:id="@+id/outletDetails_hubName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/outletDetails_floorName"
+                            android:layout_toRightOf="@id/outletDetails_floorName"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Hub Name"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:id="@+id/first"
+                            android:layout_width="45dp"
+                            android:layout_height="15dp"
+                            android:visibility="invisible"
+                            android:layout_alignLeft="@id/outletDetails_floorName"
+                            android:layout_below="@id/outletDetails_floorName"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/men"
+                            android:scaleType="fitXY"/>
+
+                        <ImageView
+                            android:id="@+id/second"
+                            android:layout_width="50dp"
+                            android:layout_height="15dp"
+                            android:layout_alignTop="@id/first"
+                            android:visibility="invisible"
+                            android:layout_marginLeft="7dp"
+                            android:layout_toRightOf="@id/first"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/women" />
+
+                        <ImageView
+                            android:id="@+id/third"
+                            android:layout_width="50dp"
+                            android:layout_height="15dp"
+                            android:layout_alignTop="@id/first"
+                            android:visibility="invisible"
+                            android:layout_marginLeft="7dp"
+                            android:layout_toRightOf="@id/second"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/kids" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/outletDetails_website"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:text="www.google.com"
+                        android:textSize="20sp" />
+
+
+                    <TextView
+                        android:id="@+id/outletDetails_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:lineSpacingExtra="5dp"
+                        android:text="Description"
+                        android:textColor="@color/black"
+
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:id="@+id/readmore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:background="@null"
+                        android:text="READ MORE"
+
+
+                        android:textColor="@color/colorPrimary">
+
+
+                    </Button>
+
+                    <TextView
+                        android:id="@+id/outletDetails_offer_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:text="Offers"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/outletDetails_offer_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:text="Coming soon..."
+                        android:fontFamily="sans-serif-condensed"
+                        android:lineSpacingExtra="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        />
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"
+                        android:layout_marginTop="7dp"
+                        android:background="@color/grey" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13dp"
+                        android:layout_marginRight="13dp"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:text="PRODUCT"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="AVERAGE PRICE"
+                            android:textSize="15sp" />
+                    </RelativeLayout>
+
+
+                    <!--
+                                    <TextView
+                                        android:id="@+id/outletDetails_tagAndPrice_label"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Average Price of Items : "
+
+
+                                        android:textSize="20sp" />
+
+                                    <LinearLayout
+                                        android:id="@+id/outletDetails_tagAndPrice_linearLayout"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
+
+                                    </LinearLayout>
+    -->
+                    <ListView
+                        android:id="@+id/tag_and_price"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@color/white"
+                        android:divider="@null"
+                        android:dividerHeight="2dp"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"></ListView>
+                    <TextView
+                        android:id="@+id/outlet_details_empty_tagPrice_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Coming soon..."
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:lineSpacingExtra="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:visibility="gone"
+                        />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:text="SIMILAR STORES"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-clight"/>
+
+            <TextView
+                android:id="@+id/outlet_details_empty_relatedBrands_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coming soon..."
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:lineSpacingExtra="5dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:visibility="gone"
+                />
+
+            <com.brandstore1.utils.HorizontalListView
+                android:id="@+id/relatedbrands"
+                android:layout_marginTop="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="13dp">
+
+            </com.brandstore1.utils.HorizontalListView>
+        </LinearLayout>
+
+    <!--
+        <fragment
+            android:id="@+id/navigation_drawer_fragment"
+            android:name="com.brandstore.fragments.NavigationDrawerFragment"
+            android:layout_width="@dimen/navigation_drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            tools:layout="@layout/fragment_navigation_drawer"></fragment>-->
+</android.support.v4.widget.DrawerLayout>

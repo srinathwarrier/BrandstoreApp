@@ -8,6 +8,9 @@ import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 
 import com.brandstore1.R;
+import com.brandstore1.model.Connection;
+import com.brandstore1.utils.Connections;
+import com.brandstore1.utils.MySharedPreferences;
 
 public class SplashScreenActivity extends ActionBarActivity {
 
@@ -20,9 +23,11 @@ public class SplashScreenActivity extends ActionBarActivity {
         setContentView(R.layout.activity_splash);
         mContext = this;
 
-        SharedPreferences sharedPref = mContext.getSharedPreferences("BrandstoreApp",Context.MODE_PRIVATE);
+        //SharedPreferences sharedPref = mContext.getSharedPreferences("BrandstoreApp",Context.MODE_PRIVATE);
         //Get "hasLoggedIn" value. If the value doesn't exist yet false is returned
-        boolean hasLoggedIn = sharedPref.getBoolean("hasLoggedIn", false);
+        //boolean hasLoggedIn = sharedPref.getBoolean("hasLoggedIn", false);
+
+        boolean hasLoggedIn = MySharedPreferences.getHasLoggedIn(mContext);
 
         if(hasLoggedIn)
         {
@@ -35,6 +40,7 @@ public class SplashScreenActivity extends ActionBarActivity {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
+                    Connections.setUserIdFromSharedPreferences(mContext);
                     goToMainActivityScreen();
                     SplashScreenActivity.this.finish();
                 }

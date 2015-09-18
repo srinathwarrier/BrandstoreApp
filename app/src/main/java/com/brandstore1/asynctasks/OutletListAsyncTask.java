@@ -64,18 +64,18 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, String> {
         this.tagId = id;
         this.query = text;
         Connections connections = new Connections();
-        this.urlString = connections.getOutletListURL(userId,this.tagId);
+        this.urlString = connections.getOutletListURL(this.tagId);
 
         switch(outletListType){
             case ALL_FAVORITE:
-                this.urlString = connections.getAllFavoriteOutletsURL(userId);
+                this.urlString = connections.getAllFavoriteOutletsURL();
                 break;
             case ALL_ON_SALE:
-                this.urlString = connections.getAllOnSaleOutletsURL(userId);
+                this.urlString = connections.getAllOnSaleOutletsURL();
                 break;
             case CLICKED_ON_CATEGORY: // same as single tagId
             case CLICKED_ON_TAG:
-                this.urlString = connections.getOutletListURL(userId,this.tagId);
+                this.urlString = connections.getOutletListURL(this.tagId);
                 break;
             case SEARCHED_QUERY:
                 break;
