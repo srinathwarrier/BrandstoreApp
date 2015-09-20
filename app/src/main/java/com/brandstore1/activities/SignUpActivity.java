@@ -41,6 +41,7 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
     Context mContext;
     private Pattern pattern;
     private Matcher matcher;
+    public static TextView textView;
 
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -74,7 +75,10 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
                 }else if(genderRadioGroup.getCheckedRadioButtonId() == R.id.signup_gender_female){
                     genderCode = "F";
                 }
-                String dobString = dobTextView.getTag().toString();
+                String dobString = "";
+                if(textView!=null && textView.getTag()!=null){
+                    dobString = textView.getTag().toString();
+                }
                 //String dobString = "08091990"; // MMDDYYYY
                 String checkValidFormData = isValidFormData(nameString, emailString, passwordString, genderCode, dobString);
                 if (checkValidFormData.equals("VALID")) {
@@ -113,8 +117,11 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
     }
 
     public void goToMainActivityScreen(){
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(mContext, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putString("test", "test");
+        intent.putExtras(bundle);
         startActivity(intent);
         finish();
     }
@@ -133,6 +140,9 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
         if(passwordString.equals("")){
             return "Password cannot be empty.";
         }
+        if(dobString.equals("")){
+            return "Date of birth cannot be empty.";
+        }
         /*if(!passwordString.equals(confirmPasswordString)){
             return "Passwords do not match.";
         }*/
@@ -148,14 +158,17 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
-        TextView textView;
+//        public static TextView textView;
         public DatePickerFragment(){
             super();
         }
-        public DatePickerFragment(TextView v){
-            super();
-            textView = v;
-        }
+//        public DatePickerFragment(TextView v){
+//            super();
+//            textView = v;
+//        }
+//        public static void setTextView(TextView v){
+//            textView = v;
+//        }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -174,15 +187,16 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
             Date date = new Date(year-1900,month,day);
             DateFormat df = new SimpleDateFormat("MMMM dd, yyyy");
             String reportDate = df.format(date);
-            textView.setText(reportDate);
+            TextView t = SignUpActivity.textView;
+            t.setText(reportDate);
 
             df = new SimpleDateFormat("yyyy-MM-dd");
-            textView.setTag(df.format(date));
-
+            t.setTag(df.format(date));
         }
     }
     public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment((TextView)v);
+        DialogFragment newFragment = new DatePickerFragment();
+        SignUpActivity.textView = (TextView)v;
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
