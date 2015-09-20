@@ -20,39 +20,43 @@
             layout="@layout/toolbar" />
 
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="90dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="To"
-            android:id="@+id/to"
-            android:textStyle="bold"
-            android:textColor="@color/grey"
-            android:textSize="22sp"
-            android:paddingLeft="20dp"
-            android:paddingTop="20dp" />
+            android:background="@color/white">
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textPersonName"
-            android:text="To"
-            android:id="@+id/tmt_to"
-            android:tag="tmt_to"
-            android:layout_toRightOf="@id/to"
-            android:paddingTop="20dp"
-            android:editable="false"
-            android:focusable="false"/>
-    </RelativeLayout>
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="To"
+                android:id="@+id/to"
+                android:textStyle="bold"
+                android:textColor="@color/grey"
+                android:textSize="22sp"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:inputType="textPersonName"
+                android:text="To"
+                android:id="@+id/tmt_to"
+                android:tag="tmt_to"
+                android:layout_toRightOf="@id/to"
+                android:paddingTop="20dp"
+                android:editable="false"
+                android:focusable="false"/>
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white">
             <TextView
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
@@ -72,6 +76,7 @@
                 android:layout_weight="1"
                 android:inputType="textPersonName"
                 android:text="From"
+                android:layout_marginRight="10dp"
                 android:id="@+id/tmt_from"
                 android:tag="tmt_from"
                 android:focusable="false"
@@ -93,13 +98,15 @@
         <ListView
             android:id="@+id/tmt_list_view"
             android:layout_width="match_parent"
-            android:layout_height="569dp"
+            android:layout_height="match_parent"
             android:divider="@null"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-            android:dividerHeight="12dp" />
+            android:dividerHeight="12dp"
+            android:background="@color/tmt_bg"
+            />
 
         <TextView
             android:id="@+id/tmt_list_empty_textView"

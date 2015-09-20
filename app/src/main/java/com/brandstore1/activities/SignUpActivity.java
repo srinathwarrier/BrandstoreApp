@@ -1,14 +1,19 @@
 package com.brandstore1.activities;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,16 +22,21 @@ import com.brandstore1.asynctasks.LoginAsyncTask;
 import com.brandstore1.asynctasks.SignupAsyncTask;
 import com.brandstore1.interfaces.SignupAsyncResponse;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends ActionBarActivity implements SignupAsyncResponse{
 
-    EditText firstNameEditText;
-    EditText lastNameEditText;
+    EditText nameEditText;
     EditText emailEditText;
     EditText passwordEditText ;
     EditText confirmPasswordEditText;
+    TextView dobTextView;
+    RadioGroup genderRadioGroup;
     Button signUpButton;
     Context mContext;
     private Pattern pattern;
@@ -43,26 +53,32 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
         setContentView(R.layout.activity_sign_up);
         mContext = this;
 
-        firstNameEditText = (EditText) findViewById(R.id.signup_first_name);
-        lastNameEditText = (EditText) findViewById(R.id.signup_last_name);
+        nameEditText = (EditText) findViewById(R.id.signup_name);
         emailEditText = (EditText) findViewById(R.id.signup_email);
         passwordEditText = (EditText) findViewById(R.id.signup_password);
-        confirmPasswordEditText = (EditText) findViewById(R.id.signup_confirm_password);
+        //confirmPasswordEditText = (EditText) findViewById(R.id.signup_confirm_password);
+        dobTextView = (TextView) findViewById(R.id.signup_dob);
+        genderRadioGroup = (RadioGroup)findViewById(R.id.signup_gender_radioGroup);
         signUpButton = (Button) findViewById(R.id.signup_button);
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String firstNameString = firstNameEditText.getText().toString();
-                String lastNameString = lastNameEditText.getText().toString();
+                String nameString = nameEditText.getText().toString();
                 String emailString = emailEditText.getText().toString();
                 String passwordString = passwordEditText.getText().toString();
-                String confirmPasswordString = confirmPasswordEditText.getText().toString();
-                String genderCode = "M";
-                String dobString = "08091990"; // MMDDYYYY
-                String checkValidFormData = isValidFormData(firstNameString, lastNameString, emailString, passwordString, confirmPasswordString, genderCode, dobString);
+                //String confirmPasswordString = confirmPasswordEditText.getText().toString();
+                String genderCode = "";
+                if(genderRadioGroup.getCheckedRadioButtonId() == R.id.signup_gender_male){
+                    genderCode = "M";
+                }else if(genderRadioGroup.getCheckedRadioButtonId() == R.id.signup_gender_female){
+                    genderCode = "F";
+                }
+                String dobString = dobTextView.getTag().toString();
+                //String dobString = "08091990"; // MMDDYYYY
+                String checkValidFormData = isValidFormData(nameString, emailString, passwordString, genderCode, dobString);
                 if (checkValidFormData.equals("VALID")) {
-                    SignupAsyncTask signupAsyncTask = new SignupAsyncTask(firstNameString, lastNameString, emailString, passwordString, genderCode, dobString, mContext);
+                    SignupAsyncTask signupAsyncTask = new SignupAsyncTask(nameString, emailString, passwordString, genderCode, dobString, mContext);
                     signupAsyncTask.signupAsyncResponseDelegate = SignUpActivity.this;
                     signupAsyncTask.execute();
                 } else {
@@ -103,25 +119,23 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
         finish();
     }
 
-    public String isValidFormData(String firstNameString ,
-                                   String lastNameString ,
+    public String isValidFormData(String nameString ,
                                    String emailString ,
                                    String passwordString ,
-                                   String confirmPasswordString ,
                                    String genderCode ,
                                    String dobString){
+        if(nameString.equals("")) {
+            return "Name cannot be empty.";
+        }
         if(! validateEmail(emailString)){
             return "Enter a valid Email address.";
-        }
-        if(!firstNameString.equals("")) {
-
         }
         if(passwordString.equals("")){
             return "Password cannot be empty.";
         }
-        if(!passwordString.equals(confirmPasswordString)){
+        /*if(!passwordString.equals(confirmPasswordString)){
             return "Passwords do not match.";
-        }
+        }*/
         return "VALID";
     }
 
@@ -130,5 +144,48 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
         matcher = pattern.matcher(emailString);
         return matcher.matches();
     }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        TextView textView;
+        public DatePickerFragment(){
+            super();
+        }
+        public DatePickerFragment(TextView v){
+            super();
+            textView = v;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+            Date date = new Date(year-1900,month,day);
+            DateFormat df = new SimpleDateFormat("MMMM dd, yyyy");
+            String reportDate = df.format(date);
+            textView.setText(reportDate);
+
+            df = new SimpleDateFormat("yyyy-MM-dd");
+            textView.setTag(df.format(date));
+
+        }
+    }
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment((TextView)v);
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+
 
 }

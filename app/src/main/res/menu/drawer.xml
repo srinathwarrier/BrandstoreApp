@@ -14,5 +14,9 @@
             android:id="@+id/drawer_item_sale"
             android:icon="@drawable/sale"
             android:title="@string/nav_item_sale"/>
+        <item
+            android:id="@+id/drawer_item_takeMeThere"
+            android:icon="@drawable/take_me_there"
+            android:title="@string/nav_item_takeMeThere"/>
     </group>
 </menu>

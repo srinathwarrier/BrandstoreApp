@@ -42,8 +42,8 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
         setContentView(R.layout.activity_search);
 
         sqLiteDatabase = openOrCreateDatabase("brandstoreDB",MODE_PRIVATE,null);
-        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
-        updateSuggestionsAsyncTask.execute();
+        //UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
+        //updateSuggestionsAsyncTask.execute();
 
         toolbar = (Toolbar) findViewById(R.id.searchtoolbar);
         setSupportActionBar(toolbar);
@@ -172,7 +172,7 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
             mResultsAdapter.notifyDataSetChanged();
         } else {
             String s="%" + newText+ "%";
-            Cursor res= sqLiteDatabase.rawQuery("Select * from Suggestions where name like '" +s +"';", null);
+            Cursor res= sqLiteDatabase.rawQuery("Select * from Suggestions where name like '" +s +"' AND category NOT IN ('others');", null);
             res.moveToFirst();
             if(res.getCount()==0)
             {

@@ -125,9 +125,7 @@ public class LoginAsyncTask extends AsyncTask<Void,Void,String> {
 
                 Connections.setUserIdFromSharedPreferences(mContext);
 
-
                 circularProgressDialog.dismiss();
-
 
                 loginAsyncResponseDelegate.goToMainActivityScreen();
 

@@ -13,6 +13,7 @@
     <string name="nav_item_categories">Categories</string>
     <string name="nav_item_favorite">Favorite</string>
     <string name="nav_item_sale">On Sale</string>
+    <string name="nav_item_takeMeThere">Take me there</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_splashscreen">SplashScreenActivity</string>
@@ -24,11 +25,15 @@
     <string name="login_signup"><u>Sign Up</u></string>
 
     <string name="title_activity_sign_up">SignUpActivity</string>
-    <string name="signup_first_name">First Name</string>
+    <string name="signup_name">Name (e.g. Harry Potter)</string>
     <string name="signup_last_name">Last Name</string>
-    <string name="signup_email">Email</string>
-    <string name="signup_password">Password</string>
+    <string name="signup_email">Email (e.g. harrypotter@hogwarts.com)</string>
+    <string name="signup_password">Password (e.g. iluvhagrid123!)</string>
     <string name="signup_confirm_password">Confirm Password</string>
+    <string name="signup_gender">Gender</string>
+    <string name="signup_gender_male">Male</string>
+    <string name="signup_gender_female">Female</string>
+    <string name="signup_dob">Click to choose Date of birth</string>
     <string name="signup_button">Sign Up</string>
 
 

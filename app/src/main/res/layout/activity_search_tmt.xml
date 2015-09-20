@@ -23,12 +23,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Enter the Nearest Store"
+                android:hint="Enter the Nearest Store"
                 android:id="@+id/tmt_outlet"
                 android:paddingTop="20dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:editable="false"
+                android:focusable="true"
             android:padding="20dp" />
         <!--
         <ListView

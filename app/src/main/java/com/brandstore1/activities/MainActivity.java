@@ -19,15 +19,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.brandstore1.AnalyticsSampleApp;
 import com.brandstore1.R;
 import com.brandstore1.adapters.CategoryGridViewAdapter;
+import com.brandstore1.entities.User;
 import com.brandstore1.fragments.NavigationDrawerFragment;
 import com.brandstore1.utils.MySharedPreferences;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.nearby.connection.Connections;
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -126,6 +129,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         mCurrentSelectedPosition = 2;
                         returnValue = true;
                         break;
+                    case R.id.drawer_item_takeMeThere:
+                        goToTakeMeThereScreen();
+                        mCurrentSelectedPosition = 3;
+                        returnValue = true;
+                        break;
                     default:
                         returnValue = true;
                 }
@@ -134,6 +142,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
             }
         });
+
+        String userJsonObjectString = MySharedPreferences.getUserJsonObjectString(this);
+        Gson gson = new Gson();
+        User user = gson.fromJson(userJsonObjectString, User.class);
+        TextView nameTextView = (TextView) findViewById(R.id.nameTextView);
+        nameTextView.setText(user.getName());
+
+
 
 
 
@@ -194,6 +210,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    public void goToTakeMeThereScreen(){
+        Intent intent = new Intent(getApplicationContext(), TakeMeThereActivity.class);
+        intent.putExtra("type", TakeMeThereActivity.TMT_type.TO_UNKNOWN);
+        startActivity(intent);
+    }
+
 
 
     public String getCategoryIDs(int position) {

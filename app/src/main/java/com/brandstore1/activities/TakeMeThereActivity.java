@@ -119,8 +119,10 @@ public class TakeMeThereActivity extends ActionBarActivity{
                    to.setText(outlet_name);
                    to_id = outlet_id;
                }
-               TakeMeThereAsyncTask pathListAsyncTask = new TakeMeThereAsyncTask(takeMeThereAdapter, to_id,from_id, emptyView, toolbar, this);
-               pathListAsyncTask.execute();
+               if(from_id!=null && to_id!=null){
+                   TakeMeThereAsyncTask pathListAsyncTask = new TakeMeThereAsyncTask(takeMeThereAdapter, to_id,from_id, emptyView, toolbar, this);
+                   pathListAsyncTask.execute();
+               }
            }
 
         }

@@ -62,14 +62,15 @@ public class Connections {
         return request;
     }
 
-    public String getSignUpURL(String firstName , String lastName , String emailId , String password ,String genderCode){
+    public String getSignUpURL(String name , String emailId , String password ,String genderCode,String dobString){
+        //http://localhost:8081/v2/signup?name=test6&emailid=test6@gmail.com&password=password8&gendercode=M&dob=1990-12-14
         String request="";
         try {
             URI uri= new URI(
                     "http",
                     ipAddress,
                     getStartParametersOfURL() +"signup",
-                    "firstname="+firstName+"&lastname="+lastName+"&emailid="+emailId+"&password="+password +"&gendercode="+genderCode,
+                    "name="+name+"&emailid="+emailId+"&password="+password +"&gendercode="+genderCode+"&dob="+dobString,
                     null);
             request = uri.toASCIIString();
         }catch (URISyntaxException e) {

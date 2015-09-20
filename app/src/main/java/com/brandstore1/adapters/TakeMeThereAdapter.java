@@ -58,6 +58,7 @@ public class TakeMeThereAdapter extends BaseAdapter {
             mHolder = new ViewHolder1();
             convertView = inflater.inflate(R.layout.tmt_list_view, null);
             mHolder.pathTextView = (TextView) convertView.findViewById(R.id.tmt_path);
+            mHolder.indexTextView = (TextView) convertView.findViewById(R.id.tmt_pathindex);
 
             convertView.setTag(mHolder);
         } else {
@@ -65,12 +66,14 @@ public class TakeMeThereAdapter extends BaseAdapter {
         }
         System.out.println(position);
         mHolder.pathTextView.setText(pathArrayList.get(position));
+        mHolder.indexTextView.setText((position+1)+"");
         return convertView;
     }
 
 
     static class ViewHolder1 {
 
+        TextView indexTextView;
         TextView pathTextView;
 
     }

@@ -5,10 +5,12 @@ package com.brandstore1.asynctasks;
  */
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.brandstore1.interfaces.UpdateSuggestionsAsyncResponse;
 import com.brandstore1.utils.Connections;
 
 import org.json.JSONArray;
@@ -25,6 +27,8 @@ import java.net.URL;
 public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
     int flag=0;
     SQLiteDatabase sqLiteDatabase;
+    public UpdateSuggestionsAsyncResponse delegate=null;
+
     public UpdateSuggestionsAsyncTask(SQLiteDatabase sqLiteDatabase){
         this.sqLiteDatabase=sqLiteDatabase;
     }
@@ -46,6 +50,9 @@ public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
             BufferedReader reader = new BufferedReader(isr);
             while ((line = reader.readLine()) != null) builder.append(line);
             flag=1;
+
+
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -53,6 +60,8 @@ public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
         // If connection to DB is unsuccessful at this point, then we need to update the DB again  next when the connection is available,
         // probably at the time when the user is searching for the item. At the time when the user is searching for the item, if the localDB is empty or
         // if the local DB is not uptodate(very rare case) , the local DB needs to updated and the search provided.
@@ -79,11 +88,13 @@ public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
 
                 }
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
         return null;
     }
@@ -91,6 +102,12 @@ public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Log.d("suggestions table"," "+sqLiteDatabase.rawQuery("Select * from Suggestions;",null).toString());
+        Log.d("suggestions table", " " + sqLiteDatabase.rawQuery("Select * from Suggestions;", null).toString());
+
+        /*if(delegate!=null){
+            delegate.closeAndGoToMainActivityScreen();
+        }*/
+
+
     }
 }

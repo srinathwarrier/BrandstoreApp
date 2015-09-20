@@ -46,8 +46,8 @@ public class SearchTMTActivity extends ActionBarActivity {
         setContentView(R.layout.activity_search_tmt);
 
         sqLiteDatabase = openOrCreateDatabase("brandstoreDB",MODE_PRIVATE,null);
-        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
-        updateSuggestionsAsyncTask.execute();
+        //UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
+        //updateSuggestionsAsyncTask.execute();
         toolbar = (Toolbar) findViewById(R.id.takemetheretoolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
@@ -113,7 +113,7 @@ public class SearchTMTActivity extends ActionBarActivity {
                 } else {
 
                     String s1 = "%" + s + "%";
-                    Cursor res = sqLiteDatabase.rawQuery("Select * from Suggestions where name like '" + s1 + "'AND category = 'outlet';", null);
+                    Cursor res = sqLiteDatabase.rawQuery("Select * from Suggestions where name like '" + s1 + "'AND category IN ('outlet','others');", null);
                     res.moveToFirst();
                     if (res.getCount() == 0) {
                         mSearchResult.clear();

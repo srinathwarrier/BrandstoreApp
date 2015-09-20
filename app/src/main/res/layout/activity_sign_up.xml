@@ -40,7 +40,7 @@
         android:gravity="center_horizontal"
         >
 
-        <LinearLayout
+        <!--LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -78,9 +78,22 @@
                 android:scrollHorizontally="true"
                 android:imeOptions="actionNext"
                 />
-        </LinearLayout>
+        </LinearLayout-->
 
-
+        <EditText
+            android:id="@+id/signup_name"
+            android:hint="@string/signup_name"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shapeloginedittext"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            />
         <EditText
             android:id="@+id/signup_email"
             android:hint="@string/signup_email"
@@ -105,7 +118,9 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             />
-        <EditText
+
+        <!--
+         <EditText
             android:id="@+id/signup_confirm_password"
             android:hint="@string/signup_confirm_password"
             android:inputType="textPassword"
@@ -117,11 +132,81 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             />
+         -->
+
+        <TextView
+            android:id="@+id/signup_dob"
+            android:hint="@string/signup_dob"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shapeloginedittext"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:onClick="showDatePickerDialog"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/shapeloginedittext"
+            android:layout_marginTop="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signup_gender"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:paddingLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.4"
+                />
+            <RadioGroup
+                android:id="@+id/signup_gender_radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_weight="0.6"
+                android:checkedButton="@+id/signup_gender_male"
+                >
+                <RadioButton
+                    android:id="@+id/signup_gender_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="@string/signup_gender_male"
+                    android:textSize="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    />
+                <RadioButton
+                    android:id="@+id/signup_gender_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="@string/signup_gender_female"
+                    android:textSize="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    />
+
+            </RadioGroup>
+
+
+        </LinearLayout>
         <Button
             android:id="@+id/signup_button"
             android:text="@string/signup_button"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginTop="20dp"
             />
 
 

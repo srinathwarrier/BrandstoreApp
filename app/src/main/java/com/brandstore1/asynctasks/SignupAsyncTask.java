@@ -32,8 +32,7 @@ import java.net.URL;
 public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
 
 
-    String firstName;
-    String lastName;
+    String name;
     String emailId;
     String password;
     String genderCode;
@@ -43,16 +42,14 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
     CircularProgressDialog circularProgressDialog;
     public SignupAsyncResponse signupAsyncResponseDelegate =null;
 
-    public SignupAsyncTask(String firstName ,
-                           String lastName,
+    public SignupAsyncTask(String name,
                            String emailId,
                            String password,
                            String genderCode,
                            String dobString,
                            Context mContext)
     {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.emailId=emailId;
         this.password=password;
         this.genderCode = genderCode;
@@ -63,15 +60,15 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        //circularProgressDialog = new CircularProgressDialog(this.mContext);
-        //circularProgressDialog = CircularProgressDialog.show(this.mContext,"","");
+        circularProgressDialog = new CircularProgressDialog(this.mContext);
+        circularProgressDialog = CircularProgressDialog.show(this.mContext,"","");
     }
 
     @Override
     protected String doInBackground(Void... params) {
         StringBuilder builder = null;
         try {
-            String urlString = new Connections().getSignUpURL(firstName, lastName, emailId, password, genderCode);
+            String urlString = new Connections().getSignUpURL(name, emailId, password, genderCode,dobString);
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -105,39 +102,39 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
             // TODO: If jsonArray.length is more than 1, do as previous , but there is an error
 
 
-            if(jsonObject==null){
-                Toast.makeText(mContext, "Invalid username/password combination", Toast.LENGTH_LONG).show();
-                //circularProgressDialog.dismiss();
-
+            if(jsonObject==null ){
+                Toast.makeText(mContext, "Connection Error.", Toast.LENGTH_LONG).show();
             }
             else{
-                user = new User();
-                user.setUserId(jsonObject.getString("userID"));
-                //user.setEmailId(jsonObject.getString("emailid"));
-                //user.setPassword(jsonObject.getString("password"));
+                if(jsonObject.getString("responseState").equals("error")){
+                    Toast.makeText(mContext, "Email exists", Toast.LENGTH_LONG).show();
+                }
+                else if(jsonObject.getString("responseState").equals("created")) {
+                    JSONObject userObject = jsonObject.getJSONObject("responseDetails");
+                    user = new User();
+                    user.setUserId(userObject.getString("userID"));
+                    user.setEmailId(userObject.getString("emailid"));
+                    user.setName(userObject.getString("name"));
 
-                // Convert user object to json object
-                Gson gson = new Gson();
-                String userJsonObject = gson.toJson(user);
+                    //user.setPassword(jsonObject.getString("password"));
 
-                // Save userid and userJsonObject to SharedPreferences
-                /*
-                SharedPreferences sharedPref = mContext.getSharedPreferences("BrandstoreApp",Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString("userid", user.getUserId());
-                editor.putString("userJsonObject", userJsonObject);
-                editor.apply();
-                */
-                MySharedPreferences.setUserId(mContext,user.getUserId());
-                MySharedPreferences.setUserJsonObjectString(mContext, userJsonObject);
+                    // Convert user object to json object
+                    Gson gson = new Gson();
+                    String userJsonObject = gson.toJson(user);
 
-                Connections.setUserIdFromSharedPreferences(mContext);
+                    // Save userid and userJsonObject to SharedPreferences
+                    MySharedPreferences.setUserId(mContext, user.getUserId());
+                    MySharedPreferences.setUserJsonObjectString(mContext, userJsonObject);
+                    MySharedPreferences.setHasLoggedIn(mContext, true);
 
-                //circularProgressDialog.dismiss();
+                    Connections.setUserIdFromSharedPreferences(mContext);
 
-                signupAsyncResponseDelegate.goToMainActivityScreen();
+                    signupAsyncResponseDelegate.goToMainActivityScreen();
+                }
 
             }
+
+            circularProgressDialog.dismiss();
 
 
 

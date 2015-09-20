@@ -82,22 +82,41 @@ public class TakeMeThereAsyncTask extends AsyncTask<Void, Void, Void> {
 
         //System.out.println("sonika "+ builder.toString());
         String temp = builder.toString();
-        //pathArrayList.add(temp);
-        //ArrayList<String> temp = new ArrayList<String>();
-        //temp.add(builder.toString());
-        String delims = "[,\\[\\]]";
+
         try {
-            String[] tokens = temp.split(delims);
-            //String token = "";
-            for(int i =1; i<= tokens.length ;i++)
-              pathArrayList.add(i+". "+tokens[i]);
+
+
             //token = token+i+". "+tokens[i]+"\n";
 
             //pathArrayList.add(token);
-        }catch (Exception e){
-            pathArrayList.add(temp);
-            System.out.println("Excptn"+e);
+
+            JSONArray jsonArray = new JSONArray(temp);
+            for(int i=0;i<jsonArray.length();i++){
+                String s = jsonArray.getString(i);
+                pathArrayList.add(s);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+
+        //pathArrayList.add(temp);
+        //ArrayList<String> temp = new ArrayList<String>();
+        //temp.add(builder.toString());
+
+        /*try {
+            String delims = "[,\\[\\]]";
+            String[] tokens = temp.split(delims);
+            //String token = "";
+            for(int i =1; i< tokens.length ;i++){
+                //pathArrayList.add(i+". "+tokens[i]);
+                pathArrayList.add(tokens[i]);
+            }
+        }catch (Exception e){
+            System.out.println("Excptn"+e);
+        }*/
 
 
         return null;
