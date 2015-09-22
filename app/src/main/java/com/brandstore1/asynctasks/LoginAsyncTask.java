@@ -103,6 +103,7 @@ public class LoginAsyncTask extends AsyncTask<Void,Void,String> {
                 user = new User();
                 JSONObject jsonObject = jsonArray.getJSONObject(0);
                 user.setUserId(jsonObject.getString("userID"));
+                user.setName(jsonObject.getString("name"));
                 //user.setEmailId(jsonObject.getString("emailid"));
                 //user.setPassword(jsonObject.getString("password"));
 
