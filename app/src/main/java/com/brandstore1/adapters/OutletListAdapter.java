@@ -24,6 +24,7 @@ import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Created by Ravi on 29-Mar-15.
@@ -32,8 +33,10 @@ import java.util.ArrayList;
 public class OutletListAdapter extends BaseAdapter implements Filterable {
     ArrayList<Outlet> mOutletList;
     ArrayList<Outlet> origOutletList;
+    //HashSet<Outlet> filteredOutlets = new HashSet<Outlet>();
+    //HashSet<Outlet> filteredOnSaleOutlets = new HashSet<Outlet>();
     private LayoutInflater inflater;
-    private Filter favFilter;
+    private Filter filter;
     private Filter saleFilter;
     Toolbar toolbar;
     TextView emptyView;
@@ -122,38 +125,61 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
     }
 
     @Override
-    public Filter getFilter() {
-        if (favFilter == null){
-            favFilter  = new OutletFavFilter();
+    public Filter getFilter(){
+        if (filter == null){
+            filter  = new OutletFilter();
         }
-        return favFilter;
+        return filter;
     }
 
 
-    private class OutletFavFilter extends Filter
+    private class OutletFilter extends Filter
     {
-
         @Override
         protected FilterResults performFiltering(CharSequence filter) {
 
             FilterResults result = new FilterResults();
-
-            if(filter == "X")
-            {
-                ArrayList<Outlet> filteredOutlets = new ArrayList<Outlet>();
-
-                for(int i = 0, l = mOutletList.size(); i < l; i++)
-                {
+            HashSet<Outlet> filteredOutlets = new HashSet<Outlet>();
+            if(filter == "fav") {
+                for (int i = 0, l = mOutletList.size(); i < l; i++) {
                     Outlet m = mOutletList.get(i);
 
-                   if(m.getIsFavorite().equals("true"))
+                    if (m.getIsFavorite().equals("true"))
                         filteredOutlets.add(m);
 
                 }
+                ArrayList<Outlet> list = new ArrayList<Outlet>(filteredOutlets);
+                //mOutletList = list;
+                result.values = list;
+                result.count = list.size();
+            }
+            else if(filter == "Sale") {
 
-                result.values = filteredOutlets;
-                result.count = filteredOutlets.size();
+                for (int i = 0, l = mOutletList.size(); i < l; i++) {
+                    Outlet m = mOutletList.get(i);
 
+                    if (m.getIsOnSale().equals("true"))
+                        filteredOutlets.add(m);
+
+                }
+                ArrayList<Outlet> list = new ArrayList<Outlet>(filteredOutlets);
+                //mOutletList = list;
+                result.values = list;
+                result.count = list.size();
+            }
+            else if(filter == "favAndSale"){
+
+                for (int i = 0, l = mOutletList.size(); i < l; i++) {
+                    Outlet m = mOutletList.get(i);
+
+                    if (m.getIsFavorite().equals("true")&& m.getIsOnSale().equals("true"))
+                        filteredOutlets.add(m);
+
+                }
+                ArrayList<Outlet> list = new ArrayList<Outlet>(filteredOutlets);
+                //mOutletList = list;
+                result.values = list;
+                result.count = list.size();
 
             }
             else
@@ -175,12 +201,10 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
             toolbar.setSubtitle(getCount() + " " + "Outlets");
             notifyDataSetChanged();
             if (results.count == 0)
-                emptyView.setText("No Favorites Found !!!");
-
-
+                emptyView.setText("No outlets found");
         }
     }
-
+/*
     public Filter getSaleFilter() {
         if (saleFilter == null){
             saleFilter  = new OutletSaleFilter();
@@ -197,9 +221,8 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
 
             FilterResults result = new FilterResults();
 
-            if(filterSale == "X")
-            {
-                ArrayList<Outlet> filteredOnSaleOutlets = new ArrayList<Outlet>();
+            if(filterSale == "Sale")
+            {// filteredOnSaleOutlets = null;
 
                 for(int i = 0, l = mOutletList.size(); i < l; i++)
                 {
@@ -210,10 +233,27 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
                         filteredOnSaleOutlets.add(m);
 
                 }
+                ArrayList<Outlet> list = new ArrayList<Outlet>(filteredOnSaleOutlets);
+                mOutletList = list;
+                result.values = list;
+                result.count = list.size();
 
-                result.values = filteredOnSaleOutlets;
-                result.count = filteredOnSaleOutlets.size();
 
+            }
+            else if(filterSale == "favAndSale"){
+                //filteredOnSaleOutlets = null;
+                for (int i = 0, l = mOutletList.size(); i < l; i++) {
+                    Outlet m = mOutletList.get(i);
+
+                    if (m.getIsFavorite().equals("true")&& m.getIsOnSale().equals("true"))
+                        filteredOnSaleOutlets.add(m);
+                    //filteredOutlets.remove(m);
+
+                }
+                ArrayList<Outlet> list = new ArrayList<Outlet>(filteredOnSaleOutlets);
+                mOutletList = list;
+                result.values = list;
+                result.count = list.size();
 
             }
             else
@@ -240,6 +280,6 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
 
         }
     }
-
+*/
 
 }

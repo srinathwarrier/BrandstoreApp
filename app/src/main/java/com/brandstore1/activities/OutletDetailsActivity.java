@@ -56,7 +56,6 @@ public class OutletDetailsActivity extends ActionBarActivity {
     Outlet outlet;
     TextView emptyTagPriceView;
     TextView emptyRelatedBrandsView;
-    MenuItem tmt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,9 +158,6 @@ public class OutletDetailsActivity extends ActionBarActivity {
             }
         });
 
-
-
-
     }
 
 
@@ -169,7 +165,6 @@ public class OutletDetailsActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_outlet_details, menu);
-        takeMeThere(menu);
         return true;
     }
 
@@ -178,15 +173,22 @@ public class OutletDetailsActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        //Menu menu;
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
 
-        if(id==android.R.id.home)
-        {
-            onBackPressed();
-            return true;
+        switch(id){
+            case android.R.id.home:
+                //noinspection SimplifiableIfStatement
+                onBackPressed();
+                return true;
+            case R.id.take_me_there:
+                goToTakeMeThereActivityScreen();
+                break;
+
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -201,23 +203,12 @@ public class OutletDetailsActivity extends ActionBarActivity {
 
     }
 
-    public void takeMeThere(Menu menu){
-        tmt = menu.findItem(R.id.take_me_there);
-        tmt.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                try {
-                    Intent intent = new Intent(getApplicationContext(), TakeMeThereActivity.class);
-                    intent.putExtra("id", id);
-                    intent.putExtra("name", (String) outletname.getText());
-                    intent.putExtra("type", TakeMeThereActivity.TMT_type.TO_KNOWN);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    System.out.println("Exception ss" + e);
-                }
-                return true;
-            }
-        });
+    public void goToTakeMeThereActivityScreen(){
+        Intent intent = new Intent(getApplicationContext(), TakeMeThereActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("name", (String) outletname.getText());
+        intent.putExtra("type", TakeMeThereActivity.TMT_type.TO_KNOWN);
+        startActivity(intent);
 
     }
 

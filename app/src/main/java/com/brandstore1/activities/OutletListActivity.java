@@ -161,31 +161,54 @@ public class OutletListActivity extends ActionBarActivity {
     }
 
     public void onFavoriteMenuItemClicked(boolean toBeSelected){
-        mOutletListAdapter.resetData();
+      // if((!saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) || (saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ||(saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) ){
+            mOutletListAdapter.resetData();
+     //   }
+
         if (toBeSelected) {
             //filter favorites
             favoriteMenuItem.setChecked(true);
             favoriteMenuItem.setIcon(R.drawable.favselect);
-            mOutletListAdapter.getFilter().filter("X");
+            if(!saleMenuItem.isChecked())
+            mOutletListAdapter.getFilter().filter("fav");
+            else {
+                //mOutletListAdapter.resetData();
+                mOutletListAdapter.getFilter().filter("favAndSale");
+            }
         } else {
             favoriteMenuItem.setChecked(false);
             favoriteMenuItem.setIcon(R.drawable.fav);
+            if(saleMenuItem.isChecked()){
+                //mOutletListAdapter.resetData();
+                mOutletListAdapter.getFilter().filter("Sale");
+            }
+            else
             mOutletListAdapter.getFilter().filter("Y");
         }
     }
 
     public void onSaleMenuItemClicked(boolean toBeSelected){
-        mOutletListAdapter.resetData();
+
+       // if((!saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) || (saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ||(!saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ){
+            mOutletListAdapter.resetData();
+        //}
+
         if (toBeSelected) {
             //filter OnSale Outlets
             saleMenuItem.setChecked(true);
             saleMenuItem.setIcon(R.drawable.sale_on);
-            mOutletListAdapter.getSaleFilter().filter("X");
+            if(!favoriteMenuItem.isChecked())
+            mOutletListAdapter.getFilter().filter("Sale");
+            else mOutletListAdapter.getFilter().filter("favAndSale");
 
         } else {
             saleMenuItem.setChecked(false);
             saleMenuItem.setIcon(R.drawable.saleicon);
-            mOutletListAdapter.getSaleFilter().filter("Y");
+            if(favoriteMenuItem.isChecked()){
+                mOutletListAdapter.resetData();
+                mOutletListAdapter.getFilter().filter("fav");
+            } else
+            mOutletListAdapter.getFilter().filter("Y");
 
         }
     }
