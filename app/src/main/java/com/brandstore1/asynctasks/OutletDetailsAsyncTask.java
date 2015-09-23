@@ -206,7 +206,12 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             obj.setFloor(jsonobject.getString("floorNumber").concat(", "));
             obj.setHubName(jsonobject.getString("hubName"));
             obj.setLongDescription(jsonobject.getString("description"));
-            obj.setShortDescription(obj.getLongDescription().substring(0, 100).concat("..."));
+            if(obj.getLongDescription().length()<100){
+                obj.setShortDescription(obj.getLongDescription());
+            }
+            else{
+                obj.setShortDescription(obj.getLongDescription().substring(0, 100).concat("..."));
+            }
             obj.setGenderCodeString(jsonobject.get("genderCodeString").toString());
             obj.setIsFavorite(Boolean.valueOf(jsonobject.get("isFavorite").toString()));
 

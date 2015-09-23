@@ -153,10 +153,12 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, String> {
 
 
         try {
-            //toolbar.setTitle(mOutletArrayList.get(0).getRelevantTag().toString());
-            toolbar.setSubtitle(mOutletArrayList.size() + " " + "Outlets");
             if (mOutletArrayList.size() == 0) {
-                emptyView.setText("No Outlets Found !!!");
+                emptyView.setText("No outlets found");
+            }
+            else{
+                //toolbar.setTitle(mOutletArrayList.get(0).getRelevantTag().toString());
+                toolbar.setSubtitle(mOutletArrayList.size() + " " + "Outlets");
             }
         }catch(Exception e){
             e.printStackTrace();
