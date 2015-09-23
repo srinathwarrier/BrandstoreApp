@@ -111,7 +111,7 @@ public class Connections {
         return request;
     }
 
-    public String getOutletListURL(String tagId ){
+    public String getOutletListForTagURL(String tagId ){
         String request="";
         try {
             URI uri= new URI(
@@ -126,6 +126,25 @@ public class Connections {
         }
         return request;
     }
+
+    public String getOutletListForCollectionURL(String collectionId ){
+        String request="";
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"getOutletsForCollectionId",
+                    "userid="+userId+"&collectionid="+collectionId,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+
+
 
     public String getAllFavoriteOutletsURL(){
         String request="";

@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     GridView mCategoryGridView;
     int CategoryImages[] = {R.drawable.accessories, R.drawable.denims, R.drawable.footwear, R.drawable.handbags, R.drawable.kidswear,
-            R.drawable.luggage, R.drawable.mensethnic, R.drawable.sportswear, R.drawable.unisex,
+            R.drawable.luggage, R.drawable.mensethnic, R.drawable.sportswear,
             R.drawable.watcheseyewear, R.drawable.westernmen, R.drawable.westernunisex, R.drawable.westernwomen, R.drawable.womensethnic};
 
     //region test
-    String CategoryNames[] = {"ACCESSORIES AND GIFTS", "DENIMS", "FOOTWEAR", "HAND BAGS", "KID'S WEAR", "LUGGAGE", "MEN'S ETHNIC WEAR", "SPORTSWEAR", "UNISEX APPAREL",
+    String CategoryNames[] = {"ACCESSORIES AND GIFTS", "DENIMS", "FOOTWEAR", "HAND BAGS", "KID'S WEAR", "LUGGAGE", "MEN'S ETHNIC WEAR", "SPORTSWEAR",
             "WATCHES AND EYEWEAR", "WESTERN MEN'S APPAREL", "WESTERN UNISEX APPAREL", "WESTERN WOMEN'S APPAREL", "WOMEN'S ETHNIC WEAR"};
-    String CategoryNamesCamelCase[] = {"Accessories and Gifts", "Denims", "Footwear", "Hand bags", "Kid's wear", "Luggage", "Men's ethnic wear", "Sportswear", "Unisex apparel",
+    String CategoryNamesCamelCase[] = {"Accessories and Gifts", "Denims", "Footwear", "Hand bags", "Kid's wear", "Luggage", "Men's ethnic wear", "Sportswear",
             "Watches and Eyewear", "Westwern men's apparel", "Western unisex apparel", "Western women's apparel", "Women's ethnic wear"};
     //endregion
 
@@ -189,8 +189,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("name", CategoryNamesCamelCase[position]);
-        bundle.putString("id", getCategoryIDs(position));
-        bundle.putSerializable("type", OutletListActivity.OutletListType.CLICKED_ON_CATEGORY);
+        bundle.putString("id", getCollectionIDs(position));
+        bundle.putSerializable("type", OutletListActivity.OutletListType.CLICKED_ON_COLLECTION);
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -249,25 +249,43 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 s = "8";
                 break; // Sportswear
             case 8:
-                s = "2,149,152,200,50,41";
-                break; // Unisex apparel
-            case 9:
                 s = "37,39,203";
                 break; // Watches & Eye wear
-            case 10:
+            case 9:
                 s = "65";
                 break; // Western men's apparel
-            case 11:
+            case 10:
                 s = "1";
                 break; // Western unisex apparel
-            case 12:
+            case 11:
                 s = "89,102,93,94";
                 break; // Western women's apparel
-            case 13:
+            case 12:
                 s = "88,90,80,81,115,116";
                 break; // Women's ethnic wear
             default:
                 break;
+        }
+        return s;
+    }
+
+    public String getCollectionIDs(int position) {
+        String s = "1";
+        switch (position) {
+            case 0:  s = "1"; break; // Accessories
+            case 1:  s = "2"; break; // Denims -> Total = 27
+            case 2:  s = "3"; break; // Footwear
+            case 3:  s = "4"; break; // Hand bags
+            case 4:  s = "5"; break; // Kids wear
+            case 5:  s = "6"; break; // Luggage
+            case 6:  s = "7"; break; // Men's ethnic wear
+            case 7:  s = "8"; break; // Sportswear
+            case 8:  s = "9"; break; // Watches & Eye wear
+            case 9:  s = "10"; break; // Western men's apparel
+            case 10: s = "11"; break; // Western unisex apparel
+            case 11: s = "12"; break; // Western women's apparel
+            case 12: s = "13"; break; // Women's ethnic wear
+            default:    break;
         }
         return s;
     }

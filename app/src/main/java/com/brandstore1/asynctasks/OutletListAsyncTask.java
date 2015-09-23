@@ -33,7 +33,7 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, String> {
     String query;
     OutletListAdapter mOutletListAdapter;
     Outlet obj;
-    String tagId;
+    String tagOrCollectionId;
     TextView emptyView;
     Toolbar toolbar;
 
@@ -61,10 +61,10 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, String> {
 
         // Parameters
         String userId = "6";
-        this.tagId = id;
+        this.tagOrCollectionId = id;
         this.query = text;
         Connections connections = new Connections();
-        this.urlString = connections.getOutletListURL(this.tagId);
+        this.urlString = connections.getOutletListForTagURL(this.tagOrCollectionId);
 
         switch(outletListType){
             case ALL_FAVORITE:
@@ -73,9 +73,11 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, String> {
             case ALL_ON_SALE:
                 this.urlString = connections.getAllOnSaleOutletsURL();
                 break;
-            case CLICKED_ON_CATEGORY: // same as single tagId
+            case CLICKED_ON_COLLECTION:
+                this.urlString = connections.getOutletListForCollectionURL(this.tagOrCollectionId);
+                break;
             case CLICKED_ON_TAG:
-                this.urlString = connections.getOutletListURL(this.tagId);
+                this.urlString = connections.getOutletListForTagURL(this.tagOrCollectionId);
                 break;
             case SEARCHED_QUERY:
                 break;

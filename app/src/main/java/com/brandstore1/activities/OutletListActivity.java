@@ -36,7 +36,7 @@ public class OutletListActivity extends ActionBarActivity {
     OutletListAdapter mOutletListAdapter;
 
     public enum OutletListType{
-        CLICKED_ON_TAG , CLICKED_ON_CATEGORY ,SEARCHED_QUERY , ALL_FAVORITE , ALL_ON_SALE ,
+        CLICKED_ON_TAG , CLICKED_ON_COLLECTION ,SEARCHED_QUERY , ALL_FAVORITE , ALL_ON_SALE ,
     };
 
     @Override
