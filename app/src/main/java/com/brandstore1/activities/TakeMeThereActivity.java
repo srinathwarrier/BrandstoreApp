@@ -31,7 +31,6 @@ public class TakeMeThereActivity extends ActionBarActivity{
     EditText to;
     TakeMeThereAdapter takeMeThereAdapter;
     private EditText from;
-    private EditText filter;
     private ArrayAdapter<String> listAdapter;
     String to_id;
     String from_id;
@@ -64,7 +63,6 @@ public class TakeMeThereActivity extends ActionBarActivity{
 
         Bundle bundle = getIntent().getExtras();
         TMT_type tmtType = (TMT_type)bundle.get("type");
-        //tmtType = TMT_type.TO_UNKNOWN;
         to = (EditText) findViewById(R.id.tmt_to);
         from = (EditText)findViewById(R.id.tmt_from);
 
@@ -79,7 +77,7 @@ public class TakeMeThereActivity extends ActionBarActivity{
                 to.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        gotoSearchTMT(to);
+                        gotoSearchTMTActivityScreen(to);
                     }
                 });
 
@@ -92,7 +90,7 @@ public class TakeMeThereActivity extends ActionBarActivity{
         from.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoSearchTMT(from);
+                gotoSearchTMTActivityScreen(from);
 
             }
         });
@@ -110,7 +108,7 @@ public class TakeMeThereActivity extends ActionBarActivity{
                String outlet_name = data.getStringExtra("outlet_name");
                String outlet_id = data.getStringExtra("outlet_id");
                String to_from = data.getStringExtra("TO_FROM");
-               System.out.println("soup" + to_from);
+
                if(to_from.compareToIgnoreCase("tmt_from")== 0) {
                    from.setText(outlet_name);
                    from_id = outlet_id;
@@ -156,7 +154,7 @@ public class TakeMeThereActivity extends ActionBarActivity{
     }
 
 
-    public void gotoSearchTMT(EditText search){
+    public void gotoSearchTMTActivityScreen(EditText search){
 
         search.clearFocus();
         Intent intent = new Intent(getApplicationContext(), SearchTMTActivity.class);
