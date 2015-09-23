@@ -45,16 +45,6 @@ public class OutletListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_outlet_list);
 
         /*
-            Toolbar setup
-         */
-        toolbar = (Toolbar) findViewById(R.id.outletlisttoolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
-
-        /*
             Bundle setup >
             Get title for toolbar
             Get parameter to decide call in AsyncTask
@@ -63,6 +53,16 @@ public class OutletListActivity extends ActionBarActivity {
         String query = bundle.getString("name");
         String id = bundle.getString("id");
         OutletListType outletListType = (OutletListType)bundle.get("type");
+
+        /*
+            Toolbar setup
+         */
+        toolbar = (Toolbar) findViewById(R.id.outletlisttoolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(query);
 
 
         /*

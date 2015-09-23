@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     //region test
     String CategoryNames[] = {"ACCESSORIES AND GIFTS", "DENIMS", "FOOTWEAR", "HAND BAGS", "KID'S WEAR", "LUGGAGE", "MEN'S ETHNIC WEAR", "SPORTSWEAR", "UNISEX APPAREL",
             "WATCHES AND EYEWEAR", "WESTERN MEN'S APPAREL", "WESTERN UNISEX APPAREL", "WESTERN WOMEN'S APPAREL", "WOMEN'S ETHNIC WEAR"};
+    String CategoryNamesCamelCase[] = {"Accessories and Gifts", "Denims", "Footwear", "Hand bags", "Kid's wear", "Luggage", "Men's ethnic wear", "Sportswear", "Unisex apparel",
+            "Watches and Eyewear", "Westwern men's apparel", "Western unisex apparel", "Western women's apparel", "Women's ethnic wear"};
     //endregion
 
 
@@ -186,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void goToOutletListScreen(int position){
         Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("name", CategoryNames[position]);
+        bundle.putString("name", CategoryNamesCamelCase[position]);
         bundle.putString("id", getCategoryIDs(position));
         bundle.putSerializable("type", OutletListActivity.OutletListType.CLICKED_ON_CATEGORY);
         intent.putExtras(bundle);

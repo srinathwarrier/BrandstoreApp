@@ -128,6 +128,7 @@ public class LoginAsyncTask extends AsyncTask<Void,Void,String> {
 
                 circularProgressDialog.dismiss();
 
+                loginAsyncResponseDelegate.updateSuggestionInSQLite();
                 loginAsyncResponseDelegate.goToMainActivityScreen();
 
             }

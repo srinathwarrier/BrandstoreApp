@@ -87,7 +87,6 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        toolbar.setTitle("");
 
         circularProgressDialog = new CircularProgressDialog(this.mContext);
         circularProgressDialog = CircularProgressDialog.show(this.mContext,"","");
@@ -154,7 +153,7 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, String> {
 
 
         try {
-            toolbar.setTitle(mOutletArrayList.get(0).getRelevantTag().toString());
+            //toolbar.setTitle(mOutletArrayList.get(0).getRelevantTag().toString());
             toolbar.setSubtitle(mOutletArrayList.size() + " " + "Outlets");
             if (mOutletArrayList.size() == 0) {
                 emptyView.setText("No Outlets Found !!!");

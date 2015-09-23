@@ -129,6 +129,7 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
 
                     Connections.setUserIdFromSharedPreferences(mContext);
 
+                    signupAsyncResponseDelegate.updateSuggestionInSQLite();
                     signupAsyncResponseDelegate.goToMainActivityScreen();
                 }
 

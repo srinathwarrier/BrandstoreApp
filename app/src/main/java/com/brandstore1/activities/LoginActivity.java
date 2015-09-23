@@ -3,6 +3,7 @@ package com.brandstore1.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.brandstore1.R;
 import com.brandstore1.asynctasks.LoginAsyncTask;
+import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
 import com.brandstore1.interfaces.LoginAsyncResponse;
 
 public class LoginActivity extends ActionBarActivity implements LoginAsyncResponse{
@@ -107,6 +109,15 @@ public class LoginActivity extends ActionBarActivity implements LoginAsyncRespon
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+        Update suggestions in SQLite
+     */
+    public void updateSuggestionInSQLite(){
+        SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("brandstoreDB",MODE_PRIVATE,null);
+        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
+        updateSuggestionsAsyncTask.execute();
     }
 
     /*

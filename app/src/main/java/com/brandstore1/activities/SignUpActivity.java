@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.brandstore1.R;
 import com.brandstore1.asynctasks.LoginAsyncTask;
 import com.brandstore1.asynctasks.SignupAsyncTask;
+import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
 import com.brandstore1.interfaces.SignupAsyncResponse;
 
 import java.text.DateFormat;
@@ -114,6 +116,13 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void updateSuggestionInSQLite() {
+        SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("brandstoreDB",MODE_PRIVATE,null);
+        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
+        updateSuggestionsAsyncTask.execute();
     }
 
     public void goToMainActivityScreen(){

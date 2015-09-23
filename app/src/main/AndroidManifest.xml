@@ -29,7 +29,7 @@
 
         <activity
             android:name=".activities.SplashScreenActivity"
-            android:label="@string/title_activity_splashscreen"
+            android:label="@string/app_name"
             android:noHistory="true"
             >
             <intent-filter android:label="@string/app_name">
@@ -71,13 +71,24 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        <!-- [START gcm_receiver]
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.brandstore1" />
+            </intent-filter>
+        </receiver>
+        <! [END gcm_receiver] -->
+
         <receiver
             android:name=".gcm.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="com.slate1" />
+                <category android:name="com.brandstore1" />
             </intent-filter>
         </receiver>
 
