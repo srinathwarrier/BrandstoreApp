@@ -7,19 +7,26 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 
 import com.brandstore1.R;
 import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
+import com.brandstore1.gcm.RegistrationIntentService;
 import com.brandstore1.interfaces.UpdateSuggestionsAsyncResponse;
 import com.brandstore1.model.Connection;
 import com.brandstore1.utils.Connections;
 import com.brandstore1.utils.MySharedPreferences;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 public class SplashScreenActivity extends ActionBarActivity implements UpdateSuggestionsAsyncResponse{
 
 
+    private static final String TAG = "MainActivity";
     Context mContext;
     SQLiteDatabase sqLiteDatabase;
+    // GCM Variables
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
 
     @Override
@@ -44,6 +51,7 @@ public class SplashScreenActivity extends ActionBarActivity implements UpdateSug
             updateSuggestionsAsyncTask.execute();
 
             // Check/Update GCM regid (if needed)
+            updateInstanceID();
 
 
             // Execute some code after 2 seconds have passed
@@ -91,5 +99,32 @@ public class SplashScreenActivity extends ActionBarActivity implements UpdateSug
         startActivity(intent);
         SplashScreenActivity.this.finish();
     }
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
 
+    public void updateInstanceID(){
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+    }
 }

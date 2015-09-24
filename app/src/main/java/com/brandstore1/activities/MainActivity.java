@@ -4,6 +4,9 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,6 +17,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -345,6 +349,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == android.R.id.home) {
+            Log.d("Main", "action bar clicked");
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -363,7 +370,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private void setUpNavDrawer() {
         if (mToolbar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            mToolbar.setNavigationIcon(null);
+            mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

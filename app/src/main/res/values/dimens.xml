@@ -6,6 +6,7 @@
     <dimen name="activity_login_horizontal_margin">30dp</dimen>
     <dimen name="activity_login_vertical_margin">30dp</dimen>
 
+    <dimen name="activity_login_signup_text_size">14sp</dimen>
 
     <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
          https://developer.android.com/design/patterns/navigation-drawer.html -->

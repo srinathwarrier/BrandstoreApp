@@ -16,7 +16,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.brandstore1.asynctasks.AddFavOutletAsyncTask;
-import com.brandstore1.asynctasks.CheckFavoritesAsyncTask;
 import com.brandstore1.adapters.RelatedBrandsListViewAdapter;
 import com.brandstore1.entities.Outlet;
 import com.brandstore1.entities.RelatedBrands;
@@ -113,7 +112,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
 
         // Commenting this, since checkbox is commented in XML file as well.
         CheckBox cb = (CheckBox) findViewById(R.id.favorites);
-        //CheckFavoritesAsyncTask mCheckFavoritesAsyncTask = new CheckFavoritesAsyncTask(id, cb);
+
 
 
 

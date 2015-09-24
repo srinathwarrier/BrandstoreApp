@@ -1,14 +1,16 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_login_horizontal_margin"
+    android:paddingRight="@dimen/activity_login_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@drawable/loginbg"
     android:alpha="1"
     tools:context="com.brandstore1.activities.SignUpActivity"
     android:orientation="vertical"
+
     >
 
     <LinearLayout
@@ -22,9 +24,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SIGN UP"
+            android:text="@string/signup_label"
             android:textColor="@color/white"
-            android:textSize="30dp"
+            android:textSize="30sp"
             />
 
 
@@ -39,47 +41,6 @@
         android:layout_weight="0.2"
         android:gravity="center_horizontal"
         >
-
-        <!--LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <EditText
-                android:id="@+id/signup_first_name"
-                android:hint="@string/signup_first_name"
-                android:paddingLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:background="@drawable/shapeloginedittext"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:layout_weight="1"
-                android:lines="1"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:scrollHorizontally="true"
-                android:imeOptions="actionNext"
-                />
-            <EditText
-                android:id="@+id/signup_last_name"
-                android:hint="@string/signup_last_name"
-                android:paddingLeft="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:background="@drawable/shapeloginedittext"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:layout_weight="1"
-                android:lines="1"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:scrollHorizontally="true"
-                android:imeOptions="actionNext"
-                />
-        </LinearLayout-->
-
         <EditText
             android:id="@+id/signup_name"
             android:hint="@string/signup_name"
@@ -93,6 +54,7 @@
             android:maxLines="1"
             android:singleLine="true"
             android:imeOptions="actionNext"
+            android:textSize="@dimen/activity_login_signup_text_size"
             />
         <EditText
             android:id="@+id/signup_email"
@@ -105,6 +67,7 @@
             android:background="@drawable/shapeloginedittext"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
+            android:textSize="@dimen/activity_login_signup_text_size"
             />
         <EditText
             android:id="@+id/signup_password"
@@ -117,6 +80,7 @@
             android:background="@drawable/shapeloginedittext"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
+            android:textSize="@dimen/activity_login_signup_text_size"
             />
 
         <!--
@@ -142,7 +106,7 @@
             android:paddingLeft="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/shapeloginedittext"
-            android:textSize="18dp"
+            android:textSize="@dimen/activity_login_signup_text_size"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:onClick="showDatePickerDialog"
@@ -162,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/signup_gender"
-                android:textSize="18dp"
+                android:textSize="@dimen/activity_login_signup_text_size"
                 android:textColor="@color/white"
                 android:paddingLeft="10dp"
                 android:layout_gravity="center_vertical"
@@ -181,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:text="@string/signup_gender_male"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/activity_login_signup_text_size"
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/white"
                     android:layout_weight="1"
@@ -191,7 +155,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:text="@string/signup_gender_female"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/activity_login_signup_text_size"
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/white"
                     android:layout_weight="1"
@@ -204,9 +168,9 @@
         <Button
             android:id="@+id/signup_button"
             android:text="@string/signup_button"
-            android:layout_width="match_parent"
+            android:layout_width="1000dp"
             android:layout_height="60dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             />
 
 

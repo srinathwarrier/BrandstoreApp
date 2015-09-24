@@ -11,15 +11,6 @@ import com.brandstore1.entities.Outlet;
 import com.brandstore1.utils.CircularProgressDialog;
 import com.brandstore1.utils.Connections;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +28,7 @@ import java.util.List;
  * Created by Sonika on 8/9/2015.
  */
 
-public class AddFavOutletAsyncTask extends AsyncTask<Void, Void, Void> {
+public class AddFavOutletAsyncTask extends AsyncTask<Void, Void, String> {
 
     String id;
     boolean operation;
@@ -56,29 +47,36 @@ public class AddFavOutletAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected String doInBackground(Void... params) {
+        //String urlString = new Connections().getSetFavoriteOutletURL(this.id, this.operation);
 
+        StringBuilder builder = null;
         try {
-            HttpClient httpClient = new DefaultHttpClient();
             String urlString = new Connections().getSetFavoriteOutletURL(this.id, this.operation);
-            HttpPost httpPost = new HttpPost(urlString);
-            HttpResponse response = httpClient.execute(httpPost);
+            URL url = new URL(urlString);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
+            String line;
+            builder = new StringBuilder();
+            InputStreamReader isr = new InputStreamReader(
+                    urlConnection.getInputStream()
+            );
+            BufferedReader reader = new BufferedReader(isr);
+            while ((line = reader.readLine()) != null) builder.append(line);
 
-        } catch (ClientProtocolException e) {
-
+            return (builder.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
-
-
 
         return null;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-
+    protected void onPostExecute(String resultString) {
+        super.onPostExecute(resultString);
+        Log.i("Brandstore",resultString);
     }
 }

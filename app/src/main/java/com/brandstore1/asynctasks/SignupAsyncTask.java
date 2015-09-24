@@ -129,8 +129,13 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
 
                     Connections.setUserIdFromSharedPreferences(mContext);
 
-                    signupAsyncResponseDelegate.updateSuggestionInSQLite();
-                    signupAsyncResponseDelegate.goToMainActivityScreen();
+                    if(signupAsyncResponseDelegate!=null){
+                        signupAsyncResponseDelegate.updateSuggestionInSQLite();
+                        signupAsyncResponseDelegate.goToMainActivityScreen();
+                    }
+                    else{
+                        Toast.makeText(mContext, "Data retrieved with error.", Toast.LENGTH_LONG).show();
+                    }
                 }
 
             }

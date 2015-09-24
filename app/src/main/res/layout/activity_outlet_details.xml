@@ -79,20 +79,7 @@
                             android:fontFamily="sans-serif-condensed"
                             android:text="Floor, "
                             android:textSize="15sp" />
-                        <!--
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_alignBottom="@id/outletDetails_brandName"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="15dp"
-                            android:src="@drawable/off"
-                            android:background="@drawable/favorites"/>
 
-
-                        -->
                         <CheckBox
                             android:id="@+id/favorites"
                             android:layout_width="30dp"
@@ -291,15 +278,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="13dp"
-                android:text="SIMILAR STORES"
-                android:textSize="20sp"
+                android:text="@string/outlet_details_label_similarstores"
+                android:textSize="15sp"
                 android:fontFamily="sans-serif-clight"/>
 
             <TextView
                 android:id="@+id/outlet_details_empty_relatedBrands_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Coming soon..."
+                android:text="@string/outlet_details_label_comingsoon"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif-condensed"

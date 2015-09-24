@@ -37,7 +37,58 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.7"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
+        >
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/login_googleplusbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            tools:visibility="visible"
+            android:paddingBottom="20dp"/>
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/login_ll_or"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            >
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:background="#FFFFFFFF"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OR"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:singleLine="true"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:background="#FFFFFFFF"
+                />
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/login_ll2"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
         android:gravity="center_vertical|center_horizontal"
         >
 
@@ -53,6 +104,7 @@
             android:textColor="@color/white"
             android:hint="@string/login_email"
             android:textColorHint="@color/white"
+            android:textSize="@dimen/activity_login_signup_text_size"
             />
         <EditText
             android:id="@+id/login_password"
@@ -66,11 +118,13 @@
             android:textColor="@color/white"
             android:hint="@string/login_password"
             android:textColorHint="@color/white"
+            android:textSize="@dimen/activity_login_signup_text_size"
+            android:paddingRight="10dp"
             />
         <Button
-            android:text="@string/login_signin"
             android:id="@+id/login_signin_button"
-            android:layout_width="match_parent"
+            android:text="@string/login_signin"
+            android:layout_width="1000dp"
             android:layout_height="60dp"
             />
         <TextView
@@ -92,7 +146,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/login_ll1"
-        android:id="@+id/login_ll2"
+        android:id="@+id/login_ll3"
         android:orientation="horizontal"
         android:gravity="bottom|center_horizontal"
         android:layout_weight="1"

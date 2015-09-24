@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brandstore1.R;
@@ -59,6 +60,8 @@ public class TakeMeThereAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.tmt_list_view, null);
             mHolder.pathTextView = (TextView) convertView.findViewById(R.id.tmt_path);
             mHolder.indexTextView = (TextView) convertView.findViewById(R.id.tmt_pathindex);
+            mHolder.pathIndexTopView = (ImageView) convertView.findViewById(R.id.tmt_pathindex_top);
+            mHolder.pathIndexBottomView= (ImageView) convertView.findViewById(R.id.tmt_pathindex_bottom);
 
             convertView.setTag(mHolder);
         } else {
@@ -67,6 +70,10 @@ public class TakeMeThereAdapter extends BaseAdapter {
         System.out.println(position);
         mHolder.pathTextView.setText(pathArrayList.get(position));
         mHolder.indexTextView.setText((position+1)+"");
+
+        if(position==0){ mHolder.pathIndexTopView.setVisibility(View.INVISIBLE);}
+        if(position==(pathArrayList.size()-1)){ mHolder.pathIndexBottomView.setVisibility(View.INVISIBLE);}
+
         return convertView;
     }
 
@@ -75,6 +82,8 @@ public class TakeMeThereAdapter extends BaseAdapter {
 
         TextView indexTextView;
         TextView pathTextView;
+        ImageView pathIndexTopView;
+        ImageView pathIndexBottomView;
 
     }
 
