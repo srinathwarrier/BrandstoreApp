@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void goToOutletListScreenAllFavorites(){
         Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("name", "My Favorites");
+        bundle.putString("name", getString(R.string.nav_item_favorite));
         bundle.putSerializable("type", OutletListActivity.OutletListType.ALL_FAVORITE);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void goToOutletListScreenAllOnSale(){
         Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("name", "On Sale");
+        bundle.putString("name", getString(R.string.nav_item_sale));
         bundle.putSerializable("type", OutletListActivity.OutletListType.ALL_ON_SALE);
         intent.putExtras(bundle);
         startActivity(intent);

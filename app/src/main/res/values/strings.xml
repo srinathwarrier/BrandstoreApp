@@ -11,7 +11,7 @@
     <string name="title_activity_outlet_details">OutletDetails</string>
 
     <string name="nav_item_categories">Categories</string>
-    <string name="nav_item_favorite">Favorite</string>
+    <string name="nav_item_favorite">My Favorites</string>
     <string name="nav_item_sale">On Sale</string>
     <string name="nav_item_takeMeThere">Take me there</string>
     <string name="title_activity_test">TestActivity</string>
