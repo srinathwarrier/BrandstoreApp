@@ -5,7 +5,8 @@
         <item
             android:id="@+id/drawer_item_categories"
             android:icon="@drawable/sportswear"
-            android:title="@string/nav_item_categories"/>
+            android:title="@string/nav_item_categories"
+            android:checked="true"/>
         <item
             android:id="@+id/drawer_item_favorite"
             android:icon="@drawable/favourite"

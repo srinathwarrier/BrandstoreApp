@@ -115,10 +115,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setUpNavDrawer();
 
         mNavigationView = (NavigationView) findViewById(R.id.navigationView);
+
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                menuItem.setChecked(true);
+                //menuItem.setChecked(true);
+                Menu menu = mNavigationView.getMenu();
+                menu.getItem(0).setChecked(true); //TODO: Later, remove this.
+
                 boolean returnValue = true;
                 switch (menuItem.getItemId()) {
                     case R.id.drawer_item_categories:
@@ -127,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         break;
                     case R.id.drawer_item_favorite:
                         goToOutletListScreenAllFavorites();
-                        //mCurrentSelectedPosition = 1;
-                        //returnValue = true;
+                        mCurrentSelectedPosition = 1;
+                        returnValue = true;
                         break;
                     case R.id.drawer_item_sale:
                         goToOutletListScreenAllOnSale();
@@ -390,7 +394,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
+        outState.putInt(STATE_SELECTED_POSITION, 0);
     }
 
     @Override
@@ -398,7 +402,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onRestoreInstanceState(savedInstanceState);
         mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION, 0);
         Menu menu = mNavigationView.getMenu();
-        menu.getItem(mCurrentSelectedPosition).setChecked(true);
+        menu.getItem(0).setChecked(true); //TODO: Later, change to getItem(mCurrentSelectedPosition)
     }
 
     @Override
