@@ -37,6 +37,7 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
     String password;
     String genderCode;
     String dobString;
+    Connections.AccountType accountType;
     Context mContext;
     User user ;
     CircularProgressDialog circularProgressDialog;
@@ -47,6 +48,7 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
                            String password,
                            String genderCode,
                            String dobString,
+                           Connections.AccountType accountType,
                            Context mContext)
     {
         this.name = name;
@@ -54,6 +56,7 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
         this.password=password;
         this.genderCode = genderCode;
         this.dobString = dobString;
+        this.accountType = accountType;
         this.mContext = mContext;
     }
 
@@ -68,7 +71,7 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
     protected String doInBackground(Void... params) {
         StringBuilder builder = null;
         try {
-            String urlString = new Connections().getSignUpURL(name, emailId, password, genderCode,dobString);
+            String urlString = new Connections().getSignUpURL(name, emailId, password, genderCode,dobString,accountType);
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -107,7 +110,7 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
             }
             else{
                 if(jsonObject.getString("responseState").equals("error")){
-                    Toast.makeText(mContext, "Email exists", Toast.LENGTH_LONG).show();
+                    signupAsyncResponseDelegate.onEmailAlreadyExists();
                 }
                 else if(jsonObject.getString("responseState").equals("created")) {
                     JSONObject userObject = jsonObject.getJSONObject("responseDetails");

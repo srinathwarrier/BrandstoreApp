@@ -165,6 +165,7 @@ public class OutletListAsyncTask extends AsyncTask<Void, Void, String> {
         }catch(Exception e){
             e.printStackTrace();
         }
+        mOutletListAdapter.setOrigOutletListFrom(mOutletArrayList);
         mOutletListAdapter.notifyDataSetChanged();
          circularProgressDialog.dismiss();
         //OutletList

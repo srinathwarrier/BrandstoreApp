@@ -24,6 +24,9 @@ public class Connections {
         }
 
     }
+    public enum AccountType{
+        BRANDSTORE_ACCOUNT ,GOOGLE_ACCOUNT
+    }
 
     public static void setUserIdFromSharedPreferences(Context mContext){
         //fetch userId from SharedPreferences
@@ -62,21 +65,36 @@ public class Connections {
         return request;
     }
 
-    public String getSignUpURL(String name , String emailId , String password ,String genderCode,String dobString){
+    public String getSignUpURL(String name , String emailId , String password ,String genderCode,String dobString , AccountType accountType){
         //http://localhost:8081/v2/signup?name=test6&emailid=test6@gmail.com&password=password8&gendercode=M&dob=1990-12-14
         String request="";
+        String accountTypeString = getStringForAccountType(accountType);
         try {
             URI uri= new URI(
                     "http",
                     ipAddress,
                     getStartParametersOfURL() +"signup",
-                    "name="+name+"&emailid="+emailId+"&password="+password +"&gendercode="+genderCode+"&dob="+dobString,
+                    "name="+name+"&emailid="+emailId+"&password="+password +"&gendercode="+genderCode+"&dob="+dobString+"&account="+accountTypeString,
                     null);
             request = uri.toASCIIString();
         }catch (URISyntaxException e) {
             e.printStackTrace();
         }
         return request;
+    }
+    public String getStringForAccountType(AccountType accountType){
+        String returnValue="brandstore";
+        switch (accountType){
+            case BRANDSTORE_ACCOUNT:
+                returnValue = "brandstore";
+                break;
+            case GOOGLE_ACCOUNT:
+                returnValue = "google";
+                break ;
+            default:
+                returnValue = "brandstore";
+        }
+        return returnValue;
     }
 
     public String getUpdateRegIdURL(String registrationId){

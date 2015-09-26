@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="false"
         android:state_enabled="true"
-        android:drawable="@drawable/fav" />
+        android:drawable="@drawable/ic_favorite_border_white_24dp" />
     <item android:state_checked="true"
         android:state_enabled="true"
         android:drawable="@drawable/favselect" />

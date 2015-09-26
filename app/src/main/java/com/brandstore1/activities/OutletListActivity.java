@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class OutletListActivity extends ActionBarActivity {
     TextView category;
     ListView outletListView;
-    ArrayList<Outlet> outletArrayList = new ArrayList();
+    ArrayList<Outlet> outletArrayList = new ArrayList<Outlet>();
     Toolbar toolbar;
     MenuItem favoriteMenuItem;
     MenuItem saleMenuItem;
@@ -162,7 +162,7 @@ public class OutletListActivity extends ActionBarActivity {
 
     public void onFavoriteMenuItemClicked(boolean toBeSelected){
       // if((!saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) || (saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ||(saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) ){
-            mOutletListAdapter.resetData();
+            mOutletListAdapter.setOutletListFromOriginal();
      //   }
 
         if (toBeSelected) {
@@ -177,7 +177,7 @@ public class OutletListActivity extends ActionBarActivity {
             }
         } else {
             favoriteMenuItem.setChecked(false);
-            favoriteMenuItem.setIcon(R.drawable.fav);
+            favoriteMenuItem.setIcon(R.drawable.ic_favorite_border_white_24dp);
             if(saleMenuItem.isChecked()){
                 //mOutletListAdapter.resetData();
                 mOutletListAdapter.getFilter().filter("Sale");
@@ -190,7 +190,7 @@ public class OutletListActivity extends ActionBarActivity {
     public void onSaleMenuItemClicked(boolean toBeSelected){
 
        // if((!saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) || (saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ||(!saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ){
-            mOutletListAdapter.resetData();
+            mOutletListAdapter.setOutletListFromOriginal();
         //}
 
         if (toBeSelected) {
@@ -205,7 +205,7 @@ public class OutletListActivity extends ActionBarActivity {
             saleMenuItem.setChecked(false);
             saleMenuItem.setIcon(R.drawable.saleicon);
             if(favoriteMenuItem.isChecked()){
-                mOutletListAdapter.resetData();
+                mOutletListAdapter.setOutletListFromOriginal();
                 mOutletListAdapter.getFilter().filter("fav");
             } else
             mOutletListAdapter.getFilter().filter("Y");

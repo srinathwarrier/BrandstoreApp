@@ -26,6 +26,8 @@ import com.brandstore1.asynctasks.LoginAsyncTask;
 import com.brandstore1.asynctasks.SignupAsyncTask;
 import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
 import com.brandstore1.interfaces.LoginAsyncResponse;
+import com.brandstore1.interfaces.SignupAsyncResponse;
+import com.brandstore1.utils.Connections;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
@@ -37,6 +39,7 @@ import com.google.android.gms.plus.model.people.Person;
 
 public class LoginActivity extends ActionBarActivity implements
         LoginAsyncResponse,
+        SignupAsyncResponse,
         View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
@@ -159,6 +162,7 @@ public class LoginActivity extends ActionBarActivity implements
             @Override
             public void onClick(View v) {
                 Log.i("Login","forgotPasswordTextView");
+                Toast.makeText(mContext, "Forgot password not implemented", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -238,6 +242,15 @@ public class LoginActivity extends ActionBarActivity implements
         finish();
     }
 
+    @Override
+    public void onEmailAlreadyExists() {
+        Toast.makeText(mContext, "Email already exists", Toast.LENGTH_LONG).show();
+        if (mGoogleApiClient.isConnected()) {
+            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+            mGoogleApiClient.disconnect();
+        }
+    }
+
     public void goToSignUpActivityScreen(){
         Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
         startActivity(intent);
@@ -254,11 +267,9 @@ public class LoginActivity extends ActionBarActivity implements
                 String emailString = Plus.AccountApi.getAccountName(mGoogleApiClient);
                 String genderCode = ""+currentPerson.getGender();
 
-
-                SignupAsyncTask signupAsyncTask = new SignupAsyncTask(name, emailString, passwordString, genderCode, dobString, mContext);
-                //signupAsyncTask.signupAsyncResponseDelegate = LoginActivity.this;
+                SignupAsyncTask signupAsyncTask = new SignupAsyncTask(name, emailString, passwordString, genderCode,dobString ,Connections.AccountType.GOOGLE_ACCOUNT, mContext);
+                signupAsyncTask.signupAsyncResponseDelegate = this;
                 signupAsyncTask.execute();
-
 
                 //Toast.makeText(this,"name:"+name+" lang:"+language+" birthday:"+test,Toast.LENGTH_LONG);
             } else {

@@ -1,6 +1,7 @@
 package com.brandstore1.activities;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -65,6 +66,9 @@ public class TakeMeThereActivity extends ActionBarActivity{
         TMT_type tmtType = (TMT_type)bundle.get("type");
         to = (EditText) findViewById(R.id.tmt_to);
         from = (EditText)findViewById(R.id.tmt_from);
+
+        from.getBackground().setColorFilter(getResources().getColor(R.color.tmt_bg), PorterDuff.Mode.SRC_ATOP);
+        to.getBackground().setColorFilter(getResources().getColor(R.color.tmt_bg), PorterDuff.Mode.SRC_ATOP);
 
         switch(tmtType){
             case TO_KNOWN:

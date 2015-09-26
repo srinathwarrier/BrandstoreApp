@@ -6,4 +6,5 @@ package com.brandstore1.interfaces;
 public interface SignupAsyncResponse {
     public void updateSuggestionInSQLite();
     public void goToMainActivityScreen();
+    public void onEmailAlreadyExists();
 }

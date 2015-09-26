@@ -23,6 +23,7 @@ import com.brandstore1.asynctasks.LoginAsyncTask;
 import com.brandstore1.asynctasks.SignupAsyncTask;
 import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
 import com.brandstore1.interfaces.SignupAsyncResponse;
+import com.brandstore1.utils.Connections;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -84,7 +85,7 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
                 //String dobString = "08091990"; // MMDDYYYY
                 String checkValidFormData = isValidFormData(nameString, emailString, passwordString, genderCode, dobString);
                 if (checkValidFormData.equals("VALID")) {
-                    SignupAsyncTask signupAsyncTask = new SignupAsyncTask(nameString, emailString, passwordString, genderCode, dobString, mContext);
+                    SignupAsyncTask signupAsyncTask = new SignupAsyncTask(nameString, emailString, passwordString, genderCode, dobString, Connections.AccountType.BRANDSTORE_ACCOUNT,mContext);
                     signupAsyncTask.signupAsyncResponseDelegate = SignUpActivity.this;
                     signupAsyncTask.execute();
                 } else {
@@ -133,6 +134,11 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
         intent.putExtras(bundle);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onEmailAlreadyExists() {
+        Toast.makeText(mContext, "Email already exists", Toast.LENGTH_LONG).show();
     }
 
     public String isValidFormData(String nameString ,

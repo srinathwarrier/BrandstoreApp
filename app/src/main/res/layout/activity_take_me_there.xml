@@ -47,7 +47,8 @@
                 android:tag="tmt_from"
                 android:focusable="false"
                 android:layout_toRightOf="@id/from"
-                android:paddingTop="20dp" />
+                android:paddingTop="20dp"
+                android:textColor="@color/tmt_label"/>
 
             <!--<ListView
                 android:layout_width="wrap_content"
@@ -91,7 +92,8 @@
                 android:layout_toRightOf="@id/to"
                 android:paddingTop="20dp"
                 android:editable="false"
-                android:focusable="false"/>
+                android:focusable="false"
+                />
         </RelativeLayout>
 
         <ListView

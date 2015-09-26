@@ -9,7 +9,7 @@
             android:checked="true"/>
         <item
             android:id="@+id/drawer_item_favorite"
-            android:icon="@drawable/favourite"
+            android:icon="@drawable/ic_favorite_border_white_24dp"
             android:title="@string/nav_item_favorite"/>
         <item
             android:id="@+id/drawer_item_sale"
