@@ -120,7 +120,7 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.logo)
+                        .setSmallIcon(R.drawable.brandstorelogoicon)
                         .setContentTitle(testMessage)
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(testMessage))
                         .setContentText(testMessage);
@@ -140,7 +140,7 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.logo)
+                        .setSmallIcon(R.drawable.brandstorelogoicon)
                         .setContentTitle("Slate")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))

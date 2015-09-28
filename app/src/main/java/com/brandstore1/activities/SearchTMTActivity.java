@@ -41,6 +41,7 @@ public class SearchTMTActivity extends ActionBarActivity {
     SQLiteDatabase sqLiteDatabase;
     EditText from_outlet;
     String to_from;
+    String hint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +62,9 @@ public class SearchTMTActivity extends ActionBarActivity {
 
         Bundle bundle = getIntent().getExtras();
         to_from = bundle.getString("search");
-
+        hint = bundle.getString("hint");
         from_outlet =(EditText) findViewById(R.id.tmt_outlet);
+        from_outlet.setHint(hint);
 
         mResultList = (ListView) findViewById(R.id.list_view_results);
         mResultList.setVisibility(View.INVISIBLE);

@@ -81,7 +81,7 @@ public class TakeMeThereActivity extends ActionBarActivity{
                 to.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        gotoSearchTMTActivityScreen(to);
+                        gotoSearchTMTActivityScreen(to,"Enter destination outlet");
                     }
                 });
 
@@ -94,7 +94,7 @@ public class TakeMeThereActivity extends ActionBarActivity{
         from.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoSearchTMTActivityScreen(from);
+                gotoSearchTMTActivityScreen(from,"Enter source outlet");
 
             }
         });
@@ -158,11 +158,12 @@ public class TakeMeThereActivity extends ActionBarActivity{
     }
 
 
-    public void gotoSearchTMTActivityScreen(EditText search){
+    public void gotoSearchTMTActivityScreen(EditText search, String hint){
 
         search.clearFocus();
         Intent intent = new Intent(getApplicationContext(), SearchTMTActivity.class);
         intent.putExtra("search", search.getTag().toString());
+        intent.putExtra("hint", hint);
         startActivityForResult(intent, 2);
 
 
