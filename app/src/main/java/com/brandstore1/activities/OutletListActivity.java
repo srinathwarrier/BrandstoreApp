@@ -34,7 +34,7 @@ public class OutletListActivity extends ActionBarActivity {
     MenuItem favoriteMenuItem;
     MenuItem saleMenuItem;
     OutletListAdapter mOutletListAdapter;
-
+    OutletListType outletListType;
     public enum OutletListType{
         CLICKED_ON_TAG , CLICKED_ON_COLLECTION ,SEARCHED_QUERY , ALL_FAVORITE , ALL_ON_SALE ,
     };
@@ -52,7 +52,7 @@ public class OutletListActivity extends ActionBarActivity {
         Bundle bundle = getIntent().getExtras();
         String query = bundle.getString("name");
         String id = bundle.getString("id");
-        OutletListType outletListType = (OutletListType)bundle.get("type");
+        outletListType = (OutletListType)bundle.get("type");
 
         /*
             Toolbar setup
@@ -133,6 +133,12 @@ public class OutletListActivity extends ActionBarActivity {
         // Initialize the menuItem variables
         favoriteMenuItem = menu.findItem(R.id.display_favorites);
         saleMenuItem = menu.findItem(R.id.on_sale);
+
+        if(outletListType == OutletListType.ALL_ON_SALE) {
+            saleMenuItem.setChecked(true);
+            saleMenuItem.setIcon(R.drawable.sale_on);
+            saleMenuItem.setEnabled(false);
+        }
 
         return true;
     }

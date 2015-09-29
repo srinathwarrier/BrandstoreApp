@@ -75,14 +75,15 @@ public class SearchTMTActivity extends ActionBarActivity {
         mResultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("outlet")) {
+                    Intent intent=new Intent();
+                    intent.putExtra("outlet_name",mSearchResult.get(position).getName().toString());
+                    intent.putExtra("outlet_id",mSearchResult.get(position).getId().toString());
+                    intent.putExtra("TO_FROM",to_from);
+                    setResult(2, intent);
+                    finish();//finishing activity
 
-                Intent intent=new Intent();
-                intent.putExtra("outlet_name",mSearchResult.get(position).getName().toString());
-                intent.putExtra("outlet_id",mSearchResult.get(position).getId().toString());
-                intent.putExtra("TO_FROM",to_from);
-                setResult(2, intent);
-                finish();//finishing activity
-
+                }
             }
         });
 

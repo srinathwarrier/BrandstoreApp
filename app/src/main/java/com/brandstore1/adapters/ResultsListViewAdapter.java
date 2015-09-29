@@ -78,4 +78,5 @@ public class ResultsListViewAdapter extends BaseAdapter {
         TextView textView;
         TextView textView2;
     }
+
 }

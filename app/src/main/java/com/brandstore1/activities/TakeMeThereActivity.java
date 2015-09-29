@@ -77,7 +77,6 @@ public class TakeMeThereActivity extends ActionBarActivity{
                 break;
             case TO_UNKNOWN:
                 to.setEnabled(true);
-                to.setText("To");
                 to.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

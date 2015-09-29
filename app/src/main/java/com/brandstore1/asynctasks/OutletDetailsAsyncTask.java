@@ -211,6 +211,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             }
             else{
                 obj.setShortDescription(obj.getLongDescription().substring(0, 100).concat("..."));
+                readmore.setVisibility(View.VISIBLE);
             }
             obj.setGenderCodeString(jsonobject.get("genderCodeString").toString());
             obj.setIsFavorite(Boolean.valueOf(jsonobject.get("isFavorite").toString()));
@@ -286,7 +287,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             /*
                 Set UI : Add readmore button
              */
-            readmore.setVisibility(View.VISIBLE);
+            //readmore.setVisibility(View.VISIBLE);
             readmore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

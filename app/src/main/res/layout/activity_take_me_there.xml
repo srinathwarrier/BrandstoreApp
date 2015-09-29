@@ -93,6 +93,7 @@
                 android:paddingTop="20dp"
                 android:editable="false"
                 android:focusable="false"
+                android:textColor="@color/tmt_label"
                 />
         </RelativeLayout>
 
