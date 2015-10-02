@@ -1,7 +1,19 @@
 package com.brandstore1.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+
+import com.brandstore1.activities.MainActivity;
+import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
+import com.brandstore1.entities.User;
+import com.brandstore1.gcm.GCMConnection;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -27,6 +39,74 @@ public class Connections {
     public enum AccountType{
         BRANDSTORE_ACCOUNT ,GOOGLE_ACCOUNT
     }
+
+    /*
+        Update suggestions in SQLite
+     */
+    public static void updateSuggestionInSQLite(Context mContext) {
+        SQLiteDatabase sqLiteDatabase = mContext.openOrCreateDatabase("brandstoreDB", mContext.MODE_PRIVATE, null);
+        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
+        updateSuggestionsAsyncTask.execute();
+    }
+
+    public static void updateInstanceID( Context mContext) {
+        GCMConnection.updateInstanceIDIfNeeded("Connections", mContext);
+    }
+
+
+    public static void fetchAndSaveUserObjectToSharedPreferences(JSONObject jsonObject, Context mContext){
+        try{
+            // Fetch jsonObject , create user object
+            User user = new User();
+            user.setUserId(jsonObject.getString("userID"));
+            user.setName(jsonObject.getString("name"));
+            user.setEmailId(jsonObject.getString("emailid"));
+
+            // Convert user object to json object
+            Gson gson = new Gson();
+            String userJsonObject = gson.toJson(user);
+
+            // Save to Shared Preferences
+            MySharedPreferences.setUserId(mContext, user.getUserId());
+            MySharedPreferences.setUserJsonObjectString(mContext, userJsonObject);
+            MySharedPreferences.setHasLoggedIn(mContext, true);
+
+            setUserIdFromSharedPreferences(mContext);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void closeScreenAndGoToMainActivityScreen(Context mContext){
+        Intent intent = new Intent(mContext, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        mContext.startActivity(intent);
+        ((Activity)mContext).finish();
+    }
+
+
+    public static void performInitialLoginFormalities(JSONObject jsonObject, Context mContext){
+        fetchAndSaveUserObjectToSharedPreferences(jsonObject,mContext);
+        updateSuggestionInSQLite(mContext);
+        updateInstanceID(mContext);
+    }
+    public static void performInitialSignupFormalities(JSONObject jsonObject, Context mContext){
+        fetchAndSaveUserObjectToSharedPreferences(jsonObject,mContext);
+        updateSuggestionInSQLite(mContext);
+        updateInstanceID(mContext);
+    }
+    public static void performInitialOpeningAppFormalities( Context mContext){
+        setUserIdFromSharedPreferences(mContext); // only userId variable needs to be set when opening app
+        updateSuggestionInSQLite(mContext);
+        updateInstanceID(mContext);
+        closeScreenAndGoToMainActivityScreen(mContext);
+    }
+
+
 
     public static void setUserIdFromSharedPreferences(Context mContext){
         //fetch userId from SharedPreferences
@@ -65,16 +145,15 @@ public class Connections {
         return request;
     }
 
-    public String getSignUpURL(String name , String emailId , String password ,String genderCode,String dobString , AccountType accountType){
+    public String getSignUpURL(String name , String emailId , String password ,String genderCode,String dobString){
         //http://localhost:8081/v2/signup?name=test6&emailid=test6@gmail.com&password=password8&gendercode=M&dob=1990-12-14
         String request="";
-        String accountTypeString = getStringForAccountType(accountType);
         try {
             URI uri= new URI(
                     "http",
                     ipAddress,
                     getStartParametersOfURL() +"signup",
-                    "name="+name+"&emailid="+emailId+"&password="+password +"&gendercode="+genderCode+"&dob="+dobString+"&account="+accountTypeString,
+                    "name="+name+"&emailid="+emailId+"&password="+password +"&gendercode="+genderCode+"&dob="+dobString,
                     null);
             request = uri.toASCIIString();
         }catch (URISyntaxException e) {
@@ -82,6 +161,25 @@ public class Connections {
         }
         return request;
     }
+
+    public String getExternalAccountLoginOrSignUpURL(String name , String emailId ,String genderCode,String dobString , AccountType accountType){
+        //http://localhost:8081/v2/signup?name=test6&emailid=test6@gmail.com&password=password8&gendercode=M&dob=1990-12-14
+        String request="";
+        String accountTypeString = getStringForAccountType(accountType);
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"externalAccountLoginOrSignUp",
+                    "name="+name+"&emailid="+emailId+"&gendercode="+genderCode+"&dob="+dobString+"&accounttype="+accountTypeString,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
     public String getStringForAccountType(AccountType accountType){
         String returnValue="brandstore";
         switch (accountType){

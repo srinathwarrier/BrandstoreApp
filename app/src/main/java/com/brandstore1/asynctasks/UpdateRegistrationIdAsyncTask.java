@@ -26,7 +26,7 @@ public class UpdateRegistrationIdAsyncTask extends AsyncTask<Void,Void,Void> {
     String registrationId;
     Context mContext;
 
-    public UpdateRegistrationIdAsyncTask(String userId, String registrationId, Context mContext)
+    public UpdateRegistrationIdAsyncTask(String registrationId, Context mContext)
     {
         this.userId=userId;
         this.registrationId=registrationId;

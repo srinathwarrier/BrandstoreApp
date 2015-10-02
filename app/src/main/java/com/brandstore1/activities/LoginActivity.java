@@ -22,12 +22,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.brandstore1.R;
+import com.brandstore1.asynctasks.ExternalAccountLoginOrSignupAsyncTask;
 import com.brandstore1.asynctasks.LoginAsyncTask;
 import com.brandstore1.asynctasks.SignupAsyncTask;
 import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
+import com.brandstore1.gcm.GCMConnection;
 import com.brandstore1.interfaces.LoginAsyncResponse;
 import com.brandstore1.interfaces.SignupAsyncResponse;
 import com.brandstore1.utils.Connections;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
@@ -36,9 +45,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.facebook.FacebookSdk;
+
+import org.json.JSONObject;
 
 public class LoginActivity extends ActionBarActivity implements
-        LoginAsyncResponse,
         SignupAsyncResponse,
         View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks,
@@ -55,6 +66,8 @@ public class LoginActivity extends ActionBarActivity implements
     TextView signUpTextView;
     Context mContext;
 
+    LoginButton facebookLoginButton;
+    CallbackManager callbackManager;
     SignInButton googleplusSignInButton;
 
     /* RequestCode for resolutions involving sign-in */
@@ -77,6 +90,9 @@ public class LoginActivity extends ActionBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
         setContentView(R.layout.activity_login);
         mContext = this;
 
@@ -98,6 +114,35 @@ public class LoginActivity extends ActionBarActivity implements
         // Set up button click listeners
         googleplusSignInButton = (SignInButton)findViewById(R.id.login_googleplusbutton);
         googleplusSignInButton.setOnClickListener(this);
+        facebookLoginButton = (LoginButton)findViewById(R.id.login_facebookbutton);
+        facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.i(TAG,"");
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                // Application code
+                                Log.i(TAG,"");
+                            }
+                        }
+                );
+            }
+
+            @Override
+            public void onCancel() {
+                Log.i(TAG,"");
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                Log.i(TAG,"");
+            }
+        });
 
         if (android.os.Build.VERSION.SDK_INT >= 17) {
             passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_black_24dp, 0);
@@ -151,7 +196,6 @@ public class LoginActivity extends ActionBarActivity implements
                 String emailString = emailEditText.getText().toString();
                 String passwordString = passwordEditText .getText().toString();
                 LoginAsyncTask loginAsyncTask = new LoginAsyncTask(emailString , passwordString ,mContext);
-                loginAsyncTask.loginAsyncResponseDelegate = LoginActivity.this;
                 loginAsyncTask.execute();
             }
         });
@@ -222,26 +266,6 @@ public class LoginActivity extends ActionBarActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-        Update suggestions in SQLite
-     */
-    public void updateSuggestionInSQLite(){
-        SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("brandstoreDB",MODE_PRIVATE,null);
-        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
-        updateSuggestionsAsyncTask.execute();
-    }
-
-    /*
-        Go To Screen methods
-     */
-
-    public void goToMainActivityScreen(){
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
-
     @Override
     public void onEmailAlreadyExists() {
         Toast.makeText(mContext, "Email already exists", Toast.LENGTH_LONG).show();
@@ -250,6 +274,10 @@ public class LoginActivity extends ActionBarActivity implements
             mGoogleApiClient.disconnect();
         }
     }
+
+    /*
+        Go To Screen methods
+     */
 
     public void goToSignUpActivityScreen(){
         Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
@@ -263,13 +291,12 @@ public class LoginActivity extends ActionBarActivity implements
             if (currentPerson != null) {
                 String name = currentPerson.getDisplayName();
                 String dobString = currentPerson.getBirthday();
-                String passwordString = "";
+
                 String emailString = Plus.AccountApi.getAccountName(mGoogleApiClient);
                 String genderCode = ""+currentPerson.getGender();
 
-                SignupAsyncTask signupAsyncTask = new SignupAsyncTask(name, emailString, passwordString, genderCode,dobString ,Connections.AccountType.GOOGLE_ACCOUNT, mContext);
-                signupAsyncTask.signupAsyncResponseDelegate = this;
-                signupAsyncTask.execute();
+                ExternalAccountLoginOrSignupAsyncTask externalAccountLoginOrSignupAsyncTask= new ExternalAccountLoginOrSignupAsyncTask(name, emailString, genderCode,dobString ,Connections.AccountType.GOOGLE_ACCOUNT, mContext);
+                externalAccountLoginOrSignupAsyncTask.execute();
 
                 //Toast.makeText(this,"name:"+name+" lang:"+language+" birthday:"+test,Toast.LENGTH_LONG);
             } else {
@@ -295,6 +322,7 @@ public class LoginActivity extends ActionBarActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
             // If the error resolution was not successful we should not resolve further errors.

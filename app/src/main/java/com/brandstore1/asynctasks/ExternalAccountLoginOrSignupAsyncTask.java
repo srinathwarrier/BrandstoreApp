@@ -1,18 +1,18 @@
 package com.brandstore1.asynctasks;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.brandstore1.R;
+import com.brandstore1.entities.User;
+import com.brandstore1.interfaces.SignupAsyncResponse;
+import com.brandstore1.model.Connection;
 import com.brandstore1.utils.CircularProgressDialog;
 import com.brandstore1.utils.Connections;
+import com.brandstore1.utils.MySharedPreferences;
+import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,18 +26,29 @@ import java.net.URL;
 /**
  * Created by I076630 on 06-May-15.
  */
-public class LoginAsyncTask extends AsyncTask<Void,Void,String> {
+public class ExternalAccountLoginOrSignupAsyncTask extends AsyncTask<Void,Void,String> {
 
 
+    String name;
     String emailId;
-    String password;
+    String genderCode;
+    String dobString;
+    Connections.AccountType accountType;
     Context mContext;
     CircularProgressDialog circularProgressDialog;
 
-    public LoginAsyncTask(String emailId, String password, Context mContext)
+    public ExternalAccountLoginOrSignupAsyncTask(String name,
+                                                 String emailId,
+                                                 String genderCode,
+                                                 String dobString,
+                                                 Connections.AccountType accountType,
+                                                 Context mContext)
     {
+        this.name = name;
         this.emailId=emailId;
-        this.password=password;
+        this.genderCode = genderCode;
+        this.dobString = dobString;
+        this.accountType = accountType;
         this.mContext = mContext;
     }
 
@@ -52,7 +63,7 @@ public class LoginAsyncTask extends AsyncTask<Void,Void,String> {
     protected String doInBackground(Void... params) {
         StringBuilder builder = null;
         try {
-            String urlString = new Connections().getLoginURL(emailId, password);
+            String urlString = new Connections().getExternalAccountLoginOrSignUpURL(name, emailId, genderCode, dobString, accountType);
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -78,24 +89,31 @@ public class LoginAsyncTask extends AsyncTask<Void,Void,String> {
     protected void onPostExecute(String returnValue) {
         super.onPostExecute(returnValue);
         try {
-            JSONArray jsonArray = new JSONArray(returnValue);
-            Log.i("Login", "JSON :" + jsonArray.toString());
+            JSONObject jsonObject = new JSONObject(returnValue);
+            Log.i("Signup", "JSON :" + jsonObject.toString());
 
             // If jsonArray.length is 0, user does not exist. So show Toast that user/password combination is invalid.
             // If jsonArray.length is 1, extract and add to user entity. Save userid and Go to MainActivity.
             // TODO: If jsonArray.length is more than 1, do as previous , but there is an error
 
-            if(jsonArray.length()==0){
-                Toast.makeText(mContext, "Invalid username/password combination", Toast.LENGTH_LONG).show();
-                circularProgressDialog.dismiss();
+
+            if(jsonObject==null ){
+                Toast.makeText(mContext, "Connection Error.", Toast.LENGTH_LONG).show();
             }
             else{
-                JSONObject jsonObject = jsonArray.getJSONObject(0);
-                Connections.performInitialLoginFormalities(jsonObject, mContext);
-                circularProgressDialog.dismiss();
+                if(jsonObject.getString("responseState").equals("error")){
+                    Toast.makeText(mContext, "Connection Error.", Toast.LENGTH_LONG).show();
+                }
+                else if(jsonObject.getString("responseState").equals("login")){
+                    JSONObject userObject = jsonObject.getJSONObject("responseDetails");
+                    Connections.performInitialLoginFormalities(userObject,mContext);
+                }
+                else if(jsonObject.getString("responseState").equals("signup")) {
+                    JSONObject userObject = jsonObject.getJSONObject("responseDetails");
+                    Connections.performInitialSignupFormalities(userObject,mContext);
+                }
             }
-
-
+            circularProgressDialog.dismiss();
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -103,7 +121,6 @@ public class LoginAsyncTask extends AsyncTask<Void,Void,String> {
         catch (Exception e){
             e.printStackTrace();
         }
-
 
 
     }

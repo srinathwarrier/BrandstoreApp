@@ -22,6 +22,7 @@ import com.brandstore1.R;
 import com.brandstore1.asynctasks.LoginAsyncTask;
 import com.brandstore1.asynctasks.SignupAsyncTask;
 import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
+import com.brandstore1.gcm.GCMConnection;
 import com.brandstore1.interfaces.SignupAsyncResponse;
 import com.brandstore1.utils.Connections;
 
@@ -46,6 +47,7 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
     private Matcher matcher;
     public static TextView textView;
 
+    private static final String TAG = "SignUpActivity";
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -85,7 +87,7 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
                 //String dobString = "08091990"; // MMDDYYYY
                 String checkValidFormData = isValidFormData(nameString, emailString, passwordString, genderCode, dobString);
                 if (checkValidFormData.equals("VALID")) {
-                    SignupAsyncTask signupAsyncTask = new SignupAsyncTask(nameString, emailString, passwordString, genderCode, dobString, Connections.AccountType.BRANDSTORE_ACCOUNT,mContext);
+                    SignupAsyncTask signupAsyncTask = new SignupAsyncTask(nameString, emailString, passwordString, genderCode, dobString,mContext);
                     signupAsyncTask.signupAsyncResponseDelegate = SignUpActivity.this;
                     signupAsyncTask.execute();
                 } else {
@@ -117,23 +119,6 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void updateSuggestionInSQLite() {
-        SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("brandstoreDB",MODE_PRIVATE,null);
-        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
-        updateSuggestionsAsyncTask.execute();
-    }
-
-    public void goToMainActivityScreen(){
-        Intent intent = new Intent(mContext, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        Bundle bundle = new Bundle();
-        bundle.putString("test", "test");
-        intent.putExtras(bundle);
-        startActivity(intent);
-        finish();
     }
 
     @Override

@@ -18,6 +18,9 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_splashscreen">SplashScreenActivity</string>
 
+    <string name="error_updateapp">This version of Brandstore is invalid. Please update your app from the Play Store to keep using Brandstore.</string>
+
+
     <string name="login_password">Password</string>
     <string name="login_email">Email</string>
     <string name="login_signin">Sign In</string>
@@ -37,7 +40,10 @@
     <string name="signup_dob">Date of birth</string>
     <string name="signup_button">Sign Up</string>
 
-    <string name="gcm_defaultSenderId">465621888656</string>
+    <string name="gcm_defaultSenderId">829391307534</string>
+    <string name="facebook_app_id">639654116137392</string>
+
+
     <string name="outlet_details_label_similarstores">SIMILAR STORES</string>
     <string name="outlet_details_label_comingsoon">Coming soon…</string>
 
