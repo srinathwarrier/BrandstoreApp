@@ -48,13 +48,14 @@
             android:gravity="center_horizontal|center_vertical"
             >
 
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/login_facebookbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                />
+            <!--<com.facebook.login.widget.LoginButton-->
+                <!--android:id="@+id/login_facebookbutton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="30dp"-->
+                <!--android:layout_marginBottom="30dp"-->
+                <!--android:visibility="gone"-->
+                <!--/>-->
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/login_googleplusbutton"
                 android:layout_width="wrap_content"

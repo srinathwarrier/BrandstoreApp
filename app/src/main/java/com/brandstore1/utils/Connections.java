@@ -93,11 +93,13 @@ public class Connections {
         fetchAndSaveUserObjectToSharedPreferences(jsonObject,mContext);
         updateSuggestionInSQLite(mContext);
         updateInstanceID(mContext);
+        closeScreenAndGoToMainActivityScreen(mContext);
     }
     public static void performInitialSignupFormalities(JSONObject jsonObject, Context mContext){
-        fetchAndSaveUserObjectToSharedPreferences(jsonObject,mContext);
+        fetchAndSaveUserObjectToSharedPreferences(jsonObject, mContext);
         updateSuggestionInSQLite(mContext);
         updateInstanceID(mContext);
+        closeScreenAndGoToMainActivityScreen(mContext);
     }
     public static void performInitialOpeningAppFormalities( Context mContext){
         setUserIdFromSharedPreferences(mContext); // only userId variable needs to be set when opening app
