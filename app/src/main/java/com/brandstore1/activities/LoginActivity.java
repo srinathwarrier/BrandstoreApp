@@ -111,10 +111,12 @@ public class LoginActivity extends ActionBarActivity implements
         signUpTextView = (TextView) findViewById(R.id.signup_text);
         isPasswordVisible = false;
 
-        // Set up button click listeners
+        // Set up Login button click listeners
         googleplusSignInButton = (SignInButton)findViewById(R.id.login_googleplusbutton);
         googleplusSignInButton.setOnClickListener(this);
-        facebookLoginButton = (LoginButton)findViewById(R.id.login_facebookbutton);
+
+
+        /*facebookLoginButton = (LoginButton)findViewById(R.id.login_facebookbutton);
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -142,7 +144,7 @@ public class LoginActivity extends ActionBarActivity implements
             public void onError(FacebookException e) {
                 Log.i(TAG,"");
             }
-        });
+        });*/
 
         if (android.os.Build.VERSION.SDK_INT >= 17) {
             passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_black_24dp, 0);
@@ -289,10 +291,11 @@ public class LoginActivity extends ActionBarActivity implements
             // get all Data
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
             if (currentPerson != null) {
+                String emailString = Plus.AccountApi.getAccountName(mGoogleApiClient);
                 String name = currentPerson.getDisplayName();
                 String dobString = currentPerson.getBirthday();
+                if(dobString==null)dobString="";
 
-                String emailString = Plus.AccountApi.getAccountName(mGoogleApiClient);
                 String genderCode = ""+currentPerson.getGender();
 
                 ExternalAccountLoginOrSignupAsyncTask externalAccountLoginOrSignupAsyncTask= new ExternalAccountLoginOrSignupAsyncTask(name, emailString, genderCode,dobString ,Connections.AccountType.GOOGLE_ACCOUNT, mContext);
@@ -322,7 +325,9 @@ public class LoginActivity extends ActionBarActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+
+
+        //callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
             // If the error resolution was not successful we should not resolve further errors.
