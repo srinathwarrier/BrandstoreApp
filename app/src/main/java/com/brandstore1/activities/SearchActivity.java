@@ -16,20 +16,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.brandstore1.R;
-import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
 import com.brandstore1.adapters.ResultsListViewAdapter;
 import com.brandstore1.entities.SearchResults;
 import com.brandstore1.fragments.NavigationDrawerFragment;
-//import com.brandstore1.views.SearchBox;
 
 import java.util.ArrayList;
 
-
-public class SearchActivity extends ActionBarActivity implements SearchView.OnQueryTextListener{
+public class SearchActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
     ResultsListViewAdapter mResultsAdapter;
-    //SearchBox mEdit;
-    ListView mResultList;
-    NavigationDrawerFragment drawerFragment;
+    ListView lvResultList;
     ArrayList<SearchResults> mSearchResult = new ArrayList<>();
     Toolbar toolbar;
     Context mContext;
@@ -41,26 +36,24 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        sqLiteDatabase = openOrCreateDatabase("brandstoreDB",MODE_PRIVATE,null);
+        sqLiteDatabase = openOrCreateDatabase("brandstoreDB", MODE_PRIVATE, null);
         //UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
         //updateSuggestionsAsyncTask.execute();
 
         toolbar = (Toolbar) findViewById(R.id.searchtoolbar);
         setSupportActionBar(toolbar);
-        mContext=this;
+        mContext = this;
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
         //drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout));
-
-
         //mEdit = (SearchBox) findViewById(R.id.search_box_results);
-        mResultList = (ListView) findViewById(R.id.list_view_results);
-        mResultList.setVisibility(View.INVISIBLE);
+        lvResultList = (ListView) findViewById(R.id.list_view_results);
+        lvResultList.setVisibility(View.INVISIBLE);
 
 
         mResultsAdapter = new ResultsListViewAdapter(mSearchResult, this);
-        mResultList.setAdapter(mResultsAdapter);
+        lvResultList.setAdapter(mResultsAdapter);
 
 /*
         mEdit.addTextChangedListener(new TextWatcher() {
@@ -88,7 +81,7 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
             }
         });
 */
-        mResultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvResultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("category") || mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("hub")) {
@@ -124,7 +117,7 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
         getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem search = menu.findItem(R.id.search);
         searchView = (SearchView) MenuItemCompat.getActionView(search);
-        if(searchView!=null){
+        if (searchView != null) {
             searchView.setIconifiedByDefault(false);
             searchView.requestFocusFromTouch();
             searchView.setQueryHint("Type brand or product");
@@ -144,7 +137,6 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -152,7 +144,7 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
     protected void onResume() {
         super.onResume();
         mResultsAdapter = new ResultsListViewAdapter(mSearchResult, this);
-        mResultList.setAdapter(mResultsAdapter);
+        lvResultList.setAdapter(mResultsAdapter);
     }
 
     @Override
@@ -164,26 +156,24 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
     public boolean onQueryTextChange(String newText) {
         if (searchView.getQuery().length() < 1) {
             mSearchResult.clear();
-            SearchResults obj= new SearchResults();
+            SearchResults obj = new SearchResults();
             obj.setId("0");
             obj.setName("Start typing to view suggestions");
             obj.setCategory(" ");
             mSearchResult.add(obj);
             mResultsAdapter.notifyDataSetChanged();
         } else {
-            String s="%" + newText+ "%";
-            Cursor res= sqLiteDatabase.rawQuery("Select * from Suggestions where name like '" +s +"' AND category NOT IN ('others');", null);
+            String s = "%" + newText + "%";
+            Cursor res = sqLiteDatabase.rawQuery("Select * from Suggestions where name like '" + s + "' AND category NOT IN ('others');", null);
             res.moveToFirst();
-            if(res.getCount()==0)
-            {
+            if (res.getCount() == 0) {
                 mSearchResult.clear();
-                SearchResults obj= new SearchResults();
+                SearchResults obj = new SearchResults();
                 obj.setId("0");
                 obj.setName("No results found");
                 obj.setCategory(" ");
                 mSearchResult.add(obj);
-            }
-            else {
+            } else {
 
                 mSearchResult.clear();
                 while (res.isAfterLast() == false) {
@@ -201,7 +191,7 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
             //SearchResultsAsyncTask mSearchAsyncTask = new SearchResultsAsyncTask(newText, mResultsAdapter, mSearchResult, mContext);
             //mSearchAsyncTask.execute();
             mResultsAdapter.notifyDataSetChanged();
-            mResultList.setVisibility(View.VISIBLE);
+            lvResultList.setVisibility(View.VISIBLE);
         }
 
         return false;

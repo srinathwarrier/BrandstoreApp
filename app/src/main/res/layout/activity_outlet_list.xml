@@ -33,31 +33,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
+            android:dividerHeight="12dp"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-            android:dividerHeight="12dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/outlet_list_empty_textView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal|center_vertical"
-            android:visibility="gone"
-             />
+            android:visibility="gone" />
 
 
     </LinearLayout>
-<!--
-    <fragment
-        android:id="@+id/navigation_drawer_fragment"
-        android:name="com.brandstore.fragments.NavigationDrawerFragment"
-        android:layout_width="@dimen/navigation_drawer_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        tools:layout="@layout/fragment_navigation_drawer">
+    <!--
+        <fragment
+            android:id="@+id/navigation_drawer_fragment"
+            android:name="com.brandstore.fragments.NavigationDrawerFragment"
+            android:layout_width="@dimen/navigation_drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            tools:layout="@layout/fragment_navigation_drawer">
 
-    </fragment>-->
+        </fragment>-->
 </android.support.v4.widget.DrawerLayout>

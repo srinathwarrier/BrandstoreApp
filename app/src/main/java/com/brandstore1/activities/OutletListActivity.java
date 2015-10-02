@@ -11,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.brandstore1.asynctasks.OutletListAsyncTask;
 import com.brandstore1.R;
 import com.brandstore1.adapters.OutletListAdapter;
+import com.brandstore1.asynctasks.OutletListAsyncTask;
 import com.brandstore1.entities.Outlet;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -22,22 +22,24 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
 public class OutletListActivity extends ActionBarActivity {
-    TextView category;
-    ListView outletListView;
-    ArrayList<Outlet> outletArrayList = new ArrayList<Outlet>();
+
+    ListView lvOutletListView;
     Toolbar toolbar;
+
     MenuItem favoriteMenuItem;
     MenuItem saleMenuItem;
     OutletListAdapter mOutletListAdapter;
     OutletListType outletListType;
-    public enum OutletListType{
-        CLICKED_ON_TAG , CLICKED_ON_COLLECTION ,SEARCHED_QUERY , ALL_FAVORITE , ALL_ON_SALE ,
-    };
+
+    ArrayList<Outlet> outletArrayList = new ArrayList<Outlet>();
+
+    public enum OutletListType {
+        CLICKED_ON_TAG, CLICKED_ON_COLLECTION, SEARCHED_QUERY, ALL_FAVORITE, ALL_ON_SALE,
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class OutletListActivity extends ActionBarActivity {
         Bundle bundle = getIntent().getExtras();
         String query = bundle.getString("name");
         String id = bundle.getString("id");
-        outletListType = (OutletListType)bundle.get("type");
+        outletListType = (OutletListType) bundle.get("type");
 
         /*
             Toolbar setup
@@ -64,7 +66,6 @@ public class OutletListActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(query);
 
-
         /*
             UniversalImageLoader setup
          */
@@ -74,12 +75,10 @@ public class OutletListActivity extends ActionBarActivity {
                 .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
                 .showImageOnFail(R.drawable.blank_screen) // resource or drawable
                 .resetViewBeforeLoading(true)  // default
-
                 .cacheInMemory(true) // default
                 .cacheOnDisk(true) // default
                 .build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-
                 .diskCache(new UnlimitedDiscCache(cacheDir))
                 .defaultDisplayImageOptions(options)
                 .build();
@@ -89,14 +88,14 @@ public class OutletListActivity extends ActionBarActivity {
             ListView setup
          */
         TextView emptyView = (TextView) findViewById(R.id.outlet_list_empty_textView);
-        outletListView = (ListView) findViewById(R.id.outlet_list_list_view);
-        outletListView.setEmptyView(emptyView);
+        lvOutletListView = (ListView) findViewById(R.id.outlet_list_list_view);
+        lvOutletListView.setEmptyView(emptyView);
 
         /*
             Adapter setup
          */
         mOutletListAdapter = new OutletListAdapter(outletArrayList, this, toolbar, emptyView);
-        outletListView.setAdapter(mOutletListAdapter);
+        lvOutletListView.setAdapter(mOutletListAdapter);
 
         /*
             AsyncTask setup
@@ -105,11 +104,9 @@ public class OutletListActivity extends ActionBarActivity {
         // UI Elements : ( toolbar , emptyView )
         // Parameters : query , id , outletListType
 
-        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outletArrayList, query, mOutletListAdapter, id, emptyView, toolbar,this,outletListType );
+        OutletListAsyncTask mOutletListAsyncTask = new OutletListAsyncTask(outletArrayList, query, mOutletListAdapter, id, emptyView, toolbar, this, outletListType);
         mOutletListAsyncTask.execute();
-
-
-        outletListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvOutletListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), OutletDetailsActivity.class);
@@ -134,12 +131,11 @@ public class OutletListActivity extends ActionBarActivity {
         favoriteMenuItem = menu.findItem(R.id.display_favorites);
         saleMenuItem = menu.findItem(R.id.on_sale);
 
-        if(outletListType == OutletListType.ALL_ON_SALE) {
+        if (outletListType == OutletListType.ALL_ON_SALE) {
             saleMenuItem.setChecked(true);
             saleMenuItem.setIcon(R.drawable.sale_on);
             saleMenuItem.setEnabled(false);
         }
-
         return true;
     }
 
@@ -149,8 +145,7 @@ public class OutletListActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        switch(id){
+        switch (id) {
             case android.R.id.home:
                 //noinspection SimplifiableIfStatement
                 onBackPressed();
@@ -162,21 +157,19 @@ public class OutletListActivity extends ActionBarActivity {
                 onSaleMenuItemClicked(!item.isChecked());
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    public void onFavoriteMenuItemClicked(boolean toBeSelected){
-      // if((!saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) || (saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ||(saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) ){
-            mOutletListAdapter.setOutletListFromOriginal();
-     //   }
-
+    public void onFavoriteMenuItemClicked(boolean toBeSelected) {
+        // if((!saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) || (saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ||(saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) ){
+        mOutletListAdapter.setOutletListFromOriginal();
+        //   }
         if (toBeSelected) {
             //filter favorites
             favoriteMenuItem.setChecked(true);
             favoriteMenuItem.setIcon(R.drawable.favselect);
-            if(!saleMenuItem.isChecked())
-            mOutletListAdapter.getFilter().filter("fav");
+            if (!saleMenuItem.isChecked())
+                mOutletListAdapter.getFilter().filter("fav");
             else {
                 //mOutletListAdapter.resetData();
                 mOutletListAdapter.getFilter().filter("favAndSale");
@@ -184,39 +177,33 @@ public class OutletListActivity extends ActionBarActivity {
         } else {
             favoriteMenuItem.setChecked(false);
             favoriteMenuItem.setIcon(R.drawable.ic_favorite_border_white_24dp);
-            if(saleMenuItem.isChecked()){
+            if (saleMenuItem.isChecked()) {
                 //mOutletListAdapter.resetData();
                 mOutletListAdapter.getFilter().filter("Sale");
-            }
-            else
-            mOutletListAdapter.getFilter().filter("Y");
+            } else
+                mOutletListAdapter.getFilter().filter("Y");
         }
     }
 
-    public void onSaleMenuItemClicked(boolean toBeSelected){
-
-       // if((!saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) || (saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ||(!saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ){
-            mOutletListAdapter.setOutletListFromOriginal();
+    public void onSaleMenuItemClicked(boolean toBeSelected) {
+        // if((!saleMenuItem.isChecked() && !favoriteMenuItem.isChecked()) || (saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ||(!saleMenuItem.isChecked() && favoriteMenuItem.isChecked()) ){
+        mOutletListAdapter.setOutletListFromOriginal();
         //}
-
         if (toBeSelected) {
             //filter OnSale Outlets
             saleMenuItem.setChecked(true);
             saleMenuItem.setIcon(R.drawable.sale_on);
-            if(!favoriteMenuItem.isChecked())
-            mOutletListAdapter.getFilter().filter("Sale");
+            if (!favoriteMenuItem.isChecked())
+                mOutletListAdapter.getFilter().filter("Sale");
             else mOutletListAdapter.getFilter().filter("favAndSale");
-
         } else {
             saleMenuItem.setChecked(false);
             saleMenuItem.setIcon(R.drawable.saleicon);
-            if(favoriteMenuItem.isChecked()){
+            if (favoriteMenuItem.isChecked()) {
                 mOutletListAdapter.setOutletListFromOriginal();
                 mOutletListAdapter.getFilter().filter("fav");
             } else
-            mOutletListAdapter.getFilter().filter("Y");
-
+                mOutletListAdapter.getFilter().filter("Y");
         }
     }
-
 }

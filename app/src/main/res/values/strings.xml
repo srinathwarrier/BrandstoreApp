@@ -40,6 +40,7 @@
     <string name="gcm_defaultSenderId">465621888656</string>
     <string name="outlet_details_label_similarstores">SIMILAR STORES</string>
     <string name="outlet_details_label_comingsoon">Coming soon…</string>
+    <string name="search_box_hint">\"Let\'s go shopping!\"</string>
 
 
 </resources>

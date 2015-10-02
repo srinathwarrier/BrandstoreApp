@@ -5,11 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -42,17 +41,16 @@ public class LoginActivity extends ActionBarActivity implements
         SignupAsyncResponse,
         View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
-    private static final String TAG = "LoginActivity";
-
-    EditText emailEditText;
-    EditText passwordEditText ;
+    EditText etEmailEditText;
+    EditText etPasswordEditText;
     boolean isPasswordVisible;
-    Button signInButton;
-    TextView forgotPasswordTextView;
-    TextView signUpTextView;
+    Button btnSignInButton;
+    TextView tvForgotPasswordTextView;
+    TextView tvSignUpTextView;
     Context mContext;
 
     SignInButton googleplusSignInButton;
@@ -73,7 +71,6 @@ public class LoginActivity extends ActionBarActivity implements
     /* Should we automatically resolve ConnectionResults when possible? */
     private boolean mShouldResolve = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,21 +85,21 @@ public class LoginActivity extends ActionBarActivity implements
         }
         // [END restore_saved_instance_state]
 
-        emailEditText = (EditText) findViewById(R.id.login_email);
-        passwordEditText = (EditText) findViewById(R.id.login_password);
-        signInButton = (Button) findViewById(R.id.login_signin_button);
-        forgotPasswordTextView = (TextView) findViewById(R.id.login_forgot_password_text);
-        signUpTextView = (TextView) findViewById(R.id.signup_text);
+        etEmailEditText = (EditText) findViewById(R.id.login_email);
+        etPasswordEditText = (EditText) findViewById(R.id.login_password);
+        btnSignInButton = (Button) findViewById(R.id.login_signin_button);
+        tvForgotPasswordTextView = (TextView) findViewById(R.id.login_forgot_password_text);
+        tvSignUpTextView = (TextView) findViewById(R.id.signup_text);
         isPasswordVisible = false;
 
         // Set up button click listeners
-        googleplusSignInButton = (SignInButton)findViewById(R.id.login_googleplusbutton);
+        googleplusSignInButton = (SignInButton) findViewById(R.id.login_googleplusbutton);
         googleplusSignInButton.setOnClickListener(this);
 
         if (android.os.Build.VERSION.SDK_INT >= 17) {
-            passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_black_24dp, 0);
+            etPasswordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_black_24dp, 0);
             // Implement showPassword
-            passwordEditText.setOnTouchListener(new View.OnTouchListener() {
+            etPasswordEditText.setOnTouchListener(new View.OnTouchListener() {
                 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -112,13 +109,13 @@ public class LoginActivity extends ActionBarActivity implements
                     final int DRAWABLE_BOTTOM = 3;
 
                     if (event.getAction() == MotionEvent.ACTION_UP) {
-                        if (event.getRawX() >= (passwordEditText.getRight() - passwordEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        if (event.getRawX() >= (etPasswordEditText.getRight() - etPasswordEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                             if (isPasswordVisible) {
-                                passwordEditText.setInputType(129);
-                                passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_black_24dp, 0);
+                                etPasswordEditText.setInputType(129);
+                                etPasswordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_black_24dp, 0);
                             } else {
-                                passwordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                                passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_white_24dp, 0);
+                                etPasswordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                                etPasswordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_white_24dp, 0);
                             }
                             isPasswordVisible = !(isPasswordVisible);
                             return true;
@@ -144,13 +141,13 @@ public class LoginActivity extends ActionBarActivity implements
         // Handle clickListener for :
 
         // 1. SignIn button click
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        btnSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("Login","signInButton");
-                String emailString = emailEditText.getText().toString();
-                String passwordString = passwordEditText .getText().toString();
-                LoginAsyncTask loginAsyncTask = new LoginAsyncTask(emailString , passwordString ,mContext);
+                Log.i(TAG, "signInButton");
+                String emailString = etEmailEditText.getText().toString();
+                String passwordString = etPasswordEditText.getText().toString();
+                LoginAsyncTask loginAsyncTask = new LoginAsyncTask(emailString, passwordString, mContext);
                 loginAsyncTask.loginAsyncResponseDelegate = LoginActivity.this;
                 loginAsyncTask.execute();
             }
@@ -158,19 +155,19 @@ public class LoginActivity extends ActionBarActivity implements
 
 
         // 2. Forgot password click
-        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+        tvForgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("Login","forgotPasswordTextView");
+                Log.i(TAG, "forgotPasswordTextView");
                 Toast.makeText(mContext, "Forgot password not implemented", Toast.LENGTH_LONG).show();
             }
         });
 
         // 3. Sign Up click
-        signUpTextView.setOnClickListener(new View.OnClickListener() {
+        tvSignUpTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("Login","signUpTextView");
+                Log.i(TAG, "signUpTextView");
                 goToSignUpActivityScreen();
             }
         });
@@ -179,10 +176,6 @@ public class LoginActivity extends ActionBarActivity implements
         //
         //
         // .
-
-
-
-
     }
 
     // [START on_start_on_stop]
@@ -198,7 +191,6 @@ public class LoginActivity extends ActionBarActivity implements
         mGoogleApiClient.disconnect();
     }
     // [END on_start_on_stop]
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -225,9 +217,9 @@ public class LoginActivity extends ActionBarActivity implements
     /*
         Update suggestions in SQLite
      */
-    public void updateSuggestionInSQLite(){
-        SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("brandstoreDB",MODE_PRIVATE,null);
-        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
+    public void updateSuggestionInSQLite() {
+        SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("brandstoreDB", MODE_PRIVATE, null);
+        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask = new UpdateSuggestionsAsyncTask(sqLiteDatabase);
         updateSuggestionsAsyncTask.execute();
     }
 
@@ -235,7 +227,7 @@ public class LoginActivity extends ActionBarActivity implements
         Go To Screen methods
      */
 
-    public void goToMainActivityScreen(){
+    public void goToMainActivityScreen() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -251,7 +243,7 @@ public class LoginActivity extends ActionBarActivity implements
         }
     }
 
-    public void goToSignUpActivityScreen(){
+    public void goToSignUpActivityScreen() {
         Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
         startActivity(intent);
     }
@@ -265,9 +257,9 @@ public class LoginActivity extends ActionBarActivity implements
                 String dobString = currentPerson.getBirthday();
                 String passwordString = "";
                 String emailString = Plus.AccountApi.getAccountName(mGoogleApiClient);
-                String genderCode = ""+currentPerson.getGender();
+                String genderCode = "" + currentPerson.getGender();
 
-                SignupAsyncTask signupAsyncTask = new SignupAsyncTask(name, emailString, passwordString, genderCode,dobString ,Connections.AccountType.GOOGLE_ACCOUNT, mContext);
+                SignupAsyncTask signupAsyncTask = new SignupAsyncTask(name, emailString, passwordString, genderCode, dobString, Connections.AccountType.GOOGLE_ACCOUNT, mContext);
                 signupAsyncTask.signupAsyncResponseDelegate = this;
                 signupAsyncTask.execute();
 
@@ -276,7 +268,7 @@ public class LoginActivity extends ActionBarActivity implements
                 Log.w(TAG, "invalid");
             }
         } else {
-            Log.i(TAG,"Not signed in");
+            Log.i(TAG, "Not signed in");
         }
     }
 
