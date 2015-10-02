@@ -17,11 +17,13 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.brandstore1.AnalyticsSampleApp;
+import com.brandstore1.BrandstoreApplication;
 import com.brandstore1.R;
 import com.brandstore1.adapters.CategoryGridViewAdapter;
 import com.brandstore1.entities.User;
 import com.brandstore1.fragments.NavigationDrawerFragment;
+import com.brandstore1.utils.AnalyticsConstants;
+import com.brandstore1.utils.GAUtils;
 import com.brandstore1.utils.MySharedPreferences;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     // Use this as tag in Log . Helps to easily identify which class the log is being shown from.
     // Example: Log.d(DEBUG_TAG, "In onResume Method");
     private static final String DEBUG_TAG = MainActivity.class.getSimpleName();
+    private static final String CATEGORY_ITEM = "category_item_home_page";
 
     GridView mCategoryGridView;
 
@@ -144,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         nameTextView.setText(user.getName());
 
         // Get tracker.
-        Tracker t = ((AnalyticsSampleApp) getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
+        Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
         t.setScreenName(DEBUG_TAG);
 
         // Send a screen view.
@@ -172,6 +175,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         bundle.putString("id", getCollectionIDs(position));
         bundle.putSerializable("type", OutletListActivity.OutletListType.CLICKED_ON_COLLECTION);
         intent.putExtras(bundle);
+        GAUtils.sendEvent(this, AnalyticsConstants.UI_CATEGORY,
+                CATEGORY_ITEM, position);
         startActivity(intent);
     }
 
