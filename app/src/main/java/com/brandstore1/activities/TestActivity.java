@@ -217,7 +217,7 @@ public class TestActivity extends ActionBarActivity {
             userId="1";
         }
 
-        UpdateRegistrationIdAsyncTask updateRegistrationIdAsyncTask = new UpdateRegistrationIdAsyncTask(userId, regid, this);
+        UpdateRegistrationIdAsyncTask updateRegistrationIdAsyncTask = new UpdateRegistrationIdAsyncTask(regid, this);
         updateRegistrationIdAsyncTask.execute();
 
     }

@@ -5,10 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -21,12 +22,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.brandstore1.R;
+import com.brandstore1.asynctasks.ExternalAccountLoginOrSignupAsyncTask;
 import com.brandstore1.asynctasks.LoginAsyncTask;
 import com.brandstore1.asynctasks.SignupAsyncTask;
 import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
+import com.brandstore1.gcm.GCMConnection;
 import com.brandstore1.interfaces.LoginAsyncResponse;
 import com.brandstore1.interfaces.SignupAsyncResponse;
 import com.brandstore1.utils.Connections;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
@@ -35,24 +45,29 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.facebook.FacebookSdk;
+
+import org.json.JSONObject;
 
 public class LoginActivity extends ActionBarActivity implements
-        LoginAsyncResponse,
         SignupAsyncResponse,
         View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener{
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
 
-    EditText etEmailEditText;
-    EditText etPasswordEditText;
+    private static final String TAG = "LoginActivity";
+
+    EditText emailEditText;
+    EditText passwordEditText ;
     boolean isPasswordVisible;
-    Button btnSignInButton;
-    TextView tvForgotPasswordTextView;
-    TextView tvSignUpTextView;
+    Button signInButton;
+    TextView forgotPasswordTextView;
+    TextView signUpTextView;
     Context mContext;
 
+    LoginButton facebookLoginButton;
+    CallbackManager callbackManager;
     SignInButton googleplusSignInButton;
 
     /* RequestCode for resolutions involving sign-in */
@@ -71,9 +86,13 @@ public class LoginActivity extends ActionBarActivity implements
     /* Should we automatically resolve ConnectionResults when possible? */
     private boolean mShouldResolve = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
         setContentView(R.layout.activity_login);
         mContext = this;
 
@@ -85,21 +104,50 @@ public class LoginActivity extends ActionBarActivity implements
         }
         // [END restore_saved_instance_state]
 
-        etEmailEditText = (EditText) findViewById(R.id.login_email);
-        etPasswordEditText = (EditText) findViewById(R.id.login_password);
-        btnSignInButton = (Button) findViewById(R.id.login_signin_button);
-        tvForgotPasswordTextView = (TextView) findViewById(R.id.login_forgot_password_text);
-        tvSignUpTextView = (TextView) findViewById(R.id.signup_text);
+        emailEditText = (EditText) findViewById(R.id.login_email);
+        passwordEditText = (EditText) findViewById(R.id.login_password);
+        signInButton = (Button) findViewById(R.id.login_signin_button);
+        forgotPasswordTextView = (TextView) findViewById(R.id.login_forgot_password_text);
+        signUpTextView = (TextView) findViewById(R.id.signup_text);
         isPasswordVisible = false;
 
         // Set up button click listeners
-        googleplusSignInButton = (SignInButton) findViewById(R.id.login_googleplusbutton);
+        googleplusSignInButton = (SignInButton)findViewById(R.id.login_googleplusbutton);
         googleplusSignInButton.setOnClickListener(this);
+        facebookLoginButton = (LoginButton)findViewById(R.id.login_facebookbutton);
+        facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.i(TAG,"");
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                // Application code
+                                Log.i(TAG,"");
+                            }
+                        }
+                );
+            }
+
+            @Override
+            public void onCancel() {
+                Log.i(TAG,"");
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                Log.i(TAG,"");
+            }
+        });
 
         if (android.os.Build.VERSION.SDK_INT >= 17) {
-            etPasswordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_black_24dp, 0);
+            passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_black_24dp, 0);
             // Implement showPassword
-            etPasswordEditText.setOnTouchListener(new View.OnTouchListener() {
+            passwordEditText.setOnTouchListener(new View.OnTouchListener() {
                 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -109,13 +157,13 @@ public class LoginActivity extends ActionBarActivity implements
                     final int DRAWABLE_BOTTOM = 3;
 
                     if (event.getAction() == MotionEvent.ACTION_UP) {
-                        if (event.getRawX() >= (etPasswordEditText.getRight() - etPasswordEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        if (event.getRawX() >= (passwordEditText.getRight() - passwordEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                             if (isPasswordVisible) {
-                                etPasswordEditText.setInputType(129);
-                                etPasswordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_black_24dp, 0);
+                                passwordEditText.setInputType(129);
+                                passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_black_24dp, 0);
                             } else {
-                                etPasswordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                                etPasswordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_white_24dp, 0);
+                                passwordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                                passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_white_24dp, 0);
                             }
                             isPasswordVisible = !(isPasswordVisible);
                             return true;
@@ -141,33 +189,32 @@ public class LoginActivity extends ActionBarActivity implements
         // Handle clickListener for :
 
         // 1. SignIn button click
-        btnSignInButton.setOnClickListener(new View.OnClickListener() {
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "signInButton");
-                String emailString = etEmailEditText.getText().toString();
-                String passwordString = etPasswordEditText.getText().toString();
-                LoginAsyncTask loginAsyncTask = new LoginAsyncTask(emailString, passwordString, mContext);
-                loginAsyncTask.loginAsyncResponseDelegate = LoginActivity.this;
+                Log.i("Login","signInButton");
+                String emailString = emailEditText.getText().toString();
+                String passwordString = passwordEditText .getText().toString();
+                LoginAsyncTask loginAsyncTask = new LoginAsyncTask(emailString , passwordString ,mContext);
                 loginAsyncTask.execute();
             }
         });
 
 
         // 2. Forgot password click
-        tvForgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "forgotPasswordTextView");
+                Log.i("Login","forgotPasswordTextView");
                 Toast.makeText(mContext, "Forgot password not implemented", Toast.LENGTH_LONG).show();
             }
         });
 
         // 3. Sign Up click
-        tvSignUpTextView.setOnClickListener(new View.OnClickListener() {
+        signUpTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "signUpTextView");
+                Log.i("Login","signUpTextView");
                 goToSignUpActivityScreen();
             }
         });
@@ -176,6 +223,10 @@ public class LoginActivity extends ActionBarActivity implements
         //
         //
         // .
+
+
+
+
     }
 
     // [START on_start_on_stop]
@@ -191,6 +242,7 @@ public class LoginActivity extends ActionBarActivity implements
         mGoogleApiClient.disconnect();
     }
     // [END on_start_on_stop]
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -214,26 +266,6 @@ public class LoginActivity extends ActionBarActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-        Update suggestions in SQLite
-     */
-    public void updateSuggestionInSQLite() {
-        SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("brandstoreDB", MODE_PRIVATE, null);
-        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask = new UpdateSuggestionsAsyncTask(sqLiteDatabase);
-        updateSuggestionsAsyncTask.execute();
-    }
-
-    /*
-        Go To Screen methods
-     */
-
-    public void goToMainActivityScreen() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
-
     @Override
     public void onEmailAlreadyExists() {
         Toast.makeText(mContext, "Email already exists", Toast.LENGTH_LONG).show();
@@ -243,7 +275,11 @@ public class LoginActivity extends ActionBarActivity implements
         }
     }
 
-    public void goToSignUpActivityScreen() {
+    /*
+        Go To Screen methods
+     */
+
+    public void goToSignUpActivityScreen(){
         Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
         startActivity(intent);
     }
@@ -255,20 +291,19 @@ public class LoginActivity extends ActionBarActivity implements
             if (currentPerson != null) {
                 String name = currentPerson.getDisplayName();
                 String dobString = currentPerson.getBirthday();
-                String passwordString = "";
-                String emailString = Plus.AccountApi.getAccountName(mGoogleApiClient);
-                String genderCode = "" + currentPerson.getGender();
 
-                SignupAsyncTask signupAsyncTask = new SignupAsyncTask(name, emailString, passwordString, genderCode, dobString, Connections.AccountType.GOOGLE_ACCOUNT, mContext);
-                signupAsyncTask.signupAsyncResponseDelegate = this;
-                signupAsyncTask.execute();
+                String emailString = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                String genderCode = ""+currentPerson.getGender();
+
+                ExternalAccountLoginOrSignupAsyncTask externalAccountLoginOrSignupAsyncTask= new ExternalAccountLoginOrSignupAsyncTask(name, emailString, genderCode,dobString ,Connections.AccountType.GOOGLE_ACCOUNT, mContext);
+                externalAccountLoginOrSignupAsyncTask.execute();
 
                 //Toast.makeText(this,"name:"+name+" lang:"+language+" birthday:"+test,Toast.LENGTH_LONG);
             } else {
                 Log.w(TAG, "invalid");
             }
         } else {
-            Log.i(TAG, "Not signed in");
+            Log.i(TAG,"Not signed in");
         }
     }
 
@@ -287,6 +322,7 @@ public class LoginActivity extends ActionBarActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
             // If the error resolution was not successful we should not resolve further errors.

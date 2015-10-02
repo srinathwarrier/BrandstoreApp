@@ -55,14 +55,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private boolean mFromSavedInstanceState;
     private int mCurrentSelectedPosition;
 
-    int CategoryImages[] = {R.drawable.accessories, R.drawable.denims, R.drawable.footwear, R.drawable.handbags, R.drawable.kidswear,
+    int categoryImages[] = {R.drawable.accessories, R.drawable.denims, R.drawable.footwear, R.drawable.handbags, R.drawable.kidswear,
             R.drawable.luggage, R.drawable.mensethnic, R.drawable.sportswear,
             R.drawable.watcheseyewear, R.drawable.westernmen, R.drawable.westernunisex, R.drawable.westernwomen, R.drawable.womensethnic};
 
     //region test
-    String CategoryNames[] = {"ACCESSORIES AND GIFTS", "DENIMS", "FOOTWEAR", "HAND BAGS", "KID'S WEAR", "LUGGAGE", "MEN'S ETHNIC WEAR", "SPORTSWEAR",
+    String categoryNames[] = {"ACCESSORIES AND GIFTS", "DENIMS", "FOOTWEAR", "HAND BAGS", "KID'S WEAR", "LUGGAGE", "MEN'S ETHNIC WEAR", "SPORTSWEAR",
             "WATCHES AND EYEWEAR", "WESTERN MEN'S APPAREL", "WESTERN UNISEX APPAREL", "WESTERN WOMEN'S APPAREL", "WOMEN'S ETHNIC WEAR"};
-    String CategoryNamesCamelCase[] = {"Accessories and Gifts", "Denims", "Footwear", "Hand bags", "Kid's wear", "Luggage", "Men's ethnic wear", "Sportswear",
+    String categoryNamesCamelCase[] = {"Accessories and Gifts", "Denims", "Footwear", "Hand bags", "Kid's wear", "Luggage", "Men's ethnic wear", "Sportswear",
             "Watches and Eyewear", "Westwern men's apparel", "Western unisex apparel", "Western women's apparel", "Women's ethnic wear"};
     //endregion
 
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mCategoryGridView = (GridView) findViewById(R.id.category_grid_view);
-        mCategoryGridView.setAdapter(new CategoryGridViewAdapter(this, CategoryImages, CategoryNames));
+        mCategoryGridView.setAdapter(new CategoryGridViewAdapter(this, categoryImages, categoryNames));
         mCategoryGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void goToOutletListScreen(int position) {
         Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("name", CategoryNamesCamelCase[position]);
+        bundle.putString("name", categoryNamesCamelCase[position]);
         bundle.putString("id", getCollectionIDs(position));
         bundle.putSerializable("type", OutletListActivity.OutletListType.CLICKED_ON_COLLECTION);
         intent.putExtras(bundle);

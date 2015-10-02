@@ -37,7 +37,6 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
     String password;
     String genderCode;
     String dobString;
-    Connections.AccountType accountType;
     Context mContext;
     User user ;
     CircularProgressDialog circularProgressDialog;
@@ -48,7 +47,6 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
                            String password,
                            String genderCode,
                            String dobString,
-                           Connections.AccountType accountType,
                            Context mContext)
     {
         this.name = name;
@@ -56,7 +54,6 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
         this.password=password;
         this.genderCode = genderCode;
         this.dobString = dobString;
-        this.accountType = accountType;
         this.mContext = mContext;
     }
 
@@ -71,7 +68,7 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
     protected String doInBackground(Void... params) {
         StringBuilder builder = null;
         try {
-            String urlString = new Connections().getSignUpURL(name, emailId, password, genderCode,dobString,accountType);
+            String urlString = new Connections().getSignUpURL(name, emailId, password, genderCode,dobString);
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -104,7 +101,6 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
             // If jsonArray.length is 1, extract and add to user entity. Save userid and Go to MainActivity.
             // TODO: If jsonArray.length is more than 1, do as previous , but there is an error
 
-
             if(jsonObject==null ){
                 Toast.makeText(mContext, "Connection Error.", Toast.LENGTH_LONG).show();
             }
@@ -114,44 +110,13 @@ public class SignupAsyncTask extends AsyncTask<Void,Void,String> {
                 }
                 else if(jsonObject.getString("responseState").equals("created")) {
                     JSONObject userObject = jsonObject.getJSONObject("responseDetails");
-                    user = new User();
-                    user.setUserId(userObject.getString("userID"));
-                    user.setEmailId(userObject.getString("emailid"));
-                    user.setName(userObject.getString("name"));
 
-                    //user.setPassword(jsonObject.getString("password"));
-
-                    // Convert user object to json object
-                    Gson gson = new Gson();
-                    String userJsonObject = gson.toJson(user);
-
-                    // Save userid and userJsonObject to SharedPreferences
-                    MySharedPreferences.setUserId(mContext, user.getUserId());
-                    MySharedPreferences.setUserJsonObjectString(mContext, userJsonObject);
-                    MySharedPreferences.setHasLoggedIn(mContext, true);
-
-                    Connections.setUserIdFromSharedPreferences(mContext);
-
-                    if(signupAsyncResponseDelegate!=null){
-                        signupAsyncResponseDelegate.updateSuggestionInSQLite();
-                        signupAsyncResponseDelegate.goToMainActivityScreen();
-                    }
-                    else{
-                        Toast.makeText(mContext, "Data retrieved with error.", Toast.LENGTH_LONG).show();
-                    }
+                    Connections.performInitialSignupFormalities(userObject,mContext);
                 }
 
             }
 
             circularProgressDialog.dismiss();
-
-
-
-
-
-
-
-
 
         } catch (JSONException e) {
             e.printStackTrace();
