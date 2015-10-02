@@ -1,19 +1,11 @@
 package com.brandstore1.activities;
 
-import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -33,7 +25,6 @@ import com.brandstore1.fragments.NavigationDrawerFragment;
 import com.brandstore1.utils.MySharedPreferences;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.google.android.gms.nearby.connection.Connections;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -43,38 +34,37 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+
+    private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
+    // Use this as tag in Log . Helps to easily identify which class the log is being shown from.
+    // Example: Log.d(DEBUG_TAG, "In onResume Method");
+    private static final String DEBUG_TAG = MainActivity.class.getSimpleName();
 
     GridView mCategoryGridView;
-    int CategoryImages[] = {R.drawable.accessories, R.drawable.denims, R.drawable.footwear, R.drawable.handbags, R.drawable.kidswear,
-            R.drawable.luggage, R.drawable.mensethnic, R.drawable.sportswear,
-            R.drawable.watcheseyewear, R.drawable.westernmen, R.drawable.westernunisex, R.drawable.westernwomen, R.drawable.womensethnic};
 
-    //region test
-    String CategoryNames[] = {"ACCESSORIES AND GIFTS", "DENIMS", "FOOTWEAR", "HAND BAGS", "KID'S WEAR", "LUGGAGE", "MEN'S ETHNIC WEAR", "SPORTSWEAR",
-            "WATCHES AND EYEWEAR", "WESTERN MEN'S APPAREL", "WESTERN UNISEX APPAREL", "WESTERN WOMEN'S APPAREL", "WOMEN'S ETHNIC WEAR"};
-    String CategoryNamesCamelCase[] = {"Accessories and Gifts", "Denims", "Footwear", "Hand bags", "Kid's wear", "Luggage", "Men's ethnic wear", "Sportswear",
-            "Watches and Eyewear", "Westwern men's apparel", "Western unisex apparel", "Western women's apparel", "Women's ethnic wear"};
-    //endregion
-
+    // SearchView
+    SearchView searchView;
 
     // Navigation drawer :
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
 
-    private static final String PREFERENCES_FILE = "BrandstoreApp";
-    private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-
     private boolean mUserLearnedDrawer;
     private boolean mFromSavedInstanceState;
     private int mCurrentSelectedPosition;
 
+    int categoryImages[] = {R.drawable.accessories, R.drawable.denims, R.drawable.footwear, R.drawable.handbags, R.drawable.kidswear,
+            R.drawable.luggage, R.drawable.mensethnic, R.drawable.sportswear,
+            R.drawable.watcheseyewear, R.drawable.westernmen, R.drawable.westernunisex, R.drawable.westernwomen, R.drawable.womensethnic};
 
-    // SearchView
-    SearchView searchView;
-
-
+    //region test
+    String categoryNames[] = {"ACCESSORIES AND GIFTS", "DENIMS", "FOOTWEAR", "HAND BAGS", "KID'S WEAR", "LUGGAGE", "MEN'S ETHNIC WEAR", "SPORTSWEAR",
+            "WATCHES AND EYEWEAR", "WESTERN MEN'S APPAREL", "WESTERN UNISEX APPAREL", "WESTERN WOMEN'S APPAREL", "WOMEN'S ETHNIC WEAR"};
+    String categoryNamesCamelCase[] = {"Accessories and Gifts", "Denims", "Footwear", "Hand bags", "Kid's wear", "Luggage", "Men's ethnic wear", "Sportswear",
+            "Watches and Eyewear", "Westwern men's apparel", "Western unisex apparel", "Western women's apparel", "Women's ethnic wear"};
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 .cacheOnDisk(true) // default
                 .build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-
                 .diskCache(new UnlimitedDiscCache(cacheDir))
                 .defaultDisplayImageOptions(options)
                 .build();
@@ -99,8 +88,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         // Toolbar methods
         setUpToolbar();
-
-
 
         //NavigationDrawer methods:
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -113,9 +100,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
 
         setUpNavDrawer();
-
         mNavigationView = (NavigationView) findViewById(R.id.navigationView);
-
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -149,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 return returnValue;
-
             }
         });
 
@@ -159,51 +143,39 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         TextView nameTextView = (TextView) findViewById(R.id.nameTextView);
         nameTextView.setText(user.getName());
 
-
-
-
-
-
-
         // Get tracker.
         Tracker t = ((AnalyticsSampleApp) getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
-        t.setScreenName("MainActivity");
+        t.setScreenName(DEBUG_TAG);
 
         // Send a screen view.
         t.send(new HitBuilders.ScreenViewBuilder().build());
-
 
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
         mCategoryGridView = (GridView) findViewById(R.id.category_grid_view);
-        mCategoryGridView.setAdapter(new CategoryGridViewAdapter(this, CategoryImages, CategoryNames));
-
-
+        mCategoryGridView.setAdapter(new CategoryGridViewAdapter(this, categoryImages, categoryNames));
         mCategoryGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 goToOutletListScreen(position);
             }
         });
-
-
     }
 
-    public void goToOutletListScreen(int position){
+    public void goToOutletListScreen(int position) {
         Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("name", CategoryNamesCamelCase[position]);
+        bundle.putString("name", categoryNamesCamelCase[position]);
         bundle.putString("id", getCollectionIDs(position));
         bundle.putSerializable("type", OutletListActivity.OutletListType.CLICKED_ON_COLLECTION);
         intent.putExtras(bundle);
         startActivity(intent);
     }
 
-    public void goToOutletListScreenAllFavorites(){
+    public void goToOutletListScreenAllFavorites() {
         Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("name", getString(R.string.nav_item_favorite));
@@ -212,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         startActivity(intent);
     }
 
-    public void goToOutletListScreenAllOnSale(){
+    public void goToOutletListScreenAllOnSale() {
         Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("name", getString(R.string.nav_item_sale));
@@ -221,13 +193,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         startActivity(intent);
     }
 
-    public void goToTakeMeThereScreen(){
+    public void goToTakeMeThereScreen() {
         Intent intent = new Intent(getApplicationContext(), TakeMeThereActivity.class);
         intent.putExtra("type", TakeMeThereActivity.TMT_type.TO_UNKNOWN);
         startActivity(intent);
     }
-
-
 
     public String getCategoryIDs(int position) {
         String s = "1";
@@ -280,33 +250,59 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public String getCollectionIDs(int position) {
         String s = "1";
         switch (position) {
-            case 0:  s = "1"; break; // Accessories
-            case 1:  s = "2"; break; // Denims -> Total = 27
-            case 2:  s = "3"; break; // Footwear
-            case 3:  s = "4"; break; // Hand bags
-            case 4:  s = "5"; break; // Kids wear
-            case 5:  s = "6"; break; // Luggage
-            case 6:  s = "7"; break; // Men's ethnic wear
-            case 7:  s = "8"; break; // Sportswear
-            case 8:  s = "9"; break; // Watches & Eye wear
-            case 9:  s = "10"; break; // Western men's apparel
-            case 10: s = "11"; break; // Western unisex apparel
-            case 11: s = "12"; break; // Western women's apparel
-            case 12: s = "13"; break; // Women's ethnic wear
-            default:    break;
+            case 0:
+                s = "1";
+                break; // Accessories
+            case 1:
+                s = "2";
+                break; // Denims -> Total = 27
+            case 2:
+                s = "3";
+                break; // Footwear
+            case 3:
+                s = "4";
+                break; // Hand bags
+            case 4:
+                s = "5";
+                break; // Kids wear
+            case 5:
+                s = "6";
+                break; // Luggage
+            case 6:
+                s = "7";
+                break; // Men's ethnic wear
+            case 7:
+                s = "8";
+                break; // Sportswear
+            case 8:
+                s = "9";
+                break; // Watches & Eye wear
+            case 9:
+                s = "10";
+                break; // Western men's apparel
+            case 10:
+                s = "11";
+                break; // Western unisex apparel
+            case 11:
+                s = "12";
+                break; // Western women's apparel
+            case 12:
+                s = "13";
+                break; // Women's ethnic wear
+            default:
+                break;
         }
         return s;
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem search = menu.findItem(R.id.search1);
         searchView = (SearchView) MenuItemCompat.getActionView(search);
-        if(searchView!=null){
+        if (searchView != null) {
             searchView.setIconifiedByDefault(false);
-            searchView.setQueryHint("Let's go shopping!");
+            searchView.setQueryHint(getResources().getString(R.string.search_box_hint));
             searchView.setFocusable(false);
             //searchView.setOnQueryTextListener(this);
             /*searchView.setOnSearchClickListener(new View.OnClickListener() {
@@ -320,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if(hasFocus){
+                    if (hasFocus) {
                         searchView.clearFocus();
                         Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
                         startActivity(intent);
@@ -337,7 +333,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             });
         }
         // Inflate the menu; this adds items to the action bar if it is present.
-
         return true;
     }
 
@@ -348,15 +343,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == android.R.id.home) {
+            Log.d(DEBUG_TAG, "action bar clicked");
         }
-        else if (id == android.R.id.home) {
-            Log.d("Main", "action bar clicked");
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -367,15 +359,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
-
-    /*
-        Navigation Drawer methods
-     */
+    // Navigation Drawer methods
     private void setUpNavDrawer() {
         if (mToolbar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
-
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -387,7 +375,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             mDrawerLayout.openDrawer(GravityCompat.START);
             mUserLearnedDrawer = true;
             //saveSharedSetting(this, PREF_USER_LEARNED_DRAWER, "true");
-            MySharedPreferences.setUserLearnedDrawer(this,"true");
+            MySharedPreferences.setUserLearnedDrawer(this, "true");
         }
     }
 

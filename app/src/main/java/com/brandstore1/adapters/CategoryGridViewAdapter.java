@@ -16,20 +16,19 @@ import com.brandstore1.R;
  */
 public class CategoryGridViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    private int CategoryImages[];
-    private String CategoryNames[];
+    private int categoryImages[];
+    private String categoryNames[];
 
     public CategoryGridViewAdapter(Activity context, int images[], String categories[]) {
         this.inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        CategoryImages = images;
-        CategoryNames = categories;
-
+        categoryImages = images;
+        categoryNames = categories;
     }
 
     @Override
     public int getCount() {
-        return CategoryImages.length;
+        return categoryImages.length;
     }
 
     @Override
@@ -43,9 +42,8 @@ public class CategoryGridViewAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-
-        ImageView CategoryImage;
-        TextView CategoryName;
+        ImageView ivCategoryImage;
+        TextView tvCategoryName;
     }
 
     @Override
@@ -54,16 +52,14 @@ public class CategoryGridViewAdapter extends BaseAdapter {
         if (convertView == null) {
             mHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.category_grid_view_single_item, null);
-            mHolder.CategoryImage = (ImageView) convertView.findViewById(R.id.category_image);
-            mHolder.CategoryName = (TextView) convertView.findViewById(R.id.category_name);
+            mHolder.ivCategoryImage = (ImageView) convertView.findViewById(R.id.category_image);
+            mHolder.tvCategoryName = (TextView) convertView.findViewById(R.id.category_name);
             convertView.setTag(mHolder);
         } else {
             mHolder = (ViewHolder) convertView.getTag();
         }
-
-
-        mHolder.CategoryImage.setImageResource(CategoryImages[position]);
-        mHolder.CategoryName.setText(CategoryNames[position]);
+        mHolder.ivCategoryImage.setImageResource(categoryImages[position]);
+        mHolder.tvCategoryName.setText(categoryNames[position]);
         return convertView;
     }
 }
