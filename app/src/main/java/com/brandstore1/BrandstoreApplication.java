@@ -6,6 +6,10 @@ import android.content.Context;
 import android.support.v4.app.NotificationCompat;
 
 import com.brandstore1.gcm.NotificationMessage;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
+import java.util.HashMap;
 
 /**
  * Created by i076324 on 6/8/2015.
@@ -15,6 +19,7 @@ public class BrandstoreApplication extends Application {
     private static int numUnreadMessages;
     private static NotificationCompat.InboxStyle inboxStyle;
 
+    private static BrandstoreApplication mInstance;
 
     private static NotificationStatus notificationStatus = NotificationStatus.DEFAULT;
 
@@ -44,8 +49,6 @@ public class BrandstoreApplication extends Application {
     public void setNumUnreadMessages(int numUnreadMessages) {
         this.numUnreadMessages = numUnreadMessages;
     }
-
-
 
     public static NotificationStatus addNotification(NotificationMessage notificationMessage){
         numUnreadMessages++;
@@ -112,6 +115,17 @@ public class BrandstoreApplication extends Application {
         return notificationStatus;
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mInstance = this;
+        mInstance.initializeInstance();
+    }
+
+    private void initializeInstance() {
+        // TODO: Initialize Image Loader and other libraries here.
+    }
+
     public void removeAllNotifications(){
         setNumUnreadMessages(0);
         setInboxStyle(new NotificationCompat.InboxStyle());
@@ -120,6 +134,10 @@ public class BrandstoreApplication extends Application {
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(NOTIFICATION_ID);
+    }
+
+    public static BrandstoreApplication getInstance() {
+        return mInstance;
     }
 
     public enum NotificationType{
@@ -137,4 +155,26 @@ public class BrandstoreApplication extends Application {
              4: only TALK_SONG but for DIFFERENT songs. !
           */
     }
+    // The following line should be changed to include the correct property id.
+    private static final String PROPERTY_ID = "UA-60355049-1";
+
+    public enum TrackerName {
+        APP_TRACKER, // Tracker used only in this app.
+        GLOBAL_TRACKER, // Tracker used by all the apps from a company. eg: roll-up tracking.
+        ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
+    }
+
+    HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+
+    public synchronized Tracker getTracker(TrackerName trackerId) {
+        if (!mTrackers.containsKey(trackerId)) {
+
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            Tracker t = (trackerId == TrackerName.APP_TRACKER) ? analytics.newTracker(PROPERTY_ID) : null;
+            mTrackers.put(trackerId, t);
+
+        }
+        return mTrackers.get(trackerId);
+    }
+
 }
