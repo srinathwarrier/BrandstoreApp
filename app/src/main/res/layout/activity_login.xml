@@ -1,6 +1,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fb="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.brandstore1.activities.LoginActivity"
@@ -16,7 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:orientation="vertical"
         android:gravity="center_vertical|center_horizontal"
         >
@@ -34,35 +35,42 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/login_ll1"
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
         >
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/login_ll_signins"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:gravity="center_horizontal|center_vertical"
             >
-
-            <!--<com.facebook.login.widget.LoginButton-->
+            <!--<Button-->
                 <!--android:id="@+id/login_facebookbutton"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="30dp"-->
-                <!--android:layout_marginBottom="30dp"-->
-                <!--android:visibility="gone"-->
+                <!--android:layout_width="150dp"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:background="@color/com_facebook_blue"-->
+                <!--style="@style/com_facebook_loginview_default_style"-->
                 <!--/>-->
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_facebookbutton"
+                android:layout_width="150dp"
+                android:layout_height="1000dp"
+                fb:login_text="Sign in"
+                style="@style/com_facebook_loginview_default_style"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                />
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/login_googleplusbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="1000dp"
                 android:visibility="visible"
-                tools:visibility="visible"
-                android:paddingBottom="20dp"
                 />
             </LinearLayout>
         <LinearLayout
@@ -72,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
-            >
+            android:layout_marginTop="10dp">
             <View
                 android:layout_width="100dp"
                 android:layout_height="1dp"
@@ -106,7 +114,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.8"
+        android:layout_weight="0.4"
         android:gravity="center_vertical|center_horizontal"
         >
 
@@ -168,7 +176,7 @@
         android:id="@+id/login_ll3"
         android:orientation="horizontal"
         android:gravity="bottom|center_horizontal"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         >
         <TextView
             android:id="@+id/signup_text"

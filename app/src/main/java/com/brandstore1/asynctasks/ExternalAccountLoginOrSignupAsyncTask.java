@@ -30,6 +30,7 @@ public class ExternalAccountLoginOrSignupAsyncTask extends AsyncTask<Void,Void,S
 
 
     String name;
+    String accountId;
     String emailId;
     String genderCode;
     String dobString;
@@ -38,6 +39,7 @@ public class ExternalAccountLoginOrSignupAsyncTask extends AsyncTask<Void,Void,S
     CircularProgressDialog circularProgressDialog;
 
     public ExternalAccountLoginOrSignupAsyncTask(String name,
+                                                 String accountId,
                                                  String emailId,
                                                  String genderCode,
                                                  String dobString,
@@ -45,6 +47,7 @@ public class ExternalAccountLoginOrSignupAsyncTask extends AsyncTask<Void,Void,S
                                                  Context mContext)
     {
         this.name = name;
+        this.accountId=accountId;
         this.emailId=emailId;
         this.genderCode = genderCode;
         this.dobString = dobString;
@@ -63,7 +66,7 @@ public class ExternalAccountLoginOrSignupAsyncTask extends AsyncTask<Void,Void,S
     protected String doInBackground(Void... params) {
         StringBuilder builder = null;
         try {
-            String urlString = new Connections().getExternalAccountLoginOrSignUpURL(name, emailId, genderCode, dobString, accountType);
+            String urlString = new Connections().getExternalAccountLoginOrSignUpURL(name, accountId,emailId, genderCode, dobString, accountType);
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 

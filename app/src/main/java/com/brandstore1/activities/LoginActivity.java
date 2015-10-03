@@ -47,7 +47,11 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.facebook.FacebookSdk;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class LoginActivity extends ActionBarActivity implements
         SignupAsyncResponse,
@@ -116,23 +120,45 @@ public class LoginActivity extends ActionBarActivity implements
         googleplusSignInButton.setOnClickListener(this);
 
 
-        /*facebookLoginButton = (LoginButton)findViewById(R.id.login_facebookbutton);
+        facebookLoginButton = (LoginButton)findViewById(R.id.login_facebookbutton);
+        List<String> permissionNeeds = Arrays.asList("email", "public_profile","user_friends");
+        facebookLoginButton.setReadPermissions(permissionNeeds);
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.i(TAG,"");
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
+                GraphRequest request = GraphRequest.newMeRequest
+                        (loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback()
+                        {
                             @Override
-                            public void onCompleted(
-                                    JSONObject object,
-                                    GraphResponse response) {
+                            public void onCompleted(JSONObject object, GraphResponse response)
+                            {
                                 // Application code
-                                Log.i(TAG,"");
+                                Log.v("LoginActivity", response.toString());
+                                //System.out.println("Check: " + response.toString());
+                                try
+                                {
+                                    String id = object.getString("id");
+                                    String name = object.getString("name");
+                                    String email = object.getString("email");
+                                    String gender = object.getString("gender");
+                                    String age_range = object.getString("age_range");
+                                    String dobString ="";//TODO: Get DOB from permissions
+                                    ExternalAccountLoginOrSignupAsyncTask externalAccountLoginOrSignupAsyncTask= new ExternalAccountLoginOrSignupAsyncTask(name, id, email, gender,dobString ,Connections.AccountType.FACEBOOK_ACCOUNT, mContext);
+                                    externalAccountLoginOrSignupAsyncTask.execute();
+
+                                }
+                                catch (JSONException e)
+                                {
+                                    e.printStackTrace();
+                                }
+
                             }
-                        }
-                );
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender, age_range");
+                request.setParameters(parameters);
+                request.executeAsync();
             }
 
             @Override
@@ -144,7 +170,7 @@ public class LoginActivity extends ActionBarActivity implements
             public void onError(FacebookException e) {
                 Log.i(TAG,"");
             }
-        });*/
+        });
 
         if (android.os.Build.VERSION.SDK_INT >= 17) {
             passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_black_24dp, 0);
@@ -293,12 +319,13 @@ public class LoginActivity extends ActionBarActivity implements
             if (currentPerson != null) {
                 String emailString = Plus.AccountApi.getAccountName(mGoogleApiClient);
                 String name = currentPerson.getDisplayName();
+                String id = currentPerson.getId();
                 String dobString = currentPerson.getBirthday();
                 if(dobString==null)dobString="";
 
                 String genderCode = ""+currentPerson.getGender();
 
-                ExternalAccountLoginOrSignupAsyncTask externalAccountLoginOrSignupAsyncTask= new ExternalAccountLoginOrSignupAsyncTask(name, emailString, genderCode,dobString ,Connections.AccountType.GOOGLE_ACCOUNT, mContext);
+                ExternalAccountLoginOrSignupAsyncTask externalAccountLoginOrSignupAsyncTask= new ExternalAccountLoginOrSignupAsyncTask(name, id, emailString, genderCode,dobString ,Connections.AccountType.GOOGLE_ACCOUNT, mContext);
                 externalAccountLoginOrSignupAsyncTask.execute();
 
                 //Toast.makeText(this,"name:"+name+" lang:"+language+" birthday:"+test,Toast.LENGTH_LONG);
@@ -327,7 +354,7 @@ public class LoginActivity extends ActionBarActivity implements
         Log.d(TAG, "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
 
 
-        //callbackManager.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
             // If the error resolution was not successful we should not resolve further errors.

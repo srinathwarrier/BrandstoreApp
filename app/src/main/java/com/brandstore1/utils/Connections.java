@@ -37,7 +37,7 @@ public class Connections {
 
     }
     public enum AccountType{
-        BRANDSTORE_ACCOUNT ,GOOGLE_ACCOUNT
+        BRANDSTORE_ACCOUNT ,GOOGLE_ACCOUNT,FACEBOOK_ACCOUNT
     }
 
     /*
@@ -164,7 +164,7 @@ public class Connections {
         return request;
     }
 
-    public String getExternalAccountLoginOrSignUpURL(String name , String emailId ,String genderCode,String dobString , AccountType accountType){
+    public String getExternalAccountLoginOrSignUpURL(String name , String accountId , String emailId ,String genderCode,String dobString , AccountType accountType){
         //http://localhost:8081/v2/signup?name=test6&emailid=test6@gmail.com&password=password8&gendercode=M&dob=1990-12-14
         String request="";
         String accountTypeString = getStringForAccountType(accountType);
@@ -173,7 +173,7 @@ public class Connections {
                     "http",
                     ipAddress,
                     getStartParametersOfURL() +"externalAccountLoginOrSignUp",
-                    "name="+name+"&emailid="+emailId+"&gendercode="+genderCode+"&dob="+dobString+"&accounttype="+accountTypeString,
+                    "name="+name+"&accountid="+accountId+"&emailid="+emailId+"&gendercode="+genderCode+"&dob="+dobString+"&accounttype="+accountTypeString,
                     null);
             request = uri.toASCIIString();
         }catch (URISyntaxException e) {
@@ -190,6 +190,9 @@ public class Connections {
                 break;
             case GOOGLE_ACCOUNT:
                 returnValue = "google";
+                break ;
+            case FACEBOOK_ACCOUNT:
+                returnValue = "facebook";
                 break ;
             default:
                 returnValue = "brandstore";
