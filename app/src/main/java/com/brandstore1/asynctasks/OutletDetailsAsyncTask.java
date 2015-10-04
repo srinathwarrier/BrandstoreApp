@@ -208,6 +208,7 @@ public class OutletDetailsAsyncTask extends AsyncTask<Void, Void, String> {
             obj.setLongDescription(jsonobject.getString("description"));
             if(obj.getLongDescription().length()<100){
                 obj.setShortDescription(obj.getLongDescription());
+                readmore.setVisibility(View.GONE);
             }
             else{
                 obj.setShortDescription(obj.getLongDescription().substring(0, 100).concat("..."));
