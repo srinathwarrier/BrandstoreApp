@@ -15,15 +15,13 @@
         android:title="Favourites"
         android:icon="@drawable/ic_action_favorite"
         android:showAsAction="always"
-        app:showAsAction="always" />
+        app:showAsAction="always" />-->
     <item
         android:id="@+id/filter_button"
         android:title="Filter"
         android:icon="@drawable/ic_action_filter"
-        android:showAsAction="always"
         app:showAsAction="always" />
-    -->
-    <item
+   <!-- <item
         android:id="@+id/on_sale"
         android:title=""
         android:icon="@drawable/saleicon"
@@ -40,5 +38,5 @@
         android:checked="false"
         app:showAsAction="always"
         />
-
+-->
 </menu>

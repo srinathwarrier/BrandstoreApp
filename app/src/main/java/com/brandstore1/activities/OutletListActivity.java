@@ -2,6 +2,8 @@ package com.brandstore1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import com.brandstore1.R;
 import com.brandstore1.adapters.OutletListAdapter;
 import com.brandstore1.asynctasks.OutletListAsyncTask;
 import com.brandstore1.entities.Outlet;
+import com.brandstore1.fragments.OutletListFilters;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -32,8 +35,10 @@ public class OutletListActivity extends ActionBarActivity {
 
     MenuItem favoriteMenuItem;
     MenuItem saleMenuItem;
+    MenuItem filterItem;
     OutletListAdapter mOutletListAdapter;
     OutletListType outletListType;
+    OutletListFilters outletListFilters;
 
     ArrayList<Outlet> outletArrayList = new ArrayList<Outlet>();
 
@@ -128,14 +133,15 @@ public class OutletListActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_outlet_list, menu);
 
         // Initialize the menuItem variables
-        favoriteMenuItem = menu.findItem(R.id.display_favorites);
+       /* favoriteMenuItem = menu.findItem(R.id.display_favorites);
         saleMenuItem = menu.findItem(R.id.on_sale);
 
         if (outletListType == OutletListType.ALL_ON_SALE) {
             saleMenuItem.setChecked(true);
             saleMenuItem.setIcon(R.drawable.sale_on);
             saleMenuItem.setEnabled(false);
-        }
+        }*/
+        filterItem = menu.findItem(R.id.filter_button);
         return true;
     }
 
@@ -150,12 +156,18 @@ public class OutletListActivity extends ActionBarActivity {
                 //noinspection SimplifiableIfStatement
                 onBackPressed();
                 return true;
-            case R.id.display_favorites:
+            /*case R.id.display_favorites:
                 onFavoriteMenuItemClicked(!item.isChecked());
                 break;
             case R.id.on_sale:
                 onSaleMenuItemClicked(!item.isChecked());
-                break;
+                break;*/
+            case R.id.filter_button:
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                outletListFilters = new OutletListFilters();
+                fragmentTransaction.add(R.id.fl_filters, outletListFilters);
+                fragmentTransaction.commit();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -205,5 +217,15 @@ public class OutletListActivity extends ActionBarActivity {
             } else
                 mOutletListAdapter.getFilter().filter("Y");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (OutletListFilters.isOpen() && outletListFilters != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.remove(outletListFilters);
+            fragmentTransaction.commit();
+        } else super.onBackPressed();
     }
 }

@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-
         tools:context="com.brandstore1.activities.OutletListActivity">
 
         <include
@@ -59,4 +59,8 @@
             tools:layout="@layout/fragment_navigation_drawer">
 
         </fragment>-->
+    <FrameLayout
+        android:id="@+id/fl_filters"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
 </android.support.v4.widget.DrawerLayout>

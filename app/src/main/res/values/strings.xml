@@ -47,6 +47,14 @@
     <string name="outlet_details_label_similarstores">SIMILAR STORES</string>
     <string name="outlet_details_label_comingsoon">Coming soon…</string>
     <string name="search_box_hint">\"Let\'s go shopping!\"</string>
+    <string name="sort_by">SORT BY</string>
+    <string name="relevance">Relevance</string>
+    <string name="average_low_to_high">Average Price ( Low to High )</string>
+    <string name="average_high_to_low">Average Price ( High to Low )</string>
+    <string name="average_price">AVERAGE PRICE</string>
+    <string name="gender">GENDER</string>
+    <string name="more_filters">MORE FILTERS</string>
+    <string name="apply_filters">APPLY FILTERS</string>
 
 
 </resources>
