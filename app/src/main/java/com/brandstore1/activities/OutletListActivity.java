@@ -133,15 +133,15 @@ public class OutletListActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_outlet_list, menu);
 
         // Initialize the menuItem variables
-       /* favoriteMenuItem = menu.findItem(R.id.display_favorites);
+        favoriteMenuItem = menu.findItem(R.id.display_favorites);
         saleMenuItem = menu.findItem(R.id.on_sale);
 
         if (outletListType == OutletListType.ALL_ON_SALE) {
             saleMenuItem.setChecked(true);
             saleMenuItem.setIcon(R.drawable.sale_on);
             saleMenuItem.setEnabled(false);
-        }*/
-        filterItem = menu.findItem(R.id.filter_button);
+        }
+        //filterItem = menu.findItem(R.id.filter_button);
         return true;
     }
 
@@ -156,18 +156,18 @@ public class OutletListActivity extends ActionBarActivity {
                 //noinspection SimplifiableIfStatement
                 onBackPressed();
                 return true;
-            /*case R.id.display_favorites:
+            case R.id.display_favorites:
                 onFavoriteMenuItemClicked(!item.isChecked());
                 break;
             case R.id.on_sale:
                 onSaleMenuItemClicked(!item.isChecked());
-                break;*/
-            case R.id.filter_button:
+                break;
+            /*case R.id.filter_button:
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 outletListFilters = new OutletListFilters();
                 fragmentTransaction.add(R.id.fl_filters, outletListFilters);
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
         }
         return super.onOptionsItemSelected(item);
     }
