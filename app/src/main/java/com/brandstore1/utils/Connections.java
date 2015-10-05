@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import com.brandstore1.BrandstoreApplication;
 import com.brandstore1.activities.MainActivity;
 import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
 import com.brandstore1.entities.User;
 import com.brandstore1.gcm.GCMConnection;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -113,6 +115,12 @@ public class Connections {
     public static void setUserIdFromSharedPreferences(Context mContext){
         //fetch userId from SharedPreferences
         userId = MySharedPreferences.getUserId(mContext);
+
+        // You only need to set User ID on a tracker once. By setting it on the tracker, the ID will be
+        // sent with all subsequent hits.
+        Tracker t = ((BrandstoreApplication) ((Activity)mContext).getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
+        t.set("&uid", userId);
+
     }
 
     public String getLoginURL(String emailId , String password){

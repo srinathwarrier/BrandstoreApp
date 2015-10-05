@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
     // Use this as tag in Log . Helps to easily identify which class the log is being shown from.
     // Example: Log.d(DEBUG_TAG, "In onResume Method");
-    private static final String DEBUG_TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final String CATEGORY_ITEM = "category_item_home_page";
 
     GridView mCategoryGridView;
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         // Get tracker.
         Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
-        t.setScreenName(DEBUG_TAG);
+        t.setScreenName(TAG);
 
         // Send a screen view.
         t.send(new HitBuilders.ScreenViewBuilder().build());
@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if (id == R.id.action_settings) {
             return true;
         } else if (id == android.R.id.home) {
-            Log.d(DEBUG_TAG, "action bar clicked");
+            Log.d(TAG, "action bar clicked");
         }
         return super.onOptionsItemSelected(item);
     }

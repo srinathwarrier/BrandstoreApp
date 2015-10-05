@@ -18,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.brandstore1.BrandstoreApplication;
 import com.brandstore1.R;
 import com.brandstore1.asynctasks.LoginAsyncTask;
 import com.brandstore1.asynctasks.SignupAsyncTask;
@@ -25,6 +26,8 @@ import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
 import com.brandstore1.gcm.GCMConnection;
 import com.brandstore1.interfaces.SignupAsyncResponse;
 import com.brandstore1.utils.Connections;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,6 +61,13 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         mContext = this;
+
+        // Get tracker.
+        Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
+        // Send a screen view.
+        t.setScreenName(TAG);
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         nameEditText = (EditText) findViewById(R.id.signup_name);
         emailEditText = (EditText) findViewById(R.id.signup_email);

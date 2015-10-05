@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.brandstore1.BrandstoreApplication;
 import com.brandstore1.R;
 import com.brandstore1.asynctasks.ExternalAccountLoginOrSignupAsyncTask;
 import com.brandstore1.asynctasks.LoginAsyncTask;
@@ -37,6 +38,8 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
@@ -99,6 +102,13 @@ public class LoginActivity extends ActionBarActivity implements
 
         setContentView(R.layout.activity_login);
         mContext = this;
+
+        // Get tracker.
+        Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
+        // Send a screen view.
+        t.setScreenName(TAG);
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         // Restore from saved instance state
         // [START restore_saved_instance_state]
