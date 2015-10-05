@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.brandstore1.BrandstoreApplication;
 import com.brandstore1.R;
 import com.brandstore1.asynctasks.ExternalAccountLoginOrSignupAsyncTask;
+import com.brandstore1.asynctasks.ForgotPasswordAsyncTask;
 import com.brandstore1.asynctasks.LoginAsyncTask;
 import com.brandstore1.asynctasks.SignupAsyncTask;
 import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
@@ -55,6 +56,8 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends ActionBarActivity implements
         SignupAsyncResponse,
@@ -72,6 +75,14 @@ public class LoginActivity extends ActionBarActivity implements
     TextView forgotPasswordTextView;
     TextView signUpTextView;
     Context mContext;
+
+    private Pattern pattern;
+    private Matcher matcher;
+
+    private static final String EMAIL_PATTERN =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
 
     LoginButton facebookLoginButton;
     CallbackManager callbackManager;
@@ -136,30 +147,26 @@ public class LoginActivity extends ActionBarActivity implements
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.i(TAG,"");
+                Log.i(TAG, "");
                 GraphRequest request = GraphRequest.newMeRequest
-                        (loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback()
-                        {
+                        (loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                             @Override
-                            public void onCompleted(JSONObject object, GraphResponse response)
-                            {
+                            public void onCompleted(JSONObject object, GraphResponse response) {
                                 // Application code
                                 Log.v("LoginActivity", response.toString());
                                 //System.out.println("Check: " + response.toString());
-                                try
-                                {
+                                try {
                                     String id = object.getString("id");
-                                    String name = object.getString("name");
-                                    String email = object.getString("email");
-                                    String gender = object.getString("gender");
-                                    String age_range = object.getString("age_range");
-                                    String dobString ="";//TODO: Get DOB from permissions
-                                    ExternalAccountLoginOrSignupAsyncTask externalAccountLoginOrSignupAsyncTask= new ExternalAccountLoginOrSignupAsyncTask(name, id, email, gender,dobString ,Connections.AccountType.FACEBOOK_ACCOUNT, mContext);
+                                    String name = object.has("name") ? object.getString("name") : "";
+                                    String email = object.has("email") ? object.getString("email") : "";
+                                    String gender = object.has("gender") ? object.getString("gender") : "";
+                                    //String age_range = object.has("age_range")?object.getString("age_range"):"";
+                                    String dobString = "";//TODO: Get DOB from permissions
+
+                                    ExternalAccountLoginOrSignupAsyncTask externalAccountLoginOrSignupAsyncTask = new ExternalAccountLoginOrSignupAsyncTask(name, id, email, gender, dobString, Connections.AccountType.FACEBOOK_ACCOUNT, mContext);
                                     externalAccountLoginOrSignupAsyncTask.execute();
 
-                                }
-                                catch (JSONException e)
-                                {
+                                } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
 
@@ -173,12 +180,12 @@ public class LoginActivity extends ActionBarActivity implements
 
             @Override
             public void onCancel() {
-                Log.i(TAG,"");
+                Log.i(TAG, "");
             }
 
             @Override
             public void onError(FacebookException e) {
-                Log.i(TAG,"");
+                Log.i(TAG, "");
             }
         });
 
@@ -244,7 +251,15 @@ public class LoginActivity extends ActionBarActivity implements
             @Override
             public void onClick(View v) {
                 Log.i("Login","forgotPasswordTextView");
-                Toast.makeText(mContext, "Forgot password not implemented", Toast.LENGTH_LONG).show();
+                String emailString = emailEditText.getText().toString();
+                if(validateEmail(emailString)){
+                    ForgotPasswordAsyncTask forgotPasswordAsyncTask = new ForgotPasswordAsyncTask(emailString,mContext);
+                    forgotPasswordAsyncTask.execute();
+                }else{
+                    Toast.makeText(mContext, "Check the format of Email.", Toast.LENGTH_LONG).show();
+                }
+
+
             }
         });
 
@@ -257,17 +272,8 @@ public class LoginActivity extends ActionBarActivity implements
             }
         });
 
-        //
-        //
-        //
-        // .
-
-
-
-
     }
 
-    // [START on_start_on_stop]
     @Override
     protected void onStart() {
         super.onStart();
@@ -279,8 +285,6 @@ public class LoginActivity extends ActionBarActivity implements
         super.onStop();
         mGoogleApiClient.disconnect();
     }
-    // [END on_start_on_stop]
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -313,6 +317,13 @@ public class LoginActivity extends ActionBarActivity implements
         }
     }
 
+    public boolean validateEmail(String emailString){
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(emailString);
+        return matcher.matches();
+    }
+
+
     /*
         Go To Screen methods
      */
@@ -327,13 +338,14 @@ public class LoginActivity extends ActionBarActivity implements
             // get all Data
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
             if (currentPerson != null) {
+                String id = currentPerson.getId(); // Compulsory. TODO: Assuming this is always present.
                 String emailString = Plus.AccountApi.getAccountName(mGoogleApiClient);
-                String name = currentPerson.getDisplayName();
-                String id = currentPerson.getId();
-                String dobString = currentPerson.getBirthday();
+                if(emailString==null)emailString="";
+                String name = currentPerson.hasDisplayName()?currentPerson.getDisplayName():"";
+                String dobString = currentPerson.hasBirthday() ? currentPerson.getBirthday():"";
                 if(dobString==null)dobString="";
 
-                String genderCode = ""+currentPerson.getGender();
+                String genderCode = currentPerson.hasGender()?""+currentPerson.getGender():"";
 
                 ExternalAccountLoginOrSignupAsyncTask externalAccountLoginOrSignupAsyncTask= new ExternalAccountLoginOrSignupAsyncTask(name, id, emailString, genderCode,dobString ,Connections.AccountType.GOOGLE_ACCOUNT, mContext);
                 externalAccountLoginOrSignupAsyncTask.execute();

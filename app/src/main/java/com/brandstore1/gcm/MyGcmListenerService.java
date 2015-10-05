@@ -34,6 +34,10 @@ public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
 
+    public enum NotificationType{
+        NOTIFICATION_MESSAGE , SYSTEM_MESSAGE
+    }
+
     /**
      * Called when message is received.
      *
@@ -53,6 +57,10 @@ public class MyGcmListenerService extends GcmListenerService {
         } else {
             // normal downstream message.
         }
+
+        // TODO: Handle system messages like
+        // TODO: 1) Go to ErrorActivity , since App version is outdated.
+        // TODO: 2) remove hasLoggedIn and userId from SharedPreferences, since user has deleted account.
 
         // [START_EXCLUDE]
         /**

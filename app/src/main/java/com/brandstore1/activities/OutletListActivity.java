@@ -13,11 +13,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.brandstore1.BrandstoreApplication;
 import com.brandstore1.R;
 import com.brandstore1.adapters.OutletListAdapter;
 import com.brandstore1.asynctasks.OutletListAsyncTask;
 import com.brandstore1.entities.Outlet;
 import com.brandstore1.fragments.OutletListFilters;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,6 +32,8 @@ import java.util.ArrayList;
 
 
 public class OutletListActivity extends ActionBarActivity {
+
+    private static final String TAG = "OutletListActivity";
 
     ListView lvOutletListView;
     Toolbar toolbar;
@@ -50,6 +55,13 @@ public class OutletListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet_list);
+
+        // Get tracker.
+        Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
+        // Send a screen view.
+        t.setScreenName(TAG);
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         /*
             Bundle setup >

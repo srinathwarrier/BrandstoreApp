@@ -105,7 +105,7 @@ public class ExternalAccountLoginOrSignupAsyncTask extends AsyncTask<Void,Void,S
             }
             else{
                 if(jsonObject.getString("responseState").equals("error")){
-                    Toast.makeText(mContext, "Connection Error.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Connection Error.", Toast.LENGTH_LONG).show(); //TODO: this is an invalid scenario
                 }
                 else if(jsonObject.getString("responseState").equals("login")){
                     JSONObject userObject = jsonObject.getJSONObject("responseDetails");
