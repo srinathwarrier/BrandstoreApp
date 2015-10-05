@@ -124,7 +124,6 @@ public class OutletListActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // notifyAdapter
     }
 
     @Override
@@ -140,6 +139,11 @@ public class OutletListActivity extends ActionBarActivity {
             saleMenuItem.setChecked(true);
             saleMenuItem.setIcon(R.drawable.sale_on);
             saleMenuItem.setEnabled(false);
+        }
+        else if(outletListType == OutletListType.ALL_FAVORITE){
+            favoriteMenuItem.setChecked(true);
+            favoriteMenuItem.setIcon(R.drawable.favselect);
+            favoriteMenuItem.setEnabled(false);
         }
         //filterItem = menu.findItem(R.id.filter_button);
         return true;
@@ -228,4 +232,13 @@ public class OutletListActivity extends ActionBarActivity {
             fragmentTransaction.commit();
         } else super.onBackPressed();
     }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
 }

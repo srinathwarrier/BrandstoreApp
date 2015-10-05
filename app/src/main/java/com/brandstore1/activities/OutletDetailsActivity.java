@@ -2,6 +2,8 @@ package com.brandstore1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,6 +21,7 @@ import com.brandstore1.asynctasks.AddFavOutletAsyncTask;
 import com.brandstore1.adapters.RelatedBrandsListViewAdapter;
 import com.brandstore1.entities.Outlet;
 import com.brandstore1.entities.RelatedBrands;
+import com.brandstore1.fragments.OutletListFilters;
 import com.brandstore1.utils.HorizontalListView;
 
 import com.brandstore1.asynctasks.OutletDetailsAsyncTask;
@@ -210,5 +213,4 @@ public class OutletDetailsActivity extends ActionBarActivity {
         startActivity(intent);
 
     }
-
 }
