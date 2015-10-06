@@ -20,6 +20,9 @@
 
     <string name="error_updateapp">This version of Brandstore is invalid. Please update your app from the Play Store to keep using Brandstore.</string>
 
+    <string name="ga_category_search_activity">SuggestionEventCategory</string>
+    <string name="ga_action_search_suggestion">SuggestionEventAction</string>
+
 
     <string name="login_password">Password</string>
     <string name="login_email">Email</string>

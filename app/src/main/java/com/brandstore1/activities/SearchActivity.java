@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class SearchActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = SearchActivity.class.getSimpleName();
     ResultsListViewAdapter mResultsAdapter;
     ListView lvResultList;
     ArrayList<SearchResults> mSearchResult = new ArrayList<>();
@@ -157,6 +157,15 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        // Get tracker.
+        Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
+        // Build and Send an event.
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory(getString(R.string.ga_category_search_activity))
+                .setAction(getString(R.string.ga_action_search_suggestion))
+                .setLabel(newText)
+                .build());
+
         if (searchView.getQuery().length() < 1) {
             mSearchResult.clear();
             SearchResults obj = new SearchResults();
