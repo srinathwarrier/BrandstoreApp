@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class OutletListActivity extends ActionBarActivity {
 
-    private static final String TAG = "OutletListActivity";
+    private static final String TAG = OutletListActivity.class.getSimpleName();
 
     ListView lvOutletListView;
     Toolbar toolbar;

@@ -38,6 +38,8 @@ import java.util.regex.Pattern;
 
 public class SignUpActivity extends ActionBarActivity implements SignupAsyncResponse{
 
+    private static final String TAG = SignUpActivity.class.getSimpleName();
+
     EditText nameEditText;
     EditText emailEditText;
     EditText passwordEditText ;
@@ -50,7 +52,6 @@ public class SignUpActivity extends ActionBarActivity implements SignupAsyncResp
     private Matcher matcher;
     public static TextView textView;
 
-    private static final String TAG = "SignUpActivity";
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";

@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
+import com.brandstore1.BrandstoreApplication;
 import com.brandstore1.R;
 import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
 import com.brandstore1.gcm.GCMConnection;
@@ -17,13 +18,15 @@ import com.brandstore1.interfaces.UpdateSuggestionsAsyncResponse;
 import com.brandstore1.model.Connection;
 import com.brandstore1.utils.Connections;
 import com.brandstore1.utils.MySharedPreferences;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 public class SplashScreenActivity extends ActionBarActivity implements UpdateSuggestionsAsyncResponse{
 
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = SplashScreenActivity.class.getSimpleName();
     Context mContext;
     SQLiteDatabase sqLiteDatabase;
 
@@ -33,6 +36,13 @@ public class SplashScreenActivity extends ActionBarActivity implements UpdateSug
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         mContext = this;
+
+        // Get tracker.
+        Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
+        // Send a screen view.
+        t.setScreenName(TAG);
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         //SharedPreferences sharedPref = mContext.getSharedPreferences("BrandstoreApp",Context.MODE_PRIVATE);
         //Get "hasLoggedIn" value. If the value doesn't exist yet false is returned

@@ -18,11 +18,14 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.brandstore1.BrandstoreApplication;
 import com.brandstore1.R;
 import com.brandstore1.adapters.ResultsListViewAdapter;
 import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
 import com.brandstore1.entities.SearchResults;
 import com.brandstore1.fragments.NavigationDrawerFragment;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 
@@ -30,6 +33,7 @@ import java.util.ArrayList;
  * Created by Sonika on 8/30/2015.
  */
 public class SearchTMTActivity extends ActionBarActivity {
+    private static final String TAG = SearchTMTActivity.class.getSimpleName();
     ResultsListViewAdapter mResultsAdapter;
     //SearchBox mEdit;
     ListView mResultList;
@@ -46,6 +50,13 @@ public class SearchTMTActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_tmt);
+
+        // Get tracker.
+        Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
+        // Send a screen view.
+        t.setScreenName(TAG);
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         sqLiteDatabase = openOrCreateDatabase("brandstoreDB",MODE_PRIVATE,null);
         //UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);

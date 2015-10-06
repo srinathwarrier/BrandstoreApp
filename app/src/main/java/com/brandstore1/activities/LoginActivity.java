@@ -66,7 +66,7 @@ public class LoginActivity extends ActionBarActivity implements
         GoogleApiClient.OnConnectionFailedListener{
 
 
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     EditText emailEditText;
     EditText passwordEditText ;

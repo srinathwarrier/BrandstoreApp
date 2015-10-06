@@ -13,9 +13,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.brandstore1.BrandstoreApplication;
 import com.brandstore1.R;
 import com.brandstore1.asynctasks.TakeMeThereAsyncTask;
 import com.brandstore1.adapters.TakeMeThereAdapter;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 
@@ -23,6 +26,8 @@ import java.util.ArrayList;
  * Created by Sonika on 8/16/2015.
  */
 public class TakeMeThereActivity extends ActionBarActivity{
+
+    private static final String TAG = TakeMeThereActivity.class.getSimpleName();
     ListView pathListView;
     ListView outletListView;
     ArrayList<String> pathArrayList = new ArrayList();
@@ -45,6 +50,13 @@ public class TakeMeThereActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_me_there);
+
+        // Get tracker.
+        Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
+        // Send a screen view.
+        t.setScreenName(TAG);
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         toolbar = (Toolbar) findViewById(R.id.takemetheretoolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));

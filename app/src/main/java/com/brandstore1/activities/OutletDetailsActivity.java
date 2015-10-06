@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.brandstore1.BrandstoreApplication;
 import com.brandstore1.asynctasks.AddFavOutletAsyncTask;
 import com.brandstore1.adapters.RelatedBrandsListViewAdapter;
 import com.brandstore1.entities.Outlet;
@@ -27,6 +28,8 @@ import com.brandstore1.utils.HorizontalListView;
 import com.brandstore1.asynctasks.OutletDetailsAsyncTask;
 import com.brandstore1.R;
 import com.brandstore1.adapters.TagPriceListViewAdapter;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -37,6 +40,9 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class OutletDetailsActivity extends ActionBarActivity {
+
+    private static final String TAG = OutletDetailsActivity.class.getSimpleName();
+
     ImageView outletimage;
     TextView outletname;
     TextView floor;
@@ -63,6 +69,14 @@ public class OutletDetailsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet_details);
+
+        // Get tracker.
+        Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
+        // Send a screen view.
+        t.setScreenName(TAG);
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+
+
         toolbar = (Toolbar) findViewById(R.id.outletdetailstoolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));

@@ -15,14 +15,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.brandstore1.BrandstoreApplication;
 import com.brandstore1.R;
 import com.brandstore1.adapters.ResultsListViewAdapter;
 import com.brandstore1.entities.SearchResults;
 import com.brandstore1.fragments.NavigationDrawerFragment;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 
 public class SearchActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
     ResultsListViewAdapter mResultsAdapter;
     ListView lvResultList;
     ArrayList<SearchResults> mSearchResult = new ArrayList<>();
@@ -43,6 +48,12 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
         toolbar = (Toolbar) findViewById(R.id.searchtoolbar);
         setSupportActionBar(toolbar);
         mContext = this;
+
+        // Get tracker.
+        Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
+        // Send a screen view.
+        t.setScreenName(TAG);
+        t.send(new HitBuilders.ScreenViewBuilder().build());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
@@ -100,14 +111,6 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
             }
         });
 
-        /*// Get tracker.
-        Tracker t = ((AnalyticsSampleApp) getActivity().getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
-
-        // Set screen name.
-        t.setScreenName("screen1");
-
-        // Send a screen view.
-        t.send(new HitBuilders.ScreenViewBuilder().build());*/
     }
 
 
