@@ -17,7 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
+        android:layout_weight="@integer/activity_login_ll1_weight"
         android:orientation="vertical"
         android:gravity="center_vertical|center_horizontal"
         >
@@ -37,7 +37,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
+        android:layout_weight="@integer/activity_login_ll2_weight"
         android:gravity="center_vertical|center_horizontal"
         android:visibility="visible"
         >
@@ -59,7 +59,7 @@
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_facebookbutton"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/activity_login_signin_button_width"
                 android:layout_height="1000dp"
                 fb:login_text="Sign in"
                 style="@style/com_facebook_loginview_default_style"
@@ -68,7 +68,7 @@
                 />
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/login_googleplusbutton"
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="1000dp"
                 android:visibility="visible"
                 />
@@ -114,7 +114,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.4"
+        android:layout_weight="@integer/activity_login_ll3_weight"
         android:gravity="center_vertical|center_horizontal"
         >
 
@@ -176,17 +176,17 @@
         android:id="@+id/login_ll3"
         android:orientation="horizontal"
         android:gravity="bottom|center_horizontal"
-        android:layout_weight="0.5"
+        android:layout_weight="@integer/activity_login_ll4_weight"
         >
         <TextView
             android:id="@+id/signup_text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_height="match_parent"
             android:text="@string/login_signup"
             android:clickable="true"
             android:textSize="20dp"
             android:textColor="@color/white"
+            android:layout_gravity="center_horizontal|center_vertical"
             />
 
     </LinearLayout>

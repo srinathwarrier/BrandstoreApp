@@ -14,4 +14,11 @@
     <dimen name="text_normal">14sp</dimen>
     <dimen name="padding_standard">8dp</dimen>
     <dimen name="padding_double">16dp</dimen>
+
+    <integer name="activity_login_ll1_weight">5</integer>
+    <integer name="activity_login_ll2_weight">5</integer>
+    <integer name="activity_login_ll3_weight">3</integer>
+    <integer name="activity_login_ll4_weight">6</integer>
+    <dimen name="activity_login_signin_button_width">150dp</dimen>
+
 </resources>
