@@ -352,7 +352,8 @@ public class LoginActivity extends ActionBarActivity implements
 
                 //Toast.makeText(this,"name:"+name+" lang:"+language+" birthday:"+test,Toast.LENGTH_LONG);
             } else {
-                Log.w(TAG, "invalid");
+                Toast.makeText(this, "Error in connecting to Google. Please try again.", Toast.LENGTH_SHORT).show();
+                mGoogleApiClient.disconnect();
             }
         } else {
             Log.i(TAG,"Not signed in");

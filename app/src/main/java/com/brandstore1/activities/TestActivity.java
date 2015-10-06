@@ -95,7 +95,7 @@ public class TestActivity extends ActionBarActivity {
                 GooglePlayServicesUtil.getErrorDialog(resultCode, this,
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
-                Log.i("Slate", "This device is not supported.");
+                Log.i("Brandstore", "This device is not supported.");
                 finish();
             }
             return false;

@@ -56,8 +56,6 @@ public class UpdateRegistrationIdAsyncTask extends AsyncTask<Void,Void,Void> {
 
         try {
             JSONArray jsonArray = new JSONArray(builder.toString());
-            Log.i("Slate:CheckUser", "JSON :" + jsonArray.toString());
-
 
         } catch (JSONException e) {
             e.printStackTrace();
