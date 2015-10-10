@@ -23,7 +23,7 @@
 
 
     <!-- activity_main -->
-    <dimen name="activity_main_grid_margin_left">10dp</dimen>
+    <dimen name="activity_main_grid_margin_left">17dp</dimen>
     <dimen name="activity_main_grid_height">15dp</dimen>
     <dimen name="activity_main_grid_coulmnWidth">150dp</dimen>
     <dimen name="activity_main_grid_verticalSpacing">7dp</dimen>
@@ -38,12 +38,12 @@
     <dimen name="category_grid_textView_marginBottom">5dp</dimen>
     <dimen name="category_grid_textView_textsize">15sp</dimen>
 
-    <!--activity_outlet -->
+    <!--activity_outlet_list -->
     <dimen name="activity_outlet_list_listView_dividerHeight">12dp</dimen>
-    <dimen name="activity_outlet_list_listView_paddingBottom">16dp</dimen>
-    <dimen name="activity_outlet_list_listView_paddingLeft">64dp</dimen>
-    <dimen name="activity_outlet_list_listView_paddingRight">64dp</dimen>
-    <dimen name="activity_outlet_list_listView_paddingTop">16dp</dimen>
+    <dimen name="activity_outlet_list_listView_paddingBottom">10dp</dimen>
+    <dimen name="activity_outlet_list_listView_paddingLeft">10dp</dimen>
+    <dimen name="activity_outlet_list_listView_paddingRight">10dp</dimen>
+    <dimen name="activity_outlet_list_listView_paddingTop">10dp</dimen>
 
     <!--activity_search -->
     <dimen name="activity_search_linearLayout_paddingBottom">16dp</dimen>
