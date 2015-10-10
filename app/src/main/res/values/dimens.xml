@@ -21,4 +21,127 @@
     <integer name="activity_login_ll4_weight">6</integer>
     <dimen name="activity_login_signin_button_width">150dp</dimen>
 
+
+    <!-- activity_main -->
+    <dimen name="activity_main_grid_margin_left">10dp</dimen>
+    <dimen name="activity_main_grid_height">15dp</dimen>
+    <dimen name="activity_main_grid_coulmnWidth">150dp</dimen>
+    <dimen name="activity_main_grid_verticalSpacing">7dp</dimen>
+
+    <!--category_grid_view_single_item -->
+    <dimen name="category_grid_relativeLayout_width">160dp</dimen>
+    <dimen name="category_grid_relativeLayout_height">120dp</dimen>
+    <dimen name="category_grid_imageView_width">165dp</dimen>
+    <dimen name="category_grid_imageView_height">160dp</dimen>
+    <dimen name="category_grid_textView_width">165dp</dimen>
+    <dimen name="category_grid_textView_height">40dp</dimen>
+    <dimen name="category_grid_textView_marginBottom">5dp</dimen>
+    <dimen name="category_grid_textView_textsize">15sp</dimen>
+
+    <!--activity_outlet -->
+    <dimen name="activity_outlet_list_listView_dividerHeight">12dp</dimen>
+    <dimen name="activity_outlet_list_listView_paddingBottom">16dp</dimen>
+    <dimen name="activity_outlet_list_listView_paddingLeft">64dp</dimen>
+    <dimen name="activity_outlet_list_listView_paddingRight">64dp</dimen>
+    <dimen name="activity_outlet_list_listView_paddingTop">16dp</dimen>
+
+    <!--activity_search -->
+    <dimen name="activity_search_linearLayout_paddingBottom">16dp</dimen>
+    <dimen name="activity_search_listview_marginTop">15dp</dimen>
+    <dimen name="activity_search_listview_dividerHeight">1dp</dimen>
+
+    <!--activity_search_tmt-->
+    <dimen name="activity_search_tmt_linearLayout_weightSum">1</dimen>
+    <dimen name="activity_search_tmt_editText_padding">20dp</dimen>
+    <dimen name="activity_search_tmt_listView_marginTop">15dp</dimen>
+    <dimen name="activity_search_tmt_listView_dividerHeight">1dp</dimen>
+
+    <!--activity_take_me_there-->
+    <dimen name="activity_take_me_there_linearLayout_weightSum">1</dimen>
+    <dimen name="activity_take_me_there_weight">1</dimen>
+    <dimen name="activity_take_me_there_textView_width">90dp</dimen>
+    <dimen name="activity_take_me_there_textView_textSize">22sp</dimen>
+    <dimen name="activity_take_me_there_textView_paddingLeft">20dp</dimen>
+    <dimen name="activity_take_me_there_paddingTop">20dp</dimen>
+    <dimen name="activity_take_me_there_editText_marginRight">10dp</dimen>
+    <dimen name="activity_take_me_there_listView_paddingBottom">16dp</dimen>
+    <dimen name="activity_take_me_there_listView_paddingLeft">64dp</dimen>
+    <dimen name="activity_take_me_there_listView_paddingRight">64dp</dimen>
+    <dimen name="activity_take_me_there_listView_paddingTop">16dp</dimen>
+    <dimen name="activity_take_me_there_listView_dividerHeight">12dp</dimen>
+
+    <!--activity_error-->
+    <dimen name="activity_error_linearLayout_alpha">1</dimen>
+    <dimen name="activity_error_linearLayout_paddingLeft">64dp</dimen>
+    <dimen name="activity_error_linearLayout_paddingRight">64dp</dimen>
+    <dimen name="activity_error_linearLayout_paddingTop">16dp</dimen>
+    <dimen name="activity_error_linearLayout2_weight">0.8</dimen>
+    <dimen name="activity_error_imageView_marginBottom">20dp</dimen>
+    <dimen name="activity_error_linearLayout3_weight">0.2</dimen>
+    <dimen name="activity_error_textView_textSize">20sp</dimen>
+    <dimen name="activity_error_textView_padding">30dp</dimen>
+
+    <!--activity_login-->
+    <dimen name="activity_login_alpha">1</dimen>
+    <dimen name="activity_login_linearLayout_paddingLeft">40dp</dimen>
+    <dimen name="activity_login_linearLayout_paddingRight">40dp</dimen>
+    <dimen name="activity_login_linearLayout_paddingTop">16dp</dimen>
+    <dimen name="activity_login_imageView_marginBottom">20dp</dimen>
+    <dimen name="activity_login_ll_signins_height">50dp</dimen>
+    <dimen name="activity_login_button_height">1000dp</dimen>
+    <dimen name="activity_login_facebookbutton_marginTop">20dp</dimen>
+    <dimen name="activity_login_facebookbutton_marginBottom">20dp</dimen>
+    <dimen name="activity_login_googleplusbutton_width">120dp</dimen>
+    <dimen name="activity_login_11_or_marginTop">10dp</dimen>
+    <dimen name="activity_login_view_width">100dp</dimen>
+    <dimen name="activity_login_view_height">1dp</dimen>
+    <dimen name="activity_login_textView_textSize">20dp</dimen>
+    <dimen name="activity_login_textView_paddingLeft">50dp</dimen>
+    <dimen name="activity_login_textView_paddingRight">50dp</dimen>
+    <dimen name="activity_login112_editText_padding">10dp</dimen>
+    <dimen name="activity_login112_ediText_height">50dp</dimen>
+    <dimen name="activity_login112_editText_marginTop">10dp</dimen>
+    <dimen name="activity_login_button_width">1500dp</dimen>
+    <dimen name="activity_login_signin_button_height">60dp</dimen>
+    <dimen name="activity_login_forgot_pwd_marginTop">20dp</dimen>
+    <dimen name="activity_login_113_textView_textSize">20sp</dimen>
+
+    <!--activity_outlet_details-->
+    <dimen name="activity_outlet_details_relativeLayout1_height">250dp</dimen>
+    <dimen name="activity_outlet_details_outletbackground_height">250dp</dimen>
+    <dimen name="activity_outlet_details_outlet_image_width">120dp</dimen>
+    <dimen name="activity_outlet_details_outlet_image_height">120dp</dimen>
+    <dimen name="activity_outlet_details_relativeLayout2_marginLeft">7dp</dimen>
+    <dimen name="activity_outlet_details_brandName_marginTop">10dp</dimen>
+    <dimen name="activity_outlet_details_brandName_textSize">30sp</dimen>
+    <dimen name="activity_outlet_details_floorName_marginTop">5dp</dimen>
+    <dimen name="activity_outlet_details_floorName_textSize">15sp</dimen>
+    <dimen name="activity_outlet_details_favorites_width">30dp</dimen>
+    <dimen name="activity_outlet_details_favorites_height">30dp</dimen>
+    <dimen name="activity_outlet_details_favorites_marginTop">13dp</dimen>
+    <dimen name="activity_outlet_details_favorites_marginRight">10dp</dimen>
+    <dimen name="activity_outlet_details_hubname_textSize">15sp</dimen>
+    <dimen name="activity_outlet_details_first_width">45dp</dimen>
+    <dimen name="activity_outlet_details_height">15dp</dimen>
+    <dimen name="activity_outlet_details_first_marginTop">5dp</dimen>
+    <dimen name="activity_outlet_details_width">50dp</dimen>
+    <dimen name="activity_outlet_details_marginLeft">7dp</dimen>
+    <dimen name="activity_outlet_details_website_textSize">20sp</dimen>
+    <dimen name="activity_outlet_details_description_marginTop">5dp</dimen>
+    <dimen name="activity_outlet_details_lineSpacingExtra">5dp</dimen>
+    <dimen name="activity_outlet_details_description_textSize">15sp</dimen>
+    <dimen name="activity_outlet_details_readmore_marginTop">5dp</dimen>
+    <dimen name="activity_outlet_details_offer_title_textSize">15sp</dimen>
+    <dimen name="activity_outlet_details_imageView_height">0.5dp</dimen>
+    <dimen name="activity_outlet_details_imageView_margin">7dp</dimen>
+    <dimen name="activity_outlet_details_relativeLayout_marginLeft">13dp</dimen>
+    <dimen name="activity_outlet_details_relativeLayout_marginRight">13dp</dimen>
+    <dimen name="activity_outlet_details_relativeLayout_marginTop">10dp</dimen>
+    <dimen name="activity_outlet_details_product_textSize">15sp</dimen>
+    <dimen name="activity_outlet_details_price_textSize">15sp</dimen>
+    <dimen name="activity_outlet_details_listView_margin">10dp</dimen>
+    <dimen name="activity_outlet_details_listView_dividerHeight">2dp</dimen>
+    <dimen name="activity_outlet_details_tagprice_marginTop">10dp</dimen>
+    <dimen name="activity_outlet_details_tagprice_textSize">15sp</dimen>
+
 </resources>

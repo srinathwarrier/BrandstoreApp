@@ -35,20 +35,20 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="250dp">
+                        android:layout_height="@dimen/activity_outlet_details_relativeLayout1_height">
 
                         <ImageView
                             android:id="@+id/outletbackground"
                             android:layout_width="match_parent"
-                            android:layout_height="250dp"
+                            android:layout_height="@dimen/activity_outlet_details_outletbackground_height"
                             android:background="@drawable/background" />
 
                         <requestFocus />
 
                         <ImageView
                             android:id="@+id/outlet_image"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:layout_width="@dimen/activity_outlet_details_outlet_image_width"
+                            android:layout_height="@dimen/activity_outlet_details_outlet_image_height"
                             android:layout_centerInParent="true"
                             android:scaleType="fitXY"
                             android:src="@drawable/blank_screen" />
@@ -57,17 +57,17 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp">
+                        android:layout_marginLeft="@dimen/activity_outlet_details_relativeLayout2_marginLeft">
 
 
                         <TextView
                             android:id="@+id/outletDetails_brandName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="@dimen/activity_outlet_details_brandName_marginTop"
                             android:text="Outlet Name"
                             android:textColor="@color/black"
-                            android:textSize="30sp" />
+                            android:textSize="@dimen/activity_outlet_details_brandName_textSize" />
 
                         <TextView
                             android:id="@+id/outletDetails_floorName"
@@ -75,17 +75,17 @@
                             android:layout_height="wrap_content"
                             android:layout_alignLeft="@id/outletDetails_brandName"
                             android:layout_below="@id/outletDetails_brandName"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="@dimen/activity_outlet_details_floorName_marginTop"
                             android:fontFamily="sans-serif-condensed"
                             android:text="Floor, "
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/activity_outlet_details_floorName_textSize" />
 
                         <CheckBox
                             android:id="@+id/favorites"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="13dp"
-                            android:layout_marginRight="10dp"
+                            android:layout_width="@dimen/activity_outlet_details_favorites_width"
+                            android:layout_height="@dimen/activity_outlet_details_favorites_height"
+                            android:layout_marginTop="@dimen/activity_outlet_details_favorites_marginTop"
+                            android:layout_marginRight="@dimen/activity_outlet_details_favorites_marginRight"
                             android:layout_alignParentRight="true"
                             android:checked="false"
                             android:clickable="true"
@@ -101,37 +101,37 @@
                             android:layout_toRightOf="@id/outletDetails_floorName"
                             android:fontFamily="sans-serif-condensed"
                             android:text="Hub Name"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/activity_outlet_details_hubname_textSize" />
 
                         <ImageView
                             android:id="@+id/first"
-                            android:layout_width="45dp"
-                            android:layout_height="15dp"
+                            android:layout_width="@dimen/activity_outlet_details_first_width"
+                            android:layout_height="@dimen/activity_outlet_details_height"
                             android:visibility="invisible"
                             android:layout_alignLeft="@id/outletDetails_floorName"
                             android:layout_below="@id/outletDetails_floorName"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="@dimen/activity_outlet_details_first_marginTop"
                             android:src="@drawable/men"
                             android:scaleType="fitXY"/>
 
                         <ImageView
                             android:id="@+id/second"
-                            android:layout_width="50dp"
-                            android:layout_height="15dp"
+                            android:layout_width="@dimen/activity_outlet_details_width"
+                            android:layout_height="@dimen/activity_outlet_details_height"
                             android:layout_alignTop="@id/first"
                             android:visibility="invisible"
-                            android:layout_marginLeft="7dp"
+                            android:layout_marginLeft="@dimen/activity_outlet_details_marginLeft"
                             android:layout_toRightOf="@id/first"
                             android:scaleType="fitXY"
                             android:src="@drawable/women" />
 
                         <ImageView
                             android:id="@+id/third"
-                            android:layout_width="50dp"
+                            android:layout_width="@dimen/activity_outlet_details_width"
                             android:layout_height="15dp"
                             android:layout_alignTop="@id/first"
                             android:visibility="invisible"
-                            android:layout_marginLeft="7dp"
+                            android:layout_marginLeft="@dimen/activity_outlet_details_marginLeft"
                             android:layout_toRightOf="@id/second"
                             android:scaleType="fitXY"
                             android:src="@drawable/kids" />
@@ -141,30 +141,30 @@
                         android:id="@+id/outletDetails_website"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="@dimen/activity_outlet_details_marginLeft"
                         android:text="www.google.com"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/activity_outlet_details_website_textSize" />
 
 
                     <TextView
                         android:id="@+id/outletDetails_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="@dimen/activity_outlet_details_marginLeft"
+                        android:layout_marginTop="@dimen/activity_outlet_details_description_marginTop"
                         android:fontFamily="sans-serif-condensed"
-                        android:lineSpacingExtra="5dp"
+                        android:lineSpacingExtra="@dimen/activity_outlet_details_lineSpacingExtra"
                         android:text="Description"
                         android:textColor="@color/black"
 
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/activity_outlet_details_description_textSize" />
 
                     <Button
                         android:id="@+id/readmore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="@dimen/activity_outlet_details_readmore_marginTop"
                         android:background="@null"
                         android:text="READ MORE"
 
@@ -178,51 +178,51 @@
                         android:id="@+id/outletDetails_offer_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="@dimen/activity_outlet_details_marginLeft"
                         android:text="Offers"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/activity_outlet_details_offer_title_textSize" />
 
                     <TextView
                         android:id="@+id/outletDetails_offer_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="@dimen/activity_outlet_details_marginLeft"
                         android:text="Coming soon..."
                         android:fontFamily="sans-serif-condensed"
-                        android:lineSpacingExtra="5dp"
+                        android:lineSpacingExtra="@dimen/activity_outlet_details_lineSpacingExtra"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/activity_outlet_details_offer_title_textSize"
                         />
 
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginRight="7dp"
-                        android:layout_marginTop="7dp"
+                        android:layout_height="@dimen/activity_outlet_details_imageView_height"
+                        android:layout_marginLeft="@dimen/activity_outlet_details_imageView_margin"
+                        android:layout_marginRight="@dimen/activity_outlet_details_imageView_margin"
+                        android:layout_marginTop="@dimen/activity_outlet_details_imageView_margin"
                         android:background="@color/grey" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="13dp"
-                        android:layout_marginRight="13dp"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginLeft="@dimen/activity_outlet_details_relativeLayout_marginLeft"
+                        android:layout_marginRight="@dimen/activity_outlet_details_relativeLayout_marginRight"
+                        android:layout_marginTop="@dimen/activity_outlet_details_relativeLayout_marginTop">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:text="PRODUCT"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/activity_outlet_details_product_textSize" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:text="AVERAGE PRICE"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/activity_outlet_details_price_textSize" />
                     </RelativeLayout>
 
 
@@ -249,10 +249,10 @@
                         android:layout_width="match_parent"
 
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_margin="@dimen/activity_outlet_details_listView_margin"
                         android:background="@color/white"
                         android:divider="@null"
-                        android:dividerHeight="2dp"
+                        android:dividerHeight="@dimen/activity_outlet_details_listView_dividerHeight"
                         android:focusable="false"
                         android:focusableInTouchMode="false"></ListView>
                     <TextView
@@ -260,12 +260,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Coming soon..."
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="@dimen/activity_outlet_details_marginLeft"
+                        android:layout_marginTop="@dimen/activity_outlet_details_tagprice_marginTop"
                         android:fontFamily="sans-serif-condensed"
-                        android:lineSpacingExtra="5dp"
+                        android:lineSpacingExtra="@dimen/activity_outlet_details_lineSpacingExtra"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/activity_outlet_details_tagprice_textSize"
                         android:visibility="gone"
                     />
 

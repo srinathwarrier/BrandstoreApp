@@ -5,18 +5,18 @@
     android:layout_height="match_parent"
     tools:context="com.brandstore1.activities.LoginActivity"
     android:background="@drawable/loginbg"
-    android:alpha="1"
+    android:alpha="@dimen/activity_error_linearLayout_alpha"
     android:orientation="vertical"
     android:gravity="center_vertical|center_horizontal"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_error_linearLayout_paddingLeft"
+    android:paddingRight="@dimen/activity_error_linearLayout_paddingRight"
+    android:paddingTop="@dimen/activity_error_linearLayout_paddingTop"
 
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.8"
+        android:layout_weight="@dimen/activity_error_linearLayout2_weight"
         android:orientation="vertical"
         android:gravity="center_vertical|center_horizontal"
 
@@ -26,22 +26,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/brandstorelogo"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="@dimen/activity_error_imageView_marginBottom"
             />
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.2"
+        android:layout_weight="@dimen/activity_error_linearLayout3_weight"
         android:layout_gravity="center_horizontal|center_vertical"
         >
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text="@string/error_updateapp"
-            android:textSize="20sp"
-            android:padding="30dp"
+            android:textSize="@dimen/activity_error_textView_textSize"
+            android:padding="@dimen/activity_error_textView_padding"
             android:textColor="@color/white"
             android:gravity="center_horizontal|center_vertical"
             />

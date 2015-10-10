@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:foreground="?android:attr/selectableItemBackground"
-    android:layout_width="160dp"
-    android:layout_height="120dp">
+    android:layout_width="@dimen/category_grid_relativeLayout_width"
+    android:layout_height="@dimen/category_grid_relativeLayout_height">
 
     <ImageView
         android:id="@+id/category_image"
-        android:layout_width="165dp"
-        android:layout_height="160dp"
+        android:layout_width="@dimen/category_grid_imageView_width"
+        android:layout_height="@dimen/category_grid_imageView_height"
         android:scaleType="fitXY" />
     <TextView
         android:id="@+id/category_name"
-        android:layout_width="165dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/category_grid_textView_width"
+        android:layout_height="@dimen/category_grid_textView_height"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="@dimen/category_grid_textView_marginBottom"
         android:gravity="center"
         android:textColor="#FFFFFF"
-        android:textSize="15sp" />
+        android:textSize="@dimen/category_grid_textView_textsize" />
 </RelativeLayout>

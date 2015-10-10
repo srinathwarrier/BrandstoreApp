@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.brandstore1.activities.LoginActivity"
     android:background="@drawable/loginbg"
-    android:alpha="1"
+    android:alpha="@dimen/activity_login_alpha"
     android:orientation="vertical"
     android:gravity="center_vertical|center_horizontal"
-    android:paddingLeft="@dimen/activity_login_horizontal_margin"
-    android:paddingRight="@dimen/activity_login_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_login_linearLayout_paddingLeft"
+    android:paddingRight="@dimen/activity_login_linearLayout_paddingRight"
+    android:paddingTop="@dimen/activity_login_linearLayout_paddingTop"
 
     >
     <LinearLayout
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/brandstorelogo"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="@dimen/activity_login_imageView_marginBottom"
             />
 
     </LinearLayout>
@@ -46,7 +46,7 @@
             android:id="@+id/login_ll_signins"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/activity_login_ll_signins_height"
             android:gravity="center_horizontal|center_vertical"
             >
             <!--<Button-->
@@ -60,16 +60,16 @@
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_facebookbutton"
                 android:layout_width="@dimen/activity_login_signin_button_width"
-                android:layout_height="1000dp"
+                android:layout_height="@dimen/activity_login_button_height"
                 fb:login_text="Sign in"
                 style="@style/com_facebook_loginview_default_style"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="@dimen/activity_login_facebookbutton_marginTop"
+                android:layout_marginBottom="@dimen/activity_login_facebookbutton_marginBottom"
                 />
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/login_googleplusbutton"
-                android:layout_width="120dp"
-                android:layout_height="1000dp"
+                android:layout_width="@dimen/activity_login_googleplusbutton_width"
+                android:layout_height="@dimen/activity_login_button_height"
                 android:visibility="visible"
                 />
             </LinearLayout>
@@ -80,10 +80,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="@dimen/activity_login_11_or_marginTop">
             <View
-                android:layout_width="100dp"
-                android:layout_height="1dp"
+                android:layout_width="@dimen/activity_login_view_width"
+                android:layout_height="@dimen/activity_login_view_height"
                 android:background="#FFFFFFFF"
                 />
             <TextView
@@ -98,8 +98,8 @@
                 />
 
             <View
-                android:layout_width="100dp"
-                android:layout_height="1dp"
+                android:layout_width="@dimen/activity_login_view_width"
+                android:layout_height="@dimen/activity_login_view_height"
                 android:background="#FFFFFFFF"
                 />
 
@@ -122,11 +122,11 @@
         <EditText
             android:id="@+id/login_email"
             android:inputType="textEmailAddress"
-            android:paddingLeft="10dp"
+            android:paddingLeft="@dimen/activity_login112_editText_padding"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/activity_login112_ediText_height"
             android:background="@drawable/shapeloginedittext"
-            android:alpha="1"
+            android:alpha="@dimen/activity_login_alpha"
             android:textColor="@color/white"
             android:hint="@string/login_email"
             android:textColorHint="@color/white"
@@ -135,30 +135,30 @@
         <EditText
             android:id="@+id/login_password"
             android:inputType="textPassword"
-            android:paddingLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:paddingLeft="@dimen/activity_login112_editText_padding"
+            android:layout_marginTop="@dimen/activity_login112_editText_marginTop"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/activity_login112_ediText_height"
             android:background="@drawable/shapeloginedittext"
-            android:alpha="1"
+            android:alpha="@dimen/activity_login_alpha"
             android:textColor="@color/white"
             android:hint="@string/login_password"
             android:textColorHint="@color/white"
             android:textSize="@dimen/activity_login_signup_text_size"
-            android:paddingRight="10dp"
+            android:paddingRight="@dimen/activity_login112_editText_padding"
             />
         <Button
             android:id="@+id/login_signin_button"
             android:text="@string/login_signin"
-            android:layout_width="1500dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/activity_login_button_width"
+            android:layout_height="@dimen/activity_login_signin_button_height"
             />
         <TextView
             android:id="@+id/login_forgot_password_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_forgot_password"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/activity_login_forgot_pwd_marginTop"
             android:clickable="true"
             android:textColor="@color/white"
 
@@ -184,7 +184,7 @@
             android:layout_height="match_parent"
             android:text="@string/login_signup"
             android:clickable="true"
-            android:textSize="20dp"
+            android:textSize="@dimen/activity_login_113_textView_textSize"
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal|center_vertical"
             />
