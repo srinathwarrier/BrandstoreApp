@@ -13,7 +13,7 @@
         android:orientation="vertical"
 
         tools:context="com.brandstore1.activities.SearchTMTActivity"
-        android:weightSum="@dimen/activity_search_tmt_linearLayout_weightSum">
+        android:weightSum="@integer/activity_search_tmt_linearLayout_weightSum">
 
         <include
             android:id="@+id/takemetheretoolbar"

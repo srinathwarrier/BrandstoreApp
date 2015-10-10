@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.brandstore1.activities.LoginActivity"
     android:background="@drawable/loginbg"
-    android:alpha="@dimen/activity_error_linearLayout_alpha"
+    android:alpha="@integer/activity_error_linearLayout_alpha"
     android:orientation="vertical"
     android:gravity="center_vertical|center_horizontal"
     android:paddingLeft="@dimen/activity_error_linearLayout_paddingLeft"

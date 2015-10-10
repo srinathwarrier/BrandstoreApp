@@ -51,14 +51,14 @@
     <dimen name="activity_search_listview_dividerHeight">1dp</dimen>
 
     <!--activity_search_tmt-->
-    <dimen name="activity_search_tmt_linearLayout_weightSum">1</dimen>
+    <integer name="activity_search_tmt_linearLayout_weightSum">1</integer>
     <dimen name="activity_search_tmt_editText_padding">20dp</dimen>
     <dimen name="activity_search_tmt_listView_marginTop">15dp</dimen>
     <dimen name="activity_search_tmt_listView_dividerHeight">1dp</dimen>
 
     <!--activity_take_me_there-->
-    <dimen name="activity_take_me_there_linearLayout_weightSum">1</dimen>
-    <dimen name="activity_take_me_there_weight">1</dimen>
+    <integer name="activity_take_me_there_linearLayout_weightSum">1</integer>
+    <integer name="activity_take_me_there_weight">1</integer>
     <dimen name="activity_take_me_there_textView_width">90dp</dimen>
     <dimen name="activity_take_me_there_textView_textSize">22sp</dimen>
     <dimen name="activity_take_me_there_textView_paddingLeft">20dp</dimen>
@@ -71,18 +71,18 @@
     <dimen name="activity_take_me_there_listView_dividerHeight">12dp</dimen>
 
     <!--activity_error-->
-    <dimen name="activity_error_linearLayout_alpha">1</dimen>
+    <integer name="activity_error_linearLayout_alpha">1</integer>
     <dimen name="activity_error_linearLayout_paddingLeft">64dp</dimen>
     <dimen name="activity_error_linearLayout_paddingRight">64dp</dimen>
     <dimen name="activity_error_linearLayout_paddingTop">16dp</dimen>
-    <dimen name="activity_error_linearLayout2_weight">0.8</dimen>
+    <item name="activity_error_linearLayout2_weight" format="float" type="dimen">0.8</item>
     <dimen name="activity_error_imageView_marginBottom">20dp</dimen>
-    <dimen name="activity_error_linearLayout3_weight">0.2</dimen>
+    <item name="activity_error_linearLayout3_weight" format="float" type="dimen">0.2</item>
     <dimen name="activity_error_textView_textSize">20sp</dimen>
     <dimen name="activity_error_textView_padding">30dp</dimen>
 
     <!--activity_login-->
-    <dimen name="activity_login_alpha">1</dimen>
+    <integer name="activity_login_alpha">1</integer>
     <dimen name="activity_login_linearLayout_paddingLeft">40dp</dimen>
     <dimen name="activity_login_linearLayout_paddingRight">40dp</dimen>
     <dimen name="activity_login_linearLayout_paddingTop">16dp</dimen>
