@@ -74,7 +74,8 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
             convertView = inflater.inflate(R.layout.outlet_list_list_view_item, null);
             mHolder.brandNameTextView = (TextView) convertView.findViewById(R.id.outletname);
             mHolder.floorAndHubNameTextView = (TextView) convertView.findViewById(R.id.floorAndHubName);
-            mHolder.tagAndPriceTextView = (TextView) convertView.findViewById(R.id.tag_and_price_label);
+            mHolder.tagTextView = (TextView) convertView.findViewById(R.id.tag_label);
+            mHolder.priceTextView= (TextView) convertView.findViewById(R.id.price_label);
             mHolder.image = (ImageView) convertView.findViewById(R.id.outlet_image);
             mHolder.male = (ImageView) convertView.findViewById(R.id.first);
             mHolder.female = (ImageView) convertView.findViewById(R.id.second);
@@ -99,7 +100,8 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
 
         mHolder.brandNameTextView.setText(mOutletList.get(position).getBrandOutletName());
         mHolder.floorAndHubNameTextView.setText(mOutletList.get(position).getFloorNumber() + ", " + mOutletList.get(position).getMallName());
-        mHolder.tagAndPriceTextView.setText(mOutletList.get(position).getRelevantTag() + " : ₹ " + mOutletList.get(position).getPrice());
+        mHolder.tagTextView.setText(mOutletList.get(position).getRelevantTag());
+        mHolder.priceTextView.setText(" : ₹ " + mOutletList.get(position).getPrice());
 
         ImageLoader.getInstance().displayImage(mOutletList.get(position).getImageUrl(), mHolder.image);
 
@@ -112,7 +114,8 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
         TextView brandNameTextView;
         TextView floorAndHubNameTextView;
 
-        TextView tagAndPriceTextView;
+        TextView tagTextView;
+        TextView priceTextView;
 
         ImageView image;
         ImageView male;
