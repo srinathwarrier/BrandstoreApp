@@ -2,6 +2,8 @@ package com.brandstore1.activities;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -22,6 +24,7 @@ import com.brandstore1.R;
 import com.brandstore1.adapters.OutletListAdapter;
 import com.brandstore1.asynctasks.OutletListAsyncTask;
 import com.brandstore1.entities.Outlet;
+import com.brandstore1.entities.OutletListFilterConstraint;
 import com.brandstore1.fragments.OutletListFilters;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -50,6 +53,8 @@ public class OutletListActivity extends ActionBarActivity {
     OutletListFilters outletListFilters;
 
     ArrayList<Outlet> outletArrayList = new ArrayList<Outlet>();
+
+    OutletListFilterConstraint outletListFilterConstraint;
 
     public enum OutletListType {
         CLICKED_ON_TAG, CLICKED_ON_COLLECTION, SEARCHED_QUERY, ALL_FAVORITE, ALL_ON_SALE,
@@ -148,7 +153,7 @@ public class OutletListActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_outlet_list, menu);
 
         // Initialize the menuItem variables
-        favoriteMenuItem = menu.findItem(R.id.display_favorites);
+        /*favoriteMenuItem = menu.findItem(R.id.display_favorites);
         saleMenuItem = menu.findItem(R.id.on_sale);
 
         if (outletListType == OutletListType.ALL_ON_SALE) {
@@ -160,8 +165,9 @@ public class OutletListActivity extends ActionBarActivity {
             favoriteMenuItem.setChecked(true);
             favoriteMenuItem.setIcon(R.drawable.favselect);
             favoriteMenuItem.setEnabled(false);
-        }
-        //filterItem = menu.findItem(R.id.filter_button);
+        }*/
+        filterItem = menu.findItem(R.id.filter_button);
+        setFilterIconSelected(false);
         return true;
     }
 
@@ -176,18 +182,18 @@ public class OutletListActivity extends ActionBarActivity {
                 //noinspection SimplifiableIfStatement
                 onBackPressed();
                 return true;
-            case R.id.display_favorites:
+            /*case R.id.display_favorites:
                 onFavoriteMenuItemClicked(!item.isChecked());
                 break;
             case R.id.on_sale:
                 onSaleMenuItemClicked(!item.isChecked());
-                break;
-            /*case R.id.filter_button:
+                break;*/
+            case R.id.filter_button:
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 outletListFilters = new OutletListFilters();
                 fragmentTransaction.add(R.id.fl_filters, outletListFilters);
-                fragmentTransaction.commit();*/
+                fragmentTransaction.commit();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -255,6 +261,43 @@ public class OutletListActivity extends ActionBarActivity {
         super.onRestart();
         finish();
         startActivity(getIntent());
+    }
+
+    public void setOutletListFilterConstraint(OutletListFilterConstraint outletListFilterConstraint){
+        this.outletListFilterConstraint = outletListFilterConstraint;
+    }
+    public OutletListFilterConstraint getOutletListFilterConstraint(){
+        return outletListFilterConstraint;
+    }
+
+    public void resetMenuItems(){
+        if(toolbar!=null){
+            this.setSupportActionBar(toolbar);
+        }
+    }
+
+    public void resetArrayList(){
+        if(this.outletListFilterConstraint!=null){
+            mOutletListAdapter.setOutletListFilterConstraint(outletListFilterConstraint);
+            mOutletListAdapter.setOutletListFromOriginal();
+            mOutletListAdapter.getFilter().filter("");
+        }
+    }
+    public void setFilterIconSelected(boolean isSet){
+        Drawable drawable = toolbar.getMenu().findItem(R.id.filter_button).getIcon();
+        if (drawable != null) {
+            // If we don't mutate the drawable, then all drawable's with this id will have a color
+            // filter applied to it.
+            drawable.mutate();
+            if(isSet){
+                drawable.setColorFilter(getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.SRC_ATOP);
+            }
+            else{
+                drawable.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+            }
+
+            //drawable.setAlpha(alpha);
+        }
     }
 
 }

@@ -54,8 +54,9 @@
     <string name="relevance">Relevance</string>
     <string name="average_low_to_high">Average Price ( Low to High )</string>
     <string name="average_high_to_low">Average Price ( High to Low )</string>
-    <string name="average_price">AVERAGE PRICE</string>
-    <string name="gender">GENDER</string>
+    <string name="average_price">AVERAGE PRICE (₹)</string>
+    <string name="floor">Floor</string>
+    <string name="gender">GENDER (For products in outlet)</string>
     <string name="more_filters">MORE FILTERS</string>
     <string name="apply_filters">APPLY FILTERS</string>
 

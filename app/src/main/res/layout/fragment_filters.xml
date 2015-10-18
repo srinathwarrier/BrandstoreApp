@@ -6,20 +6,22 @@
     android:background="?android:colorBackground"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_apply_filters"
-        android:layout_width="match_parent"
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/outletlistfiltertoolbar"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/black"
-        android:text="@string/apply_filters"
-        android:textColor="@color/white" />
+        android:background="@color/colorPrimary"
+        app:theme="@style/ToolBarTheme"
+        />
 
     <ScrollView
         android:id="@+id/sv_filters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/btn_apply_filters"
+        android:layout_below="@+id/outletlistfiltertoolbar"
+        android:layout_above="@+id/btn_apply_filters"
         android:padding="@dimen/activity_horizontal_margin">
         <!-- <include layout="@layout/filters_toolbar" />-->
         <LinearLayout
@@ -27,10 +29,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/layout_sort_by_filter" />
+            <include layout="@layout/layout_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_double"/>
 
             <include
                 layout="@layout/layout_average_price_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_double" />
+
+            <include
+                layout="@layout/layout_floor_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_double" />
@@ -48,4 +59,15 @@
                 android:layout_marginTop="@dimen/padding_double" />
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/btn_apply_filters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black"
+        android:text="@string/apply_filters"
+        android:textColor="@color/white"
+        />
+
 </RelativeLayout>

@@ -19,14 +19,14 @@ import java.util.ArrayList;
 /**
  * Created by Ravi on 04-Oct-15.
  */
-public class AveragePriceAdapter extends RecyclerView.Adapter<AveragePriceAdapter.CustomViewHolder> {
-    private static final String TAG = "AveragePriceAdapter";
-    ArrayList<String> moreFiltersArray = new ArrayList<>();
+public class FloorAdapter extends RecyclerView.Adapter<FloorAdapter.CustomViewHolder> {
+    private static final String TAG = "FloorAdapter";
+    ArrayList<String> floorArray = new ArrayList<>();
     OutletListFilterConstraint outletListFilterConstraint;
     Context context;
 
-    public AveragePriceAdapter(ArrayList<String> moreFiltersArray, OutletListFilterConstraint outletListFilterConstraint,Context context) {
-        this.moreFiltersArray = moreFiltersArray;
+    public FloorAdapter(ArrayList<String> floorArray, OutletListFilterConstraint outletListFilterConstraint, Context context) {
+        this.floorArray= floorArray;
         this.outletListFilterConstraint = outletListFilterConstraint;
         this.context = context;
     }
@@ -34,13 +34,13 @@ public class AveragePriceAdapter extends RecyclerView.Adapter<AveragePriceAdapte
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        final View v = layoutInflater.inflate(R.layout.average_price_filter_item, parent, false);
+        final View v = layoutInflater.inflate(R.layout.floor_filter_item, parent, false);
         return new CustomViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(final CustomViewHolder holder, int position) {
-        holder.tvFilterName.setText(moreFiltersArray.get(position));
+        holder.tvFilterName.setText(floorArray.get(position));
         if(outletListFilterConstraint.getIsClicked(holder.tvFilterName.getText().toString())){
             setItemAsClicked(holder,true);
         }
@@ -76,7 +76,7 @@ public class AveragePriceAdapter extends RecyclerView.Adapter<AveragePriceAdapte
 
     @Override
     public int getItemCount() {
-        return moreFiltersArray.size();
+        return floorArray.size();
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {

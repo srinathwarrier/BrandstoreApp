@@ -127,4 +127,5 @@ public class Outlet {
         this.isOnSale = isOnSale;
     }
 
+
 }

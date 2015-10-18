@@ -10,10 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.brandstore1.R;
 import com.brandstore1.entities.Outlet;
+import com.brandstore1.entities.OutletListFilterConstraint;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -33,13 +35,12 @@ import java.util.HashSet;
 public class OutletListAdapter extends BaseAdapter implements Filterable {
     ArrayList<Outlet> mOutletList;
     ArrayList<Outlet> origOutletList;
-    //HashSet<Outlet> filteredOutlets = new HashSet<Outlet>();
-    //HashSet<Outlet> filteredOnSaleOutlets = new HashSet<Outlet>();
     private LayoutInflater inflater;
     private Filter filter;
     private Filter saleFilter;
     Toolbar toolbar;
     TextView emptyView;
+    OutletListFilterConstraint outletListFilterConstraint;
 
     public OutletListAdapter(ArrayList<Outlet> outlet, Activity context, Toolbar toolbar, TextView emptyView) {
         this.inflater = (LayoutInflater) context
@@ -48,6 +49,10 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
         origOutletList = new ArrayList<Outlet>();
         this.toolbar = toolbar;
         this.emptyView =  emptyView;
+    }
+
+    public void setOutletListFilterConstraint(OutletListFilterConstraint outletListFilterConstraint){
+        this.outletListFilterConstraint = outletListFilterConstraint;
     }
 
     @Override
@@ -103,6 +108,10 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
         mHolder.tagTextView.setText(mOutletList.get(position).getRelevantTag());
         mHolder.priceTextView.setText(" : ₹ " + mOutletList.get(position).getPrice());
 
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
+        p.weight = 1;
+        mHolder.tagTextView.setLayoutParams(p);
+
         ImageLoader.getInstance().displayImage(mOutletList.get(position).getImageUrl(), mHolder.image);
 
         return convertView;
@@ -143,36 +152,17 @@ public class OutletListAdapter extends BaseAdapter implements Filterable {
 
             FilterResults result = new FilterResults();
             ArrayList<Outlet> list = new ArrayList<Outlet>();
-            if(filter == "fav") {
-                for (int i = 0, l = mOutletList.size(); i < l; i++) {
-                    Outlet m = mOutletList.get(i);
+            for (int i = 0, l = mOutletList.size(); i < l; i++) {
+                Outlet m = mOutletList.get(i);
 
-                    if (m.getIsFavorite().equals("true"))
-                        list.add(m);
-                }
+                if (outletListFilterConstraint.satisfiesConstraint(m))
+                    list.add(m);
             }
-            else if(filter == "Sale") {
-                for (int i = 0, l = mOutletList.size(); i < l; i++) {
-                    Outlet m = mOutletList.get(i);
 
-                    if (m.getIsOnSale().equals("true"))
-                        list.add(m);
-
-                }
+            if(list!=null && list.size()>0 && !outletListFilterConstraint.isSORT_BY_RELEVANCE()){
+                list = outletListFilterConstraint.getSortedOutletArrayList(list);
             }
-            else if(filter == "favAndSale"){
-                for (int i = 0, l = mOutletList.size(); i < l; i++) {
-                    Outlet m = mOutletList.get(i);
 
-                    if (m.getIsFavorite().equals("true")&& m.getIsOnSale().equals("true"))
-                        list.add(m);
-
-                }
-            }
-            else
-            {
-                list = new ArrayList<Outlet>(mOutletList);
-            }
             result.values = list;
             result.count = list.size();
             return result;

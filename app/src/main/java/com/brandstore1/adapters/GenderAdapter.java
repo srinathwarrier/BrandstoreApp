@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.brandstore1.R;
+import com.brandstore1.entities.OutletListFilterConstraint;
 
 import java.util.ArrayList;
 
@@ -19,10 +20,12 @@ import java.util.ArrayList;
  */
 public class GenderAdapter extends RecyclerView.Adapter<GenderAdapter.CustomViewHolder> {
     ArrayList<String> genderArray = new ArrayList<>();
+    OutletListFilterConstraint outletListFilterConstraint;
     Context context;
 
-    public GenderAdapter(ArrayList<String> genderArray, Context context) {
+    public GenderAdapter(ArrayList<String> genderArray, OutletListFilterConstraint outletListFilterConstraint, Context context) {
         this.genderArray = genderArray;
+        this.outletListFilterConstraint = outletListFilterConstraint;
         this.context = context;
     }
 
@@ -36,20 +39,38 @@ public class GenderAdapter extends RecyclerView.Adapter<GenderAdapter.CustomView
     @Override
     public void onBindViewHolder(final CustomViewHolder holder, int position) {
         holder.tvFilterName.setText(genderArray.get(position));
+        if(outletListFilterConstraint.getIsClicked(holder.tvFilterName.getText().toString())){
+            setItemAsClicked(holder, true);
+        }
+        else{
+            setItemAsClicked(holder, false);
+        }
         holder.llContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!holder.isClicked) {
-                    holder.isClicked = true;
-                    holder.ivIsFilterActive.setVisibility(View.VISIBLE);
-                    holder.tvFilterName.setTextColor(ContextCompat.getColor(context, R.color.black));
+                    setItemAsClicked(holder, true);
+                    outletListFilterConstraint.onFilterClicked(holder.tvFilterName.getText().toString(), true);
+                    notifyDataSetChanged();
                 } else {
-                    holder.isClicked = false;
-                    holder.ivIsFilterActive.setVisibility(View.INVISIBLE);
-                    holder.tvFilterName.setTextColor(ContextCompat.getColor(context, R.color.material_grey_600));
+                    setItemAsClicked(holder,false);
+                    outletListFilterConstraint.onFilterClicked(holder.tvFilterName.getText().toString(),false);
+                    notifyDataSetChanged();
                 }
             }
         });
+    }
+    public void setItemAsClicked(final CustomViewHolder holder, boolean isSet){
+        if(isSet){
+            holder.isClicked = true;
+            holder.ivIsFilterActive.setVisibility(View.VISIBLE);
+            holder.tvFilterName.setTextColor(ContextCompat.getColor(context, R.color.black));
+        }
+        else{
+            holder.isClicked = false;
+            holder.ivIsFilterActive.setVisibility(View.INVISIBLE);
+            holder.tvFilterName.setTextColor(ContextCompat.getColor(context, R.color.material_grey_600));
+        }
     }
 
     @Override
