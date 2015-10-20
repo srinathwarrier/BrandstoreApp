@@ -3,18 +3,29 @@ package com.brandstore1;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.brandstore1.gcm.NotificationMessage;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.Region;
+import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
+import org.altbeacon.beacon.startup.BootstrapNotifier;
+import org.altbeacon.beacon.startup.RegionBootstrap;
 
 import java.util.HashMap;
 
 /**
  * Created by i076324 on 6/8/2015.
  */
-public class BrandstoreApplication extends Application {
+public class BrandstoreApplication extends Application implements BootstrapNotifier {
+    private static final String TAG = "BrandstoreApplication";
+
     // model
     private static int numUnreadMessages;
     private static NotificationCompat.InboxStyle inboxStyle;
@@ -25,6 +36,9 @@ public class BrandstoreApplication extends Application {
 
     private static String combinedUserSongId  ="";
     public static final int NOTIFICATION_ID = 1;
+
+    private RegionBootstrap regionBootstrap;
+    private BackgroundPowerSaver backgroundPowerSaver;
 
     public static String getCombinedUserSongId() {
         return combinedUserSongId;
@@ -120,6 +134,15 @@ public class BrandstoreApplication extends Application {
         super.onCreate();
         mInstance = this;
         mInstance.initializeInstance();
+
+        BeaconManager beaconManager = org.altbeacon.beacon.BeaconManager.getInstanceForApplication(this);
+        beaconManager.getBeaconParsers().clear();
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
+        Region region = new Region("backgroundRegion",
+                null, null, null);
+        regionBootstrap = new RegionBootstrap(this, region);
+        backgroundPowerSaver = new BackgroundPowerSaver(this);
+
     }
 
     private void initializeInstance() {
@@ -138,6 +161,21 @@ public class BrandstoreApplication extends Application {
 
     public static BrandstoreApplication getInstance() {
         return mInstance;
+    }
+
+    @Override
+    public void didEnterRegion(Region region) {
+        Log.d(TAG, "did enter region.");
+    }
+
+    @Override
+    public void didExitRegion(Region region) {
+        Log.d(TAG, "did exit region.");
+    }
+
+    @Override
+    public void didDetermineStateForRegion(int i, Region region) {
+        Log.d(TAG, "didDetermineStateForRegion.");
     }
 
     public enum NotificationType{
