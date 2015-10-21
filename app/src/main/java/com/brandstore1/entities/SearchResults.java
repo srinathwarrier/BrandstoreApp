@@ -7,6 +7,7 @@ public class SearchResults {
 
     private String name;
     private String category;
+    private String floorNumber;
 
     public String getId() {
         return id;
@@ -32,6 +33,14 @@ public class SearchResults {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getFloorNumber() {
+        return floorNumber;
+    }
+
+    public void setFloorNumber(String category) {
+        this.floorNumber = floorNumber;
     }
 
 }

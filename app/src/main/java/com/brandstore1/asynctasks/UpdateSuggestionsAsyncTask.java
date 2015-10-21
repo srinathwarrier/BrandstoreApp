@@ -69,7 +69,7 @@ public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
         // the update would not have taken place and we need to update it again.
 
         try {
-            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Suggestions(id VARCHAR, name VARCHAR, category VARCHAR );");
+            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Suggestions (id VARCHAR, name VARCHAR, category VARCHAR, floorNumber VARCHAR );");
             if(flag==1)
                 sqLiteDatabase.execSQL("DELETE FROM Suggestions;");
             JSONArray json = new JSONArray(builder.toString());
@@ -82,8 +82,8 @@ public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
                     ContentValues contentValues = new ContentValues();
                     contentValues.put("id",object.get("Id").toString() );
                     contentValues.put("name", object.get("name").toString());
+                    //contentValues.put("floorNumber", object.get("floorNumber").toString());
                     contentValues.put("category", object.get("type").toString());
-
                     sqLiteDatabase.insert("Suggestions", null, contentValues);
 
                 }

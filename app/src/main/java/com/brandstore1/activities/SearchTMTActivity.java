@@ -120,6 +120,7 @@ public class SearchTMTActivity extends ActionBarActivity {
                     obj.setId("0");
                     obj.setName("Start typing to view suggestions");
                     obj.setCategory(" ");
+                   // obj.setFloorNumber(" ");
                     mSearchResult.add(obj);
                     mResultsAdapter.notifyDataSetChanged();
                 } else {
@@ -132,7 +133,8 @@ public class SearchTMTActivity extends ActionBarActivity {
                         SearchResults obj = new SearchResults();
                         obj.setId("0");
                         obj.setName("No results found");
-                        obj.setCategory(" ");
+                        //obj.setCategory(" ");
+                        obj.setFloorNumber(" ");
                         mSearchResult.add(obj);
                     } else {
 
@@ -143,6 +145,7 @@ public class SearchTMTActivity extends ActionBarActivity {
                             obj.setId(res.getString(0));
                             obj.setName(res.getString(1));
                             obj.setCategory(res.getString(2));
+                            //obj.setFloorNumber(res.getString(3));
                             mSearchResult.add(obj);
                             res.moveToNext();
 

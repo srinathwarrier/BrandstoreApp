@@ -53,8 +53,9 @@ public class ResultsListViewAdapter extends BaseAdapter {
                 mHolder = new ViewHolder1();
                 convertView = inflater.inflate(R.layout.search_result_list_view_item, null);
                 mHolder.textView = (TextView) convertView.findViewById(R.id.textView);
-
                 mHolder.textView2 = (TextView) convertView.findViewById(R.id.textView2);
+                //mHolder.textView3 = (TextView) convertView.findViewById(R.id.textView3);
+
 
                 convertView.setTag(mHolder);
             } else {
@@ -64,6 +65,7 @@ public class ResultsListViewAdapter extends BaseAdapter {
             try{
                 mHolder.textView2.setText(mSearchResult.get(position).getCategory());
                 mHolder.textView.setText(mSearchResult.get(position).getName());
+                //mHolder.textView3.setText(mSearchResult.get(position).getFloorNumber());
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -77,6 +79,7 @@ public class ResultsListViewAdapter extends BaseAdapter {
 
         TextView textView;
         TextView textView2;
+        //TextView textView3;
     }
 
 }

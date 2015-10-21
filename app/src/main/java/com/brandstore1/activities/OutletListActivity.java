@@ -2,6 +2,7 @@ package com.brandstore1.activities;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -87,14 +88,20 @@ public class OutletListActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(query);
 
+        Drawable dPage_header= getResources().getDrawable(R.drawable.brandstorelogoicon);
+
+        // setting the opacity (alpha)
+        dPage_header.setAlpha(10);
+
+
         /*
             UniversalImageLoader setup
          */
         File cacheDir = StorageUtils.getCacheDirectory(this);
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.blank_screen) // resource or drawable
-                .showImageForEmptyUri(R.drawable.blank_screen) // resource or drawable
-                .showImageOnFail(R.drawable.blank_screen) // resource or drawable
+                .showImageOnLoading(R.drawable.brandstorelogoicon) // resource or drawable
+                .showImageForEmptyUri(R.drawable.brandstorelogoicon) // resource or drawable
+                .showImageOnFail(R.drawable.brandstorelogoicon) // resource or drawable
                 .resetViewBeforeLoading(true)  // default
                 .cacheInMemory(true) // default
                 .cacheOnDisk(true) // default
