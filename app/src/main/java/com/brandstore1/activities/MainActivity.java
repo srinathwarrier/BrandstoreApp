@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private boolean mFromSavedInstanceState;
     private int mCurrentSelectedPosition;
 
-    int categoryImages[] = {R.drawable.accessories, R.drawable.denims, R.drawable.footwear, R.drawable.handbags, R.drawable.kidswear,
-            R.drawable.luggage, R.drawable.mensethnic, R.drawable.sportswear,
-            R.drawable.watcheseyewear, R.drawable.westernmen, R.drawable.westernunisex, R.drawable.westernwomen, R.drawable.womensethnic};
+    int categoryImages[] = {R.drawable.category_accessories, R.drawable.category_denims, R.drawable.category_footwear, R.drawable.category_handbags, R.drawable.category_kidswear,
+            R.drawable.category_luggage, R.drawable.category_mensethnic, R.drawable.category_sportswear,
+            R.drawable.category_watcheseyewear, R.drawable.category_westernmen, R.drawable.category_westernunisex, R.drawable.category_westernwomen, R.drawable.category_womensethnic};
 
     //region test
     String categoryNames[] = {"ACCESSORIES AND GIFTS", "DENIMS", "FOOTWEAR", "HAND BAGS", "KID'S WEAR", "LUGGAGE", "MEN'S ETHNIC WEAR", "SPORTSWEAR",

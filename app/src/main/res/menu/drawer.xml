@@ -4,20 +4,20 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_item_categories"
-            android:icon="@drawable/sportswear"
+            android:icon="@drawable/nav_drawer_category"
             android:title="@string/nav_item_categories"
             android:checked="true"/>
         <item
             android:id="@+id/drawer_item_favorite"
-            android:icon="@drawable/ic_favorite_border_white_24dp"
+            android:icon="@drawable/nav_drawer_favourite"
             android:title="@string/nav_item_favorite"/>
         <item
             android:id="@+id/drawer_item_sale"
-            android:icon="@drawable/sale"
+            android:icon="@drawable/nav_drawer_sale"
             android:title="@string/nav_item_sale"/>
         <item
             android:id="@+id/drawer_item_takeMeThere"
-            android:icon="@drawable/take_me_there"
+            android:icon="@drawable/nav_drawer_tmt"
             android:title="@string/nav_item_takeMeThere"/>
     </group>
 </menu>
