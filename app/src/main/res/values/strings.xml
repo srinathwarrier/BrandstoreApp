@@ -59,6 +59,8 @@
     <string name="gender">GENDER (For products in outlet)</string>
     <string name="more_filters">MORE FILTERS</string>
     <string name="apply_filters">APPLY FILTERS</string>
+    <string name="overlay_tap_anywhere">TAP ANYWHERE TO CONTINUE</string>
+    <string name="overlay_we_are_currently_at">We are currently only available at Phoenix Market City, Bangalore</string>
 
 
 </resources>

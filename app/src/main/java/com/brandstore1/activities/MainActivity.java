@@ -1,5 +1,7 @@
 package com.brandstore1.activities;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -15,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.brandstore1.BrandstoreApplication;
@@ -69,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             "Watches and Eyewear", "Westwern men's apparel", "Western unisex apparel", "Western women's apparel", "Women's ethnic wear"};
     //endregion
 
+    // Intro screen
+    private boolean mHasSeenIntroScreen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +95,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 .build();
         ImageLoader.getInstance().init(config);
         NavigationDrawerFragment drawerFragment;
+
+        //Overlay intro screen
+        mHasSeenIntroScreen = MySharedPreferences.getHasSeenIntroScreen(this);
+        if(!mHasSeenIntroScreen){
+            showOverLay();
+        }
 
         // Toolbar methods
         setUpToolbar();
@@ -166,6 +179,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 goToOutletListScreen(position);
             }
         });
+    }
+
+    private void showOverLay(){
+
+        final Dialog dialog = new Dialog(this, android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.setContentView(R.layout.intro_overlay);
+        RelativeLayout layout = (RelativeLayout) dialog.findViewById(R.id.overlayLayout);
+        final Context context = this;
+
+        layout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                MySharedPreferences.setHasSeenIntroScreen(context,true);
+                dialog.dismiss();
+            }
+
+        });
+
+        dialog.show();
+
     }
 
     public void goToOutletListScreen(int position) {

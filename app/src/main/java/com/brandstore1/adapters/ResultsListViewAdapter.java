@@ -62,7 +62,7 @@ public class ResultsListViewAdapter extends BaseAdapter {
             }
 
             try{
-                mHolder.textView2.setText(mSearchResult.get(position).getCategory());
+                mHolder.textView2.setText(mSearchResult.get(position).getFloorName());
                 mHolder.textView.setText(mSearchResult.get(position).getName());
             }
             catch(Exception e){

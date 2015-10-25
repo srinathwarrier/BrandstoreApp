@@ -14,6 +14,7 @@ public class MySharedPreferences {
     private static String PREFERENCES_USER_ID="userid";
     private static String PREFERENCES_USER_JSON_OBJECT="userjsonobject";
     private static String PREFERENCES_HAS_LOGGED_IN="hasLoggedIn";
+    private static String PREFERENCES_HAS_SEEN_INTRO_SCREEN = "hasSeenIntroScreen";
     private static String PREFERENCES_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
     public MySharedPreferences(){
@@ -69,6 +70,15 @@ public class MySharedPreferences {
 
     public static void setHasLoggedIn(Context mContext , boolean hasLoggedIn){
         saveSharedSettingBoolean(mContext, PREFERENCES_HAS_LOGGED_IN, hasLoggedIn);
+    }
+
+    public static boolean getHasSeenIntroScreen(Context mContext ){
+        // false is default value to return if doesn't exist
+        return readSharedSettingBoolean(mContext, PREFERENCES_HAS_SEEN_INTRO_SCREEN, false);
+    }
+
+    public static void setHasSeenIntroScreen(Context mContext , boolean hasSeenIntroScreen){
+        saveSharedSettingBoolean(mContext, PREFERENCES_HAS_SEEN_INTRO_SCREEN, hasSeenIntroScreen);
     }
 
     //

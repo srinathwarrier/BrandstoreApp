@@ -5,8 +5,10 @@ package com.brandstore1.entities;
  */
 public class SearchResults {
 
+    private String id;
     private String name;
     private String category;
+    private String floorName;
 
     public String getId() {
         return id;
@@ -15,8 +17,6 @@ public class SearchResults {
     public void setId(String id) {
         this.id = id;
     }
-
-    private String id;
 
     public String getName() {
         return name;
@@ -34,4 +34,11 @@ public class SearchResults {
         this.category = category;
     }
 
+    public String getFloorName() {
+        return floorName;
+    }
+
+    public void setFloorName(String floorName) {
+        this.floorName = floorName;
+    }
 }

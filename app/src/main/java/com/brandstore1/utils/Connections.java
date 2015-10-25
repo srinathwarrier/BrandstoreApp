@@ -46,9 +46,14 @@ public class Connections {
         Update suggestions in SQLite
      */
     public static void updateSuggestionInSQLite(Context mContext) {
-        SQLiteDatabase sqLiteDatabase = mContext.openOrCreateDatabase("brandstoreDB", mContext.MODE_PRIVATE, null);
-        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
+        MySQLiteDatabase mySQLiteDatabase = new MySQLiteDatabase(mContext);
+        SQLiteDatabase db = mySQLiteDatabase.getWritableDatabase();
+        UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(db);
         updateSuggestionsAsyncTask.execute();
+
+        //SQLiteDatabase sqLiteDatabase = mContext.openOrCreateDatabase("brandstoreDB", mContext.MODE_PRIVATE, null);
+        //UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
+        //updateSuggestionsAsyncTask.execute();
     }
 
     public static void updateInstanceID( Context mContext) {

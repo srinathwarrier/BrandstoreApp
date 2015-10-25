@@ -12,6 +12,8 @@ import android.util.Log;
 
 import com.brandstore1.interfaces.UpdateSuggestionsAsyncResponse;
 import com.brandstore1.utils.Connections;
+import com.brandstore1.utils.MySQLiteDatabase;
+import com.brandstore1.utils.MySqliteDatabaseContract;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,13 +71,13 @@ public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
         // the update would not have taken place and we need to update it again.
 
         try {
-            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Suggestions(id VARCHAR, name VARCHAR, category VARCHAR );");
-            if(flag==1)
-                sqLiteDatabase.execSQL("DELETE FROM Suggestions;");
+            //sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Suggestions(id VARCHAR, name VARCHAR, category VARCHAR , floorName VARCHAR );");
             JSONArray json = new JSONArray(builder.toString());
             if (json.length() == 0) {
                 // DO something .
             } else {
+                if(flag==1)
+                    MySQLiteDatabase.emptySuggestionTable(sqLiteDatabase);
                 for (int i = 0; i < json.length(); i++) {
 
                     JSONObject object = json.getJSONObject(i);
@@ -83,8 +85,11 @@ public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
                     contentValues.put("id",object.get("Id").toString() );
                     contentValues.put("name", object.get("name").toString());
                     contentValues.put("category", object.get("type").toString());
-
-                    sqLiteDatabase.insert("Suggestions", null, contentValues);
+                    if( ( object.get("type").toString().equals("outlet") ||object.get("type").toString().equals("others"))
+                            && object.get("floorNumber")!=null){
+                        contentValues.put("floor", object.get("floorNumber").toString());
+                    }
+                    sqLiteDatabase.insert(MySqliteDatabaseContract.TableSuggestion.TABLE_NAME, null, contentValues);
 
                 }
             }
@@ -102,7 +107,7 @@ public class UpdateSuggestionsAsyncTask extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Log.d("suggestions table", " " + sqLiteDatabase.rawQuery("Select * from Suggestions;", null).toString());
+
 
         /*if(delegate!=null){
             delegate.closeAndGoToMainActivityScreen();

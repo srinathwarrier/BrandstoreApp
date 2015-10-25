@@ -5,6 +5,8 @@
     <item name="white" type="color">#FFFFFF</item>
     <item name="colorPrimary" type="color">#26C6DA</item>
     <item name="colorPrimaryDark" type="color">#0097A7</item>
+    <item name="overlayBackground" type="color">#50BFBF</item>
+
 
 
     <color name="my_primary">#ED1C24</color>

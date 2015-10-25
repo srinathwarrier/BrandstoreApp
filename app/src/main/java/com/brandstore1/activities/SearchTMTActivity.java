@@ -24,6 +24,8 @@ import com.brandstore1.adapters.ResultsListViewAdapter;
 import com.brandstore1.asynctasks.UpdateSuggestionsAsyncTask;
 import com.brandstore1.entities.SearchResults;
 import com.brandstore1.fragments.NavigationDrawerFragment;
+import com.brandstore1.utils.MySQLiteDatabase;
+import com.brandstore1.utils.MySqliteDatabaseContract;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -50,6 +52,7 @@ public class SearchTMTActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_tmt);
+        mContext = this;
 
         // Get tracker.
         Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);
@@ -58,7 +61,8 @@ public class SearchTMTActivity extends ActionBarActivity {
         t.send(new HitBuilders.ScreenViewBuilder().build());
 
 
-        sqLiteDatabase = openOrCreateDatabase("brandstoreDB",MODE_PRIVATE,null);
+        MySQLiteDatabase mySQLiteDatabase = new MySQLiteDatabase(mContext);
+        sqLiteDatabase = mySQLiteDatabase.getReadableDatabase();
         //UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
         //updateSuggestionsAsyncTask.execute();
         toolbar = (Toolbar) findViewById(R.id.takemetheretoolbar);
@@ -125,7 +129,26 @@ public class SearchTMTActivity extends ActionBarActivity {
                 } else {
 
                     String s1 = "%" + s + "%";
-                    Cursor res = sqLiteDatabase.rawQuery("Select * from Suggestions where name like '" + s1 + "'AND category IN ('outlet','others');", null);
+                    //Cursor res = sqLiteDatabase.rawQuery("Select * from Suggestions where name like '" + s1 + "'AND category IN ('outlet','others');", null);
+
+                    String[] tableColumns = new String[] {
+                            MySqliteDatabaseContract.TableSuggestion._ID,
+                            MySqliteDatabaseContract.TableSuggestion.COLUMN_NAME_TITLE,
+                            MySqliteDatabaseContract.TableSuggestion.COLUMN_NAME_CATEGORY,
+                            MySqliteDatabaseContract.TableSuggestion.COLUMN_NAME_FLOOR_NAME
+                    };
+                    String whereClause = MySqliteDatabaseContract.TableSuggestion.COLUMN_NAME_TITLE+
+                            " like ? AND "+
+                            MySqliteDatabaseContract.TableSuggestion.COLUMN_NAME_CATEGORY+
+                            " IN ('outlet','others')";
+                    String[] whereArgs = { s1 };
+                    Cursor res = sqLiteDatabase.query(MySqliteDatabaseContract.TableSuggestion.TABLE_NAME,
+                            tableColumns,
+                            whereClause,
+                            whereArgs,
+                            null,
+                            null,
+                            null);
                     res.moveToFirst();
                     if (res.getCount() == 0) {
                         mSearchResult.clear();
@@ -143,12 +166,13 @@ public class SearchTMTActivity extends ActionBarActivity {
                             obj.setId(res.getString(0));
                             obj.setName(res.getString(1));
                             obj.setCategory(res.getString(2));
+                            obj.setFloorName(res.getString(3));
                             mSearchResult.add(obj);
                             res.moveToNext();
 
                         }
                     }
-
+                    res.close();
                     mResultsAdapter.notifyDataSetChanged();
                     mResultList.setVisibility(View.VISIBLE);
                 }

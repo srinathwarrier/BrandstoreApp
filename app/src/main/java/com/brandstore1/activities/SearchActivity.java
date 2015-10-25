@@ -20,6 +20,7 @@ import com.brandstore1.R;
 import com.brandstore1.adapters.ResultsListViewAdapter;
 import com.brandstore1.entities.SearchResults;
 import com.brandstore1.fragments.NavigationDrawerFragment;
+import com.brandstore1.utils.MySQLiteDatabase;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -41,13 +42,15 @@ public class SearchActivity extends ActionBarActivity implements SearchView.OnQu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        sqLiteDatabase = openOrCreateDatabase("brandstoreDB", MODE_PRIVATE, null);
-        //UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
-        //updateSuggestionsAsyncTask.execute();
 
         toolbar = (Toolbar) findViewById(R.id.searchtoolbar);
         setSupportActionBar(toolbar);
         mContext = this;
+
+        MySQLiteDatabase mySQLiteDatabase = new MySQLiteDatabase(mContext);
+        sqLiteDatabase = mySQLiteDatabase.getReadableDatabase();
+        //UpdateSuggestionsAsyncTask updateSuggestionsAsyncTask=new UpdateSuggestionsAsyncTask(sqLiteDatabase);
+        //updateSuggestionsAsyncTask.execute();
 
         // Get tracker.
         Tracker t = ((BrandstoreApplication) getApplication()).getTracker(BrandstoreApplication.TrackerName.APP_TRACKER);

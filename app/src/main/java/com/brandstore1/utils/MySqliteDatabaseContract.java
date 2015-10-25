@@ -11,11 +11,13 @@ public final class MySqliteDatabaseContract {
     public MySqliteDatabaseContract() {}
 
     /* Inner class that defines the table contents */
-    public static abstract class TableSuggestion implements BaseColumns {
-        public static final String TABLE_NAME = "suggestion";
-        public static final String COLUMN_NAME_ENTRY_ID = "entryid";
-        public static final String COLUMN_NAME_TITLE = "title";
-        public static final String COLUMN_NAME_SUBTITLE = "subtitle";
+    public abstract class TableSuggestion implements BaseColumns {
+        public static final String TABLE_NAME = "Suggestion";
+        public static final String _ID = "_ID";
+        public static final String COLUMN_NAME_ID  = "id";
+        public static final String COLUMN_NAME_TITLE = "name";
+        public static final String COLUMN_NAME_CATEGORY = "category";
+        public static final String COLUMN_NAME_FLOOR_NAME = "floor";
 
     }
 }
