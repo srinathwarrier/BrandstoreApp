@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brandstore1.activities.OutletDetailsActivity">
 
-    <item
+    <!--<item
         android:id="@+id/take_me_there"
         android:title=""
         android:icon="@drawable/take_me_there"
         android:clickable="true"
         android:checked="false"
         app:showAsAction="always"
-        />
+        />-->
 
 
 </menu>

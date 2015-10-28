@@ -2,6 +2,7 @@ package com.brandstore1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -174,6 +175,14 @@ public class OutletDetailsActivity extends ActionBarActivity {
             }
         });
 
+        FloatingActionButton tmt = (FloatingActionButton) findViewById(R.id.tmt);
+        tmt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToTakeMeThereActivityScreen();
+            }
+        });
+
     }
 
 
@@ -194,6 +203,11 @@ public class OutletDetailsActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
 
+        if(id == android.R.id.home ){
+            onBackPressed();
+            return true;
+        }
+        /*
         switch(id){
             case android.R.id.home:
                 //noinspection SimplifiableIfStatement
@@ -204,6 +218,7 @@ public class OutletDetailsActivity extends ActionBarActivity {
                 break;
 
         }
+        */
 
         return super.onOptionsItemSelected(item);
     }
@@ -212,7 +227,6 @@ public class OutletDetailsActivity extends ActionBarActivity {
     public void addFavorites(View view){
         boolean checked = ((CheckBox) view).isChecked();
         boolean operation;
-        //Toast.makeText(OutletDetailsActivity.this,id, Toast.LENGTH_LONG).show();
         operation = checked;
         AddFavOutletAsyncTask mAddFavOutletAsyncTask = new AddFavOutletAsyncTask(id,operation);
         mAddFavOutletAsyncTask.execute();
