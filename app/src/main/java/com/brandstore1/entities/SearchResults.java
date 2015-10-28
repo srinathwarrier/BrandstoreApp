@@ -9,6 +9,7 @@ public class SearchResults {
     private String name;
     private String category;
     private String floorName;
+    private boolean showFloorName;
 
     public String getId() {
         return id;
@@ -40,5 +41,13 @@ public class SearchResults {
 
     public void setFloorName(String floorName) {
         this.floorName = floorName;
+    }
+
+    public boolean isShowFloorName() {
+        return showFloorName;
+    }
+
+    public void setShowFloorName(boolean showFloorName) {
+        this.showFloorName = showFloorName;
     }
 }

@@ -245,6 +245,24 @@ public class Connections {
         return request;
     }
 
+    public String getRecentAndPopularSuggestionsURL(){
+        String request="";
+        try {
+            URI uri= new URI(
+                    "http",
+                    ipAddress,
+                    getStartParametersOfURL() +"getRecentAndPopularSuggestions",
+                    "userid="+userId,
+                    null);
+            request = uri.toASCIIString();
+        }catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+
+
     public String getOutletListForTagURL(String tagId ){
         String request="";
         try {

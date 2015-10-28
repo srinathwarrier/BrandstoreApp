@@ -17,11 +17,11 @@ import java.util.ArrayList;
 /**
  * Created by Ravi on 27-Mar-15.
  */
-public class ResultsListViewAdapter extends BaseAdapter {
+public class RecentPopularSuggestionsAdapter extends BaseAdapter {
     ArrayList<SearchResults> mSearchResult;
     private LayoutInflater inflater;
 
-    public ResultsListViewAdapter(ArrayList<SearchResults> searchResult, Activity context) {
+    public RecentPopularSuggestionsAdapter(ArrayList<SearchResults> searchResult, Activity context) {
         this.inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSearchResult = searchResult;

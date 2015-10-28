@@ -20,4 +20,24 @@ public final class MySqliteDatabaseContract {
         public static final String COLUMN_NAME_FLOOR_NAME = "floor";
 
     }
+
+    public abstract class TableRecentSuggestion implements BaseColumns {
+        public static final String TABLE_NAME = "RecentSuggestion";
+        public static final String _ID = "_ID";
+        public static final String COLUMN_NAME_ID  = "id";
+        public static final String COLUMN_NAME_TITLE = "name";
+        public static final String COLUMN_NAME_CATEGORY = "category";
+        public static final String COLUMN_NAME_FLOOR_NAME = "floor";
+
+    }
+    public abstract class TablePopularSuggestion implements BaseColumns {
+        public static final String TABLE_NAME = "RecentSuggestion";
+        public static final String _ID = "_ID";
+        public static final String COLUMN_NAME_ID  = "id";
+        public static final String COLUMN_NAME_TITLE = "name";
+        public static final String COLUMN_NAME_CATEGORY = "category";
+        public static final String COLUMN_NAME_FLOOR_NAME = "floor";
+
+    }
+
 }

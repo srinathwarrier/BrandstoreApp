@@ -167,6 +167,7 @@ public class SearchTMTActivity extends ActionBarActivity {
                             obj.setName(res.getString(1));
                             obj.setCategory(res.getString(2));
                             obj.setFloorName(res.getString(3));
+                            obj.setShowFloorName(true);
                             mSearchResult.add(obj);
                             res.moveToNext();
 
