@@ -2,6 +2,7 @@ package com.brandstore1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -164,6 +165,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 goToOutletListScreen(position);
+            }
+        });
+
+        FloatingActionButton tmt = (FloatingActionButton) findViewById(R.id.tmt);
+        tmt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToTakeMeThereScreen();
             }
         });
     }
