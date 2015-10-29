@@ -80,17 +80,17 @@ public class SearchActivity extends ActionBarActivity
         lvRecentPopularList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mRecentPopularSearchResult.get(position).getCategory().toString().equalsIgnoreCase("category") || mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("hub")) {
+                if (mRecentPopularSearchResult.get(position).getCategory().equalsIgnoreCase("category")) {
                     Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("name", mSearchResult.get(position).getName().toString());
-                    bundle.putString("id", mSearchResult.get(position).getId());
+                    bundle.putString("name", mRecentPopularSearchResult.get(position).getName());
+                    bundle.putString("id", mRecentPopularSearchResult.get(position).getId());
                     bundle.putSerializable("type", OutletListActivity.OutletListType.CLICKED_ON_TAG);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                } else if (mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("outlet")) {
+                } else if (mRecentPopularSearchResult.get(position).getCategory().equalsIgnoreCase("outlet")) {
                     Intent intent = new Intent(getApplicationContext(), OutletDetailsActivity.class);
-                    intent.putExtra("id", mSearchResult.get(position).getId());
+                    intent.putExtra("id", mRecentPopularSearchResult.get(position).getId());
                     startActivity(intent);
                 }
             }
@@ -110,15 +110,15 @@ public class SearchActivity extends ActionBarActivity
         lvResultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("category") || mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("hub")) {
+                if (mSearchResult.get(position).getCategory().equalsIgnoreCase("category") || mSearchResult.get(position).getCategory().equalsIgnoreCase("hub")) {
                     Intent intent = new Intent(getApplicationContext(), OutletListActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("name", mSearchResult.get(position).getName().toString());
+                    bundle.putString("name", mSearchResult.get(position).getName());
                     bundle.putString("id", mSearchResult.get(position).getId());
                     bundle.putSerializable("type", OutletListActivity.OutletListType.CLICKED_ON_TAG);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                } else if (mSearchResult.get(position).getCategory().toString().equalsIgnoreCase("outlet")) {
+                } else if (mSearchResult.get(position).getCategory().equalsIgnoreCase("outlet")) {
                     Intent intent = new Intent(getApplicationContext(), OutletDetailsActivity.class);
                     intent.putExtra("id", mSearchResult.get(position).getId());
                     startActivity(intent);

@@ -39,9 +39,11 @@
             android:id="@+id/recent_popular_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@color/material_grey_900"
+            android:divider="@color/material_grey_300"
             android:dividerHeight="1dp"
             android:visibility="visible"
+            android:background="@drawable/shapelistviewborder"
+            android:layout_margin="5dp"
             />
 
 
