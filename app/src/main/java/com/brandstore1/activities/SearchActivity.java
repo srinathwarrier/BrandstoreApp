@@ -95,6 +95,13 @@ public class SearchActivity extends ActionBarActivity
                 }
             }
         });
+        mRecentPopularSearchResult.clear();
+        SearchResults obj = new SearchResults();
+        obj.setId("0");
+        obj.setName("Loading ...");
+        obj.setCategory(" ");
+        mRecentPopularSearchResult.add(obj);
+
 
         View view = View.inflate(mContext, R.layout.recent_suggestion_header, null);
         lvRecentPopularList.addHeaderView(view);
@@ -271,7 +278,7 @@ public class SearchActivity extends ActionBarActivity
             mRecentPopularSearchResult.clear();
             SearchResults obj = new SearchResults();
             obj.setId("0");
-            obj.setName("No recent results found");
+            obj.setName("No recent suggestions found");
             obj.setCategory(" ");
             mRecentPopularSearchResult.add(obj);
         } else {

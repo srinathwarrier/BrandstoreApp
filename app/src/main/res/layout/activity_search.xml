@@ -35,27 +35,15 @@
 
 -->
 
-        <ListView
-            android:id="@+id/recent_popular_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@color/material_grey_300"
-            android:dividerHeight="1dp"
-            android:visibility="visible"
-            android:background="@drawable/shapelistviewborder"
-            android:layout_margin="5dp"
-            />
-
 
         <ListView
             android:id="@+id/list_view_results"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:divider="@color/material_grey_900"
+            android:divider="@color/black"
             android:dividerHeight="1dp"
-            android:background="@drawable/roundededittext"
-            android:visibility="gone">
+            android:background="@drawable/roundededittext">
 
         </ListView>
 
