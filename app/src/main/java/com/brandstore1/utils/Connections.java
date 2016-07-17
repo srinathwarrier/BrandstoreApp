@@ -21,14 +21,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
 
-/**
- * Created by I076324 on 7/22/2015.
- */
 public class Connections {
     // SET THIS BOOLEAN VARIABLE TO FALSE FOR TESTING
     public static boolean isLiveSystem=true;
 
-    public static String ipAddress  = "ec2-52-26-206-185.us-west-2.compute.amazonaws.com";
+    public static String ipAddress  = "";//TODO: this needs to be filled with the url where backend Server is hosted
     private String systemName="brandstore";
     String versionName="v2";
     static String userId ="6";
