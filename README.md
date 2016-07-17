@@ -31,7 +31,6 @@ Home Screen | <img src="https://raw.githubusercontent.com/srinathwarrier/Brandst
 Search | <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/search1.png" width="300">
 Search - example | <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/search2.png" width="300">
 Brands list | <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/brandlist.png" width="300">
-Brands list | <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/brandlist.png" width="300">
 Brands list (with filters) | <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/brandlist%20filter.png" width="300">
 Brand details | <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/branddetails.png" width="300">
 
