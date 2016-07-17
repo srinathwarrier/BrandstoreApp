@@ -36,7 +36,7 @@ Brand details | <img src="https://raw.githubusercontent.com/srinathwarrier/Brand
 
 ### Take me there screens
 
-Floating action button > Enter nearest store > Result of TMT > Change destination
+Floating action button > Enter nearest store > Result of Take Me There > Change destination
 
 <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/takemethere1.png" width="200">
 <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/takemethere2.png" width="200"> <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/takemethere3.png" width="200"> <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/takemethere4.png" width="200">
