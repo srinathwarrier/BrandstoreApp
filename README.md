@@ -53,7 +53,7 @@ Floating action button > Enter nearest store > Result of TMT > Change destinatio
 Brandstore is released and distributed under the terms and conditions of the [Apache License](https://github.com/srinathwarrier/BrandstoreApp/blob/master/LICENSE.md).
 
 ### 👥 Contributions
-If you run into problems, please open up an issue. We also actively welcome pull requests. By contributing to Brandstore you agree that your contributions will be licensed under its MIT license.
+If you run into problems, please open up an issue. We also actively welcome pull requests. By contributing to Brandstore you agree that your contributions will be licensed under its Apache license.
 
 If you use Brandstore or any of its code in your app we would love to hear about it! Drop me a [mail](warriersrinath@gmail.com).
 
