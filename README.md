@@ -8,7 +8,7 @@ Primary features include :
 
 1. Catalog of all the Stores in a mall
 2. Details of type of products available in each store
-3. Take me there - Text-based Indoor mall navigation]
+3. Take me there - Text-based Indoor mall navigation
 
 #
 
