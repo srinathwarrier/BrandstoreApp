@@ -1,4 +1,10 @@
-![Brandstore](https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/app/src/main/res/drawable-xxhdpi/brandstorelogoicon.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/app/src/main/res/drawable-xxhdpi/brandstorelogoicon.png" alt="Brandstore"/>
+</p>
+
+<p align="center">
+    <img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat" alt="License: MIT" /> <br><br>
+</p>
 
 ## Introduction.
 Brandstore is a One-stop-shop for Mall related activites.
@@ -36,7 +42,7 @@ Brand details | <img src="https://raw.githubusercontent.com/srinathwarrier/Brand
 
 ### Take me there screens
 
-Floating action button > Enter nearest store > Result of Take Me There > Change destination
+Floating action button > Enter nearest store > Result of TMT > Change destination
 
 <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/takemethere1.png" width="200">
 <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/takemethere2.png" width="200"> <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/takemethere3.png" width="200"> <img src="https://raw.githubusercontent.com/srinathwarrier/BrandstoreApp/master/media/mockups/takemethere4.png" width="200">
