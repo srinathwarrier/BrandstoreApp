@@ -60,7 +60,7 @@ If you use Brandstore or any of its code in your app we would love to hear about
 ### 📗 Documentation
 Brandstore is yet to be documented completely. [WIP]
 
-### Authors and Contributors
+### 💻 Authors
 A shoutout to the original contributors of the project before we published it on Github.
 
 Co-founders : Srinath Warrier, Diwakar Gandhi
@@ -69,5 +69,5 @@ Developers : Ravi Sanker, Sonika , Summeet Bhalla, Gargi Barania.
 
 UX : Neelam Gulrajani
 
-### Support or Contact
+### ❓ Support or Contact
 Having trouble with Brandstore? Drop me a [mail](warriersrinath@gmail.com).
